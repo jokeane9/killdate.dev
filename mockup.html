@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>killdate.dev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --text: #e8e8e8;
+      --muted: #555;
+      --accent: #4ade80;
+      --border: #1f1f1f;
+      --max: 680px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Layout ── */
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Header ── */
+    header {
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+
+    .site-name {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+    }
+
+    nav {
+      display: flex;
+      gap: 24px;
+      margin-top: 16px;
+    }
+
+    nav a {
+      font-size: 14px;
+      color: var(--muted);
+      transition: color 0.15s;
+    }
+
+    nav a:hover, nav a.active { color: var(--text); }
+
+    /* ── Hero intro ── */
+    .intro {
+      margin-bottom: 64px;
+    }
+
+    .intro h1 {
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .intro p {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 480px;
+    }
+
+    /* ── Post list ── */
+    .post-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .post-item {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+    }
+
+    .post-item:first-child { border-top: 1px solid var(--border); }
+
+    .post-date {
+      font-size: 13px;
+      color: var(--muted);
+      white-space: nowrap;
+      min-width: 90px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .post-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      transition: color 0.15s;
+    }
+
+    .post-item:hover .post-title { color: var(--accent); }
+
+    .post-tag {
+      margin-left: auto;
+      font-size: 11px;
+      color: var(--muted);
+      background: var(--border);
+      padding: 2px 8px;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+
+    /* ── Section label ── */
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    /* ── Article page ── */
+    .article { display: none; }
+
+    .article-header { margin-bottom: 40px; }
+
+    .back {
+      font-size: 13px;
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 32px;
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+
+    .back:hover { color: var(--text); }
+
+    .article-header h1 {
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .article-meta {
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      gap: 16px;
+    }
+
+    .article-meta span { display: flex; align-items: center; gap: 4px; }
+
+    .article-body {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #d0d0d0;
+    }
+
+    .article-body p { margin-bottom: 20px; }
+
+    .article-body h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 36px 0 12px;
+      letter-spacing: -0.01em;
+    }
+
+    .article-body code {
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 13px;
+      background: var(--border);
+      color: var(--accent);
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    .article-body blockquote {
+      border-left: 2px solid var(--accent);
+      padding-left: 16px;
+      color: var(--muted);
+      margin: 24px 0;
+      font-style: italic;
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 48px 0;
+      margin-top: 80px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer a:hover { color: var(--text); }
+
+    /* ── Tab toggle ── */
+    .tab-bar {
+      display: flex;
+      gap: 0;
+      margin-bottom: 48px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tab {
+      font-size: 13px;
+      padding: 10px 0;
+      margin-right: 28px;
+      color: var(--muted);
+      cursor: pointer;
+      border-bottom: 1px solid transparent;
+      margin-bottom: -1px;
+      transition: color 0.15s;
+    }
+
+    .tab.active { color: var(--text); border-bottom-color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- Header -->
+  <header>
+    <div class="site-name">killdate.dev</div>
+    <nav>
+      <a href="#" class="active" onclick="showHome()">writing</a>
+      <a href="#" onclick="showAbout()">about</a>
+    </nav>
+  </header>
+
+  <!-- Home view -->
+  <div id="home-view">
+
+    <div class="intro">
+      <h1>Building things,<br>writing it down.</h1>
+      <p>Notes on shipping, tooling, and the messy reality of building in public.</p>
+    </div>
+
+    <p class="section-label">Recent</p>
+
+    <div class="post-list">
+
+      <div class="post-item" onclick="showPost()">
+        <span class="post-date">May 01 2026</span>
+        <span class="post-title">Why I build in public</span>
+        <span class="post-tag">process</span>
+      </div>
+
+      <div class="post-item">
+        <span class="post-date">Apr 20 2026</span>
+        <span class="post-title">Shipping without a plan (and surviving)</span>
+        <span class="post-tag">shipping</span>
+      </div>
+
+      <div class="post-item">
+        <span class="post-date">Apr 10 2026</span>
+        <span class="post-title">The tools I actually use in 2026</span>
+        <span class="post-tag">tooling</span>
+      </div>
+
+      <div class="post-item">
+        <span class="post-date">Mar 28 2026</span>
+        <span class="post-title">From idea to deployed in a weekend</span>
+        <span class="post-tag">aws</span>
+      </div>
+
+      <div class="post-item">
+        <span class="post-date">Mar 15 2026</span>
+        <span class="post-title">Why I switched to Astro</span>
+        <span class="post-tag">astro</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Article view -->
+  <div id="article-view" class="article">
+
+    <span class="back" onclick="showHome()">← back</span>
+
+    <div class="article-header">
+      <h1>Why I build in public</h1>
+      <div class="article-meta">
+        <span>May 01 2026</span>
+        <span>·</span>
+        <span>4 min read</span>
+        <span>·</span>
+        <span style="color: var(--accent)">process</span>
+      </div>
+    </div>
+
+    <div class="article-body">
+      <p>I've been building side projects in private for years. Quietly. No blog, no tweets, no updates. Just me, a terminal, and a graveyard of half-finished repos.</p>
+
+      <p>The problem isn't motivation — I have plenty of that. The problem is <em>accountability</em>. Without an audience, even a tiny one, it's too easy to let things slip into "I'll get to it eventually" territory.</p>
+
+      <h2>What changed</h2>
+
+      <p>Earlier this year I started shipping things under a domain name instead of just a GitHub handle. Something about having a <code>killdate.dev</code> URL made it feel real. Like it existed in the world, not just on my laptop.</p>
+
+      <blockquote>
+        Shipping is a skill. You get better at it by doing it repeatedly, not by waiting until something is perfect.
+      </blockquote>
+
+      <p>So I'm writing it down. Not for an audience — or at least, not primarily. For the same reason I keep a dev journal: because writing forces clarity, and clarity is the most underrated productivity tool in software.</p>
+
+      <h2>What this blog will be</h2>
+
+      <p>Notes on the process. What I'm building, why I made certain calls, what broke, what worked. Tooling I'm using. Infrastructure decisions. The kind of thing I wish I could have read when I was figuring this stuff out.</p>
+
+      <p>No guarantees on cadence. But I'll ship something when there's something worth shipping.</p>
+    </div>
+
+  </div>
+
+  <!-- About view -->
+  <div id="about-view" style="display:none">
+    <div class="intro">
+      <h1>About</h1>
+      <p style="margin-bottom: 16px">Developer. Building things I find interesting and writing about how.</p>
+      <p style="font-size:14px; color: var(--muted)">Based in Ireland. Working on <a href="#" style="color:var(--accent)">Shelf</a> and various side projects.</p>
+    </div>
+  </div>
+
+  <footer>
+    <span>killdate.dev</span>
+    <span>john.okeane@gmail.com</span>
+  </footer>
+
+</div>
+
+<script>
+  function showHome() {
+    document.getElementById('home-view').style.display = '';
+    document.getElementById('article-view').style.display = 'none';
+    document.getElementById('about-view').style.display = 'none';
+  }
+  function showPost() {
+    document.getElementById('home-view').style.display = 'none';
+    document.getElementById('article-view').style.display = '';
+    document.getElementById('about-view').style.display = 'none';
+  }
+  function showAbout() {
+    document.getElementById('home-view').style.display = 'none';
+    document.getElementById('article-view').style.display = 'none';
+    document.getElementById('about-view').style.display = '';
+  }
+</script>
+
+</body>
+</html>

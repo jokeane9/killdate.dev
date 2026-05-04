@@ -1,0 +1,196 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Stack" description="Tools, technologies, and resources in active use.">
+
+  <div class="intro">
+    <h1>Stack</h1>
+    <p>Tools and technologies in active use. Updated as things change.</p>
+  </div>
+
+  <section class="stack-section">
+    <p class="section-label">Orchestration</p>
+    <div class="stack-list">
+      <div class="stack-item">
+        <span class="stack-name">Claude Code</span>
+        <span class="stack-desc">Terminal agent. Reasoning across the whole codebase, infrastructure, deploys, prompt work, session management.</span>
+      </div>
+      <div class="stack-item">
+        <span class="stack-name">Cursor</span>
+        <span class="stack-desc">IDE. Every new UI surface, schema migration, full vertical slice. Executes against runbooks written in Claude Code.</span>
+      </div>
+      <div class="stack-item">
+        <span class="stack-name">OpenAI Codex</span>
+        <span class="stack-desc">Rapidly becoming a serious Claude Code contender. Worth watching.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="stack-section">
+    <p class="section-label">AI / Models</p>
+    <div class="stack-list">
+      <div class="stack-item">
+        <span class="stack-name">Claude (Anthropic)</span>
+        <span class="stack-desc">Primary model. Sonnet for most work, Opus for architecture calls and prompt engineering.</span>
+      </div>
+      <div class="stack-item">
+        <span class="stack-name">Anthropic API</span>
+        <span class="stack-desc">Direct API for production AI features. Prompt versioning via semver, parallel versions behind a flag.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="stack-section">
+    <p class="section-label">Frontend</p>
+    <div class="stack-list">
+      <div class="stack-item">
+        <span class="stack-name">Remix</span>
+        <span class="stack-desc">Full-stack framework. Routing, loaders, auth flow, billing. Everything server-rendered lives here. Pick what fits your project — Next.js, SvelteKit, whatever. The patterns are the same.</span>
+      </div>
+      <div class="stack-item">
+        <span class="stack-name">Astro</span>
+        <span class="stack-desc">Static sites. Marketing sites, blogs. S3 + CloudFront deploy. This site.</span>
+      </div>
+      <div class="stack-item">
+        <span class="stack-name">React</span>
+        <span class="stack-desc">UI layer. Use your platform's design system if one exists — opinionated beats custom when you're moving fast.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="stack-section">
+    <p class="section-label">Backend / Pipeline</p>
+    <div class="stack-list">
+      <div class="stack-item">
+        <span class="stack-name">Python 3.12</span>
+        <span class="stack-desc">Data pipeline, crawlers, AI processing, scheduled tasks. Everything data-adjacent lives here.</span>
+      </div>
+      <div class="stack-item">
+        <span class="stack-name">PostgreSQL</span>
+        <span class="stack-desc">Raw SQL. No ORM. Never store money as a float.</span>
+      </div>
+      <div class="stack-item">
+        <span class="stack-name">Docker</span>
+        <span class="stack-desc">Container per service. Isolates the environment — what runs locally runs in staging runs in production. No more "works on my machine."</span>
+      </div>
+      <div class="stack-item">
+        <span class="stack-name">pg-boss</span>
+        <span class="stack-desc">Job queue on top of Postgres. Cron scheduling, singleton keys, manual re-trigger without duplicate jobs.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="stack-section">
+    <p class="section-label">Infrastructure</p>
+    <div class="stack-list">
+      <div class="stack-item">
+        <span class="stack-name">AWS Fargate / ECS</span>
+        <span class="stack-desc">Run containers without managing servers. Always-on services and on-demand tasks in the same cluster. Pay for what runs.</span>
+      </div>
+      <div class="stack-item">
+        <span class="stack-name">AWS RDS</span>
+        <span class="stack-desc">Managed Postgres. Don't run your own database in production.</span>
+      </div>
+      <div class="stack-item">
+        <span class="stack-name">S3 + CloudFront</span>
+        <span class="stack-desc">Static site hosting. Cheapest way to run a production site. Pennies a month at low traffic.</span>
+      </div>
+      <div class="stack-item">
+        <span class="stack-name">Route 53</span>
+        <span class="stack-desc">DNS. Domain management via Namecheap, nameservers pointed at Route 53.</span>
+      </div>
+      <div class="stack-item">
+        <span class="stack-name">GitHub Actions</span>
+        <span class="stack-desc">CI/CD. OIDC auth to AWS — no long-lived keys. Docker build → ECR push → ECS deploy on merge to main.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="stack-section">
+    <p class="section-label">Testing</p>
+    <div class="stack-list">
+      <div class="stack-item">
+        <span class="stack-name">Vitest</span>
+        <span class="stack-desc">Node unit and contract tests. Schema contract + render smoke tests run without a database.</span>
+      </div>
+      <div class="stack-item">
+        <span class="stack-name">pytest</span>
+        <span class="stack-desc">Python pipeline tests. Golden fixture dual-validated against Pydantic and TypeScript.</span>
+      </div>
+      <div class="stack-item">
+        <span class="stack-name">Pydantic</span>
+        <span class="stack-desc">Schema validation for Claude's JSON output. Catches drift before it reaches production.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="stack-section">
+    <p class="section-label">Design</p>
+    <div class="stack-list">
+      <div class="stack-item">
+        <span class="stack-name">Figma</span>
+        <span class="stack-desc">UI design and iteration. Mocks locked here before any code is written.</span>
+      </div>
+    </div>
+  </section>
+
+</Base>
+
+<style>
+  .intro {
+    margin-bottom: 56px;
+  }
+
+  .intro h1 {
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+
+  .intro p {
+    font-size: 15px;
+    color: var(--muted);
+  }
+
+  .stack-section {
+    margin-bottom: 44px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .stack-list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--border);
+  }
+
+  .stack-item {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: baseline;
+  }
+
+  .stack-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  .stack-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+</style>

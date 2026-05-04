@@ -1,0 +1,87 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title = 'killdate.dev', description = 'Notes on shipping software in public — tools, process, and the evolving craft of building AI products.' } = Astro.props;
+const currentPath = Astro.url.pathname;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title === 'killdate.dev' ? title : `${title} — killdate.dev`}</title>
+  <meta name="description" content={description} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles/global.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a href="/" class="site-name">killdate.dev</a>
+      <nav>
+        <a href="/" class:list={['nav-link', { active: currentPath === '/' }]}>writing</a>
+        <a href="/about" class:list={['nav-link', { active: currentPath === '/about' }]}>about</a>
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer>
+      <span>killdate.dev</span>
+      <a href="mailto:john.okeane@gmail.com">john.okeane@gmail.com</a>
+    </footer>
+  </div>
+</body>
+</html>
+
+<style>
+  header {
+    padding: 48px 0 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+
+  .site-name {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  nav {
+    display: flex;
+    gap: 24px;
+  }
+
+  .nav-link {
+    font-size: 14px;
+    color: var(--muted);
+    transition: color 0.15s;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    color: var(--text);
+  }
+
+  footer {
+    padding: 48px 0 80px;
+    margin-top: 80px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer a:hover { color: var(--text); }
+</style>

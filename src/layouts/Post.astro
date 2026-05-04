@@ -1,0 +1,240 @@
+---
+import Base from './Base.astro';
+interface Props {
+  title: string;
+  description: string;
+  tags: string[];
+  part: number;
+  post: number;
+}
+const { title, description, tags, part, post } = Astro.props;
+---
+<Base title={title} description={description}>
+  <article>
+    <a href="/" class="back">← back</a>
+
+    <header class="post-header">
+      <p class="post-meta">
+        <span>Part {part}, Post {post}</span>
+        {tags.length > 0 && <span>·</span>}
+        {tags.map(tag => <span class="tag">{tag}</span>)}
+      </p>
+      <h1>{title}</h1>
+      <p class="description">{description}</p>
+    </header>
+
+    <div class="post-body">
+      <slot />
+    </div>
+  </article>
+</Base>
+
+<style>
+  .back {
+    font-size: 13px;
+    color: var(--muted);
+    display: inline-block;
+    margin-bottom: 32px;
+    transition: color 0.15s;
+  }
+  .back:hover { color: var(--text); }
+
+  .post-header { margin-bottom: 40px; }
+
+  .post-meta {
+    font-size: 13px;
+    color: var(--muted);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .tag { color: var(--accent); }
+
+  h1 {
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+
+  .description {
+    font-size: 15px;
+    color: var(--muted);
+  }
+
+  .post-body {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-body);
+  }
+
+  .post-body :global(p) { margin-bottom: 20px; }
+
+  .post-body :global(h2) {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 36px 0 12px;
+    letter-spacing: -0.01em;
+  }
+
+  .post-body :global(h3) {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 28px 0 8px;
+  }
+
+  .post-body :global(code) {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 13px;
+    background: var(--border);
+    color: var(--accent);
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+
+  .post-body :global(pre) {
+    background: var(--border);
+    padding: 20px;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin: 24px 0;
+  }
+
+  .post-body :global(pre code) {
+    background: none;
+    padding: 0;
+    font-size: 13px;
+    color: var(--text-body);
+  }
+
+  .post-body :global(blockquote) {
+    border-left: 2px solid var(--accent);
+    background: var(--border);
+    padding: 16px 20px;
+    border-radius: 0 4px 4px 0;
+    color: var(--text-body);
+    margin: 24px 0;
+    font-style: normal;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .post-body :global(blockquote p) { margin-bottom: 0; }
+
+  .post-body :global(ul),
+  .post-body :global(ol) {
+    padding-left: 20px;
+    margin-bottom: 20px;
+  }
+
+  .post-body :global(li) { margin-bottom: 6px; }
+
+  .post-body :global(strong) { color: var(--text); font-weight: 600; }
+
+  .post-body :global(hr) {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 40px 0;
+  }
+
+  .post-body :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 32px;
+    font-size: 14px;
+  }
+
+  .post-body :global(th) {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0 20px 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .post-body :global(td) {
+    padding: 11px 20px 11px 0;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    color: var(--text-body);
+    line-height: 1.5;
+  }
+
+  .post-body :global(tr:last-child td) { border-bottom: none; }
+
+  /* Build pipeline diagram */
+  .post-body :global(.pipeline) {
+    margin: 28px 0 36px;
+    position: relative;
+  }
+
+  .post-body :global(.pipeline::before) {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 14px;
+    bottom: 14px;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .post-body :global(.ps) {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 10px 0 10px 28px;
+    position: relative;
+  }
+
+  .post-body :global(.ps::before) {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 50%;
+    width: 9px;
+    height: 9px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    border-radius: 50%;
+    transform: translateY(-50%);
+  }
+
+  .post-body :global(.ps--prod::before) {
+    border-color: var(--accent);
+    background: var(--accent);
+  }
+
+  .post-body :global(.ps-num) {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    opacity: 0.5;
+    min-width: 18px;
+  }
+
+  .post-body :global(.ps-name) {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    min-width: 88px;
+  }
+
+  .post-body :global(.ps-tool) {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .post-body :global(.ps--prod .ps-name) { color: var(--accent); }
+  .post-body :global(.ps--active .ps-name) { color: var(--accent); }
+  .post-body :global(.ps--active::before) { border-color: var(--accent); }
+</style>

@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="About" description="About killdate.dev">
+  <div class="intro">
+    <h1>About</h1>
+    <p>Developer. Building things I find interesting and writing about how.</p>
+    <p class="detail">Based in Calgary. Working on <a href="https://shelfplugin.com" style="color: var(--accent)">Shelf</a> and various side projects. This blog is the process log.</p>
+  </div>
+</Base>
+
+<style>
+  .intro h1 {
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .intro p {
+    font-size: 15px;
+    color: var(--muted);
+    margin-bottom: 12px;
+    max-width: 480px;
+  }
+  .detail { font-size: 14px; }
+</style>
