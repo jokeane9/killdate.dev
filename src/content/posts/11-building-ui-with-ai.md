@@ -1,103 +1,60 @@
 ---
-title: "Building UI with AI — the billing page"
-description: "A complete walkthrough: how the Shelf billing page went from state map to shipped code via mock-first discipline, a 9-task hardened runbook, and Cursor."
+title: "Building a complex UI surface with AI — a case study"
+description: "Figma mockup → UX state map → prototype → feature lock → Cursor build → tests → production. What the workflow looks like on a real billing surface."
 part: 4
 post: 11
 draft: false
-tags: ["ui-ux", "billing", "case-study", "cursor", "mock-first"]
+tags: ["ui-ux", "case-study", "cursor", "remix", "runbook"]
 ---
 
-Abstract process only gets you so far. Here's what it actually looks like to build a non-trivial UI surface with AI — from the moment the feature was decided to the moment it was in production.
+The billing page in a Node.js/Remix app. Six distinct states, a billing API, a webhook handler, and a soft paywall. Here's how the process from the previous articles played out on a real surface — start to finish.
 
-The billing page on Shelf: six billing states, a schema migration, a webhook handler, a new nav entry, a soft paywall change, and a billing callback route. Nine tasks. All of it through Cursor. CI green first try. Deploy clean.
+## The Figma mockup
 
-## The starting point
+Requirements first. The billing page needed to handle six states: trial, free, pending, basic, pro, and cancelled. Each state had its own banner, plan card layout, and CTA. Before anything opened in Cursor, the design was locked in Figma — one frame per state, exact spacing, exact copy, exact component hierarchy.
 
-The billing page was a stub — a single $50 plan card with an upgrade button. The requirement was: full plan management, 6 billing states, upgrade/downgrade, cancel, and a soft paywall that stops hard-redirecting merchants with expired trials.
+This is not optional. Without a locked Figma spec, Cursor invents the design as it goes. You end up with a billing page that works but looks like something assembled from three different design systems.
 
-Before touching code, the process is: canonical → lock → mocks → runbook. In that order.
+## The UX state map
 
-## The canonical check
+With the Figma frames locked, Claude Code mapped every state transition. Every billing state, every trigger that moves a user from one state to another, every edge case — trial expiry, failed payment, cancellation during a billing period, reactivation.
 
-Gate 1 of the pre-build lock: read both canonical documents, identify conflicts.
+The state map surfaced two states the Figma hadn't covered. Those went back into Figma before the prototype was built. Fixing a missing state in Figma takes minutes. Fixing it mid-build takes a rework session.
 
-Billing is infrastructure, not product surface. Neither canonical covers billing UX directly. No conflicts. Gate passed in five minutes.
+## The prototype
 
-The point of Gate 1 isn't to find conflicts — it's to confirm there aren't any. The act of checking prevents the failure mode where a build contradicts a product decision that was already made and documented somewhere.
+Claude Code built a 7-tab HTML/CSS prototype from the Figma spec and the state map. One tab per billing state, each showing exactly what the browser would render. The whole team could open it, click through it, and sign off on it before a single line of production code was written.
 
-## The scope lock
+The prototype was the visual authority for the Cursor build. Cursor was told to open it and match it, state by state. No interpretation required.
 
-Gate 2 produced the IN/OUT list:
+## The feature lock
 
-**IN:** Schema migration for the `plan` column, billing server updates (Basic and Pro plans), full billing page rewrite, billing nav link, soft paywall change, webhook handler for `app_subscriptions/update`.
+With the prototype signed off, the feature lock defined the exact scope:
 
-**OUT:** Plan enforcement (3 competitor / 50 product caps) — separate build. Crawl frequency gating per plan — separate build. Email notifications on plan change. Enterprise billing. Shopify `trialDays` parameter (trial stays DB-managed).
+**IN:** Schema migration for the plan column, billing server functions, full billing route rewrite, nav link, soft paywall change, webhook handler for subscription status changes.
 
-The OUT list is the discipline. Without it, the billing build becomes the billing-and-enforcement-and-crawl-gating build, which is three times the blast radius and three times the drift risk.
+**OUT:** Feature gating per tier — separate build. Email notifications — separate build. Enterprise billing — out of scope.
 
-Section-vs-Replacement in one sentence: "Replaces the existing placeholder `app.billing.tsx` (single $50 plan card) with a full state-aware billing page, and adds a Billing nav entry pointing to the existing `/app/billing` route."
+The OUT list is the discipline. Without it the billing build becomes the billing-and-enforcement-and-notifications build.
 
-## The mock
+## The Cursor build
 
-The billing page mock was built as a 7-tab HTML file. Not a Figma frame — a functional HTML prototype you could click through in a browser.
+Nine tasks. Every task used the 5-block structure: FILES, TYPES, SKELETON, PROHIBITED, VALIDATE.
 
-- **Tab 1**: State map showing all plan transition flows. Visual diagram of how trial → free → basic → pro → cancelled → free works. Every arrow named.
-- **Tabs 2–7**: One tab per billing state (trial active, free, pending approval, basic active, pro active, cancelled). Each tab showed the exact banner, the exact plan card layout, the exact CTA.
-
-Why an HTML mock over a Figma frame? Because Cursor can reference a URL or open a file. The HTML mock was the visual authority — Cursor was explicitly told to open it in a browser and use it as the UI reference for each task. A Figma frame requires export; an HTML file opens immediately.
-
-The mock sign-off happened before the runbook was written. Not "we'll refine this during the build" — explicitly signed off, no design changes after that point.
-
-## The state model
-
-The billing page has six states derived from two signals: Shopify subscription status (API) and `merchant.plan` (DB). The state derivation function was written and locked before any route code was touched:
+The state model went into the brief before any task ran:
 
 ```
 BillingState: 'trial' | 'free' | 'pending' | 'basic' | 'pro' | 'cancelled'
 ```
 
-Precedence: Pending (Shopify awaiting approval) → Active paid plans → Cancelled grace period → Trial running → Default free.
+Cursor matched each state to the corresponding prototype tab. The VALIDATE block for every task checked against the prototype, not against memory of what it was supposed to look like.
 
-This went in the Cursor brief at the top, before the tasks. Cursor needed to understand the state model before it could implement any of the six state renders. Getting this wrong in Task 5 (the route rewrite) would have produced subtly wrong state derivations that only manifested in edge cases.
+## Tests, then production
 
-## The 9-task runbook
+Automated tests ran in the local dev environment before staging. Contract tests validated the billing state derivation logic. Typecheck confirmed the interface extensions. Both passed.
 
-Every task used the hardened 5-block structure: FILES, TYPES, SKELETON, PROHIBITED, VALIDATE.
+Manual walkthrough in staging: every state loaded by injecting database state directly, every render confirmed against the prototype. Clean.
 
-**Task 1** — Migration: one file, exact SQL, validate with a direct DB query. Done in isolation so nothing downstream fails on a missing column.
+Deploy to production. Canary — no regressions. Full rollout.
 
-**Task 2** — Add `plan` column to Merchant type and `updateMerchantPlan` function. TypeScript interface extension, one model file. Validates with typecheck.
-
-**Tasks 3 & 4** — Billing server functions: `parseAppSubscriptionDetails`, `createShelfSubscription`, `cancelShelfSubscription`. Exact function signatures in the TYPES block. No guessing.
-
-**Task 5** — Full `app.billing.tsx` rewrite. This is the heavy task. JSX skeleton for each of the 6 states. PROHIBITED block explicitly named what Cursor tends to add to billing pages: urgency copy, modal dialogs for cancel, Plan Names in the Shopify API format mixed into display copy. VALIDATE: load each state by injecting DB state directly, confirm renders match the mock.
-
-**Tasks 6 & 7** — Callback and webhook handlers. Write `plan` to DB when Shopify confirms subscription. Validate with a manual subscription trigger in test mode.
-
-**Task 8** — Nav link in `app.tsx`. One component, one line.
-
-**Task 9** — Soft paywall: remove the hard redirect from `app._index.tsx`. Validate that trial logic still gates correctly.
-
-## What happened during the build
-
-CI failed once — not from drift, but from a Polaris type mismatch. `Button onClick` is typed as `() => unknown`, not `(e: MouseEvent) => void`. Cursor added the event parameter (it's a common React pattern). TypeScript rejected it. One-line fix.
-
-The CSS module path caused a CI failure on a follow-up PR: `app.billing.module.css` was in `app/routes/` which the Remix Babel plugin tried to parse as JS. Moved to `app/styles/`. CI green.
-
-One behavioral discovery during testing: `throw redirect()` from an action in a Shopify embedded app breaks the session token. The fix was `return json({ exit: true })` and drive the exit from `useActionData()`. This wasn't in the original runbook — it was discovered during the billing walkthrough. Added to the session log as a permanent decision.
-
-## When you know you're done iterating
-
-Not when the design feels right. When:
-
-1. All six states are covered by the mock
-2. All six states match the mock in the browser
-3. All applicable lock gates are passed
-4. Tests pass (in this case, contract tests + typecheck)
-5. The deploy checklist is complete and a canary confirms no regressions
-
-"Feels right" is not a gate. "State 3 (cancelled) renders the correct banner with the correct copy and the correct button and typecheck passes" is a gate. The specificity is what makes "done" mean something.
-
----
-
-**Action:** For your next UI build, write the state model before you write any JSX. If the feature has N states, draw the state transition diagram. Make sure every state has a mock before the runbook is written. The billing page build artifacts are in `feature-builds/billing-page/` in the Shelf repo. [github.com/jokeane9/shelf](https://github.com/jokeane9/shelf)
+The whole build — from Figma frames to production — ran clean because every decision was made before implementation started. The prototype answered the design questions. The state map answered the interaction questions. The lock answered the scope questions. By the time Cursor opened the first file, there was nothing left to figure out.

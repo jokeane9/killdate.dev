@@ -13,7 +13,7 @@ const parts = [
   { num: 3, label: 'Testing' },
 ];
 
-const appendixParts = [4, 5];
+const appendixParts = [4];
 const appendixPosts = posts.filter(p => appendixParts.includes(p.data.part));
 ---
 <Base>
@@ -62,7 +62,7 @@ const appendixPosts = posts.filter(p => appendixParts.includes(p.data.part));
       <div class="post-list">
         {appendixPosts.map(post => (
           <a href={`/posts/${post.id.replace(/\.md$/, '')}`} class="post-item">
-            <span class="post-number">{String(post.data.post).padStart(2, '0')}</span>
+            <span class="post-number post-bullet">·</span>
             <span class="post-title">{post.data.title}</span>
             {post.data.tags[0] && <span class="post-tag">{post.data.tags[0]}</span>}
           </a>
