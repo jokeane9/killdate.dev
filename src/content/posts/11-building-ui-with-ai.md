@@ -49,12 +49,20 @@ BillingState: 'trial' | 'free' | 'pending' | 'basic' | 'pro' | 'cancelled'
 
 Cursor matched each state to the corresponding prototype tab. The VALIDATE block for every task checked against the prototype, not against memory of what it was supposed to look like.
 
+## Code review
+
+Every task output went through a developer review before the next task started. Not a rubber stamp — an actual read of the diff. Cursor got a few things wrong: a UI library's `Button onClick` was typed as `() => unknown` rather than `(e: MouseEvent) => void`, which TypeScript caught at the VALIDATE step. A CSS module placed in the routes directory was treated as a route module by the build tool — CI failure, caught immediately. A `throw redirect()` in the cancel action broke the embedded app session token, because Remix redirects in that context happen outside the app frame; the fix was returning action data and driving the UI transition from it instead.
+
+None of these required a rework session. All three were caught at the review step of the task they appeared in, not three tasks later when the blast radius would have been larger. The review loop is what makes that happen. Cursor is fast; the review loop is what keeps the build clean.
+
 ## Tests, then production
 
 Automated tests ran in the local dev environment before staging. Contract tests validated the billing state derivation logic. Typecheck confirmed the interface extensions. Both passed.
 
-Manual walkthrough in staging: every state loaded by injecting database state directly, every render confirmed against the prototype. Clean.
+Manual walkthrough in staging: every state loaded by injecting database state directly, every render confirmed against the prototype. And staging found things the automated tests didn't — edge cases in the transition logic, a banner that rendered correctly in isolation but overlapped a nav element in the actual page layout. The tests told us the contracts held. The manual walkthrough told us whether the product actually worked.
+
+This is the distinction that matters. End-to-end testing in a real environment is not a formality and it is not a substitute for automated tests — it is a different thing entirely. Automated tests verify correctness against known cases. End-to-end testing surfaces the cases you didn't think to write a test for. On a billing surface, those are exactly the cases that matter: the user who upgrades mid-trial, the subscription that returns a pending state from the billing API while the database says active, the cancel flow that works on desktop and breaks in the embedded mobile view. You will always find something. Budget time for it.
 
 Deploy to production. Canary — no regressions. Full rollout.
 
-The whole build — from Figma frames to production — ran clean because every decision was made before implementation started. The prototype answered the design questions. The state map answered the interaction questions. The lock answered the scope questions. By the time Cursor opened the first file, there was nothing left to figure out.
+The whole build ran clean because every decision was made before implementation started. The prototype answered the design questions. The state map answered the interaction questions. The lock answered the scope questions. By the time Cursor opened the first file, there was nothing left to figure out. What remained was execution — and the review loop and the test suite were what kept execution honest.
