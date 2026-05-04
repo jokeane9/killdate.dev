@@ -21,11 +21,19 @@ const currentPath = Astro.url.pathname;
 <body>
   <div class="wrap">
     <header>
-      <a href="/" class="site-name">killdate.dev</a>
-      <nav>
-        <a href="/" class:list={['nav-link', { active: currentPath === '/' }]}>writing</a>
-        <a href="/about" class:list={['nav-link', { active: currentPath === '/about' }]}>about</a>
-      </nav>
+      <div class="header-top">
+        <a href="/" class="site-name">killdate.dev</a>
+        <nav>
+          <a href="/" class:list={['nav-link', { active: currentPath === '/' }]}>writing</a>
+          <a href="/about" class:list={['nav-link', { active: currentPath === '/about' }]}>about</a>
+        </nav>
+      </div>
+      {currentPath === '/' && (
+        <div class="header-hero">
+          <p class="header-tagline">Agentic dev, pragmatic process, one repo to fork.</p>
+          <a href="https://github.com/killdate-dev/killdate.dev" class="github-link" target="_blank" rel="noopener">Fork on GitHub →</a>
+        </div>
+      )}
     </header>
 
     <main>
@@ -47,13 +55,18 @@ const currentPath = Astro.url.pathname;
     margin-bottom: 48px;
   }
 
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0;
+  }
+
   .site-name {
     font-size: 15px;
     font-weight: 600;
     letter-spacing: 0.04em;
     color: var(--accent);
-    display: block;
-    margin-bottom: 16px;
   }
 
   nav {
@@ -71,6 +84,29 @@ const currentPath = Astro.url.pathname;
   .nav-link.active {
     color: var(--text);
   }
+
+  .header-hero {
+    margin-top: 40px;
+  }
+
+  .header-tagline {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.4;
+    letter-spacing: -0.02em;
+    max-width: 520px;
+    margin-bottom: 16px;
+  }
+
+  .github-link {
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+    transition: opacity 0.15s;
+  }
+
+  .github-link:hover { opacity: 0.7; }
 
   footer {
     padding: 48px 0 80px;

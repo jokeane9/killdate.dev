@@ -17,12 +17,7 @@ const appendixParts = [4];
 const appendixPosts = posts.filter(p => appendixParts.includes(p.data.part));
 ---
 <Base>
-  <div class="intro">
-    <p>Agentic dev, pragmatic process, one repo to fork.</p>
-    <a href="https://github.com/killdate-dev/killdate.dev" class="github-link" target="_blank" rel="noopener">Fork on GitHub →</a>
-  </div>
-
-  {introPosts.length > 0 && (
+{introPosts.length > 0 && (
     <section class="part-section">
       <p class="section-label">Preamble</p>
       <div class="post-list">
