@@ -1,6 +1,6 @@
 ---
-title: "Taste, judgment, and human nature"
-description: "What humans bring to AI systems that can't be automated. On taste, judgment, emotional signal — and why AI is revealing these rather than replacing them."
+title: "AI as Reliable Partners"
+description: "What humans bring to AI systems — taste, judgment, and technical intuition."
 part: 4
 post: 16
 draft: false
