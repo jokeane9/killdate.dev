@@ -61,10 +61,9 @@ Reference docs split into two distinct groups — and keeping them separate matt
 
 | Doc | What it stops the AI from doing | Fires when |
 |---|---|---|
-| `AGILE-PLAYBOOK.md` | Inventing its own versioning / shipping pattern | Before any feature build |
-| `PRE-BUILD-FEATURE-CHECKLIST.md` | Skipping steps, writing code before scope is locked | Before writing code |
-| `PRE-BUILD-LOCK-TEMPLATE.md` | Treating feature scope as open-ended | Before writing code |
-| `DEPLOY-CHECKLIST.md` | Winging deploys, skipping preflight and canary | When shipping |
+| `SHIP-RULES.md` | Inventing its own versioning / shipping pattern | Before any feature build |
+| `FEATURE-LOCK.md` | Treating feature scope as open-ended, writing code before scope is locked | Before writing code |
+| `SHIP-TO-PROD.md` | Winging deploys, skipping preflight and canary | When shipping |
 | `DEBUGGING-TAXONOMY.md` | Jumping to a fix before diagnosing the right layer | When something breaks |
 | `DEV-HEURISTICS.md` | Re-learning known pitfalls in the same domain | By domain |
 

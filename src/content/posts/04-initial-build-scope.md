@@ -98,7 +98,7 @@ If your stack crosses a language boundary — a Python data pipeline writing out
 
 **Lock**
 
-> Open PRE-BUILD-LOCK-TEMPLATE. Read it in full. Walk me through what each section is asking for. Then ask me the questions you need answered — one at a time — to complete the lock for Build 1. Don't write the lock yet. Just ask.
+> Open FEATURE-LOCK. Read it in full. Walk me through what each section is asking for. Then ask me the questions you need answered — one at a time — to complete the lock for Build 1. Don't write the lock yet. Just ask.
 
 **Mocks**
 
