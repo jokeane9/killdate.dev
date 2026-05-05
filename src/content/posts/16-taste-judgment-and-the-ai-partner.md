@@ -95,20 +95,3 @@ Anders Ericsson, whose research on deliberate practice underpins most serious wo
 
 You're not just learning to build. You're building the instrument of intuition — 100x faster than was previously possible. And something I'm only beginning to understand about myself: we're both evolving, the AI and the humans working alongside it. I'm evolving probably as fast as the thing underneath my keyboard.
 
----
-
-## What this means for professional development
-
-The emerging role doesn't have a clean name yet. It's not "engineer" in the traditional sense. It's not "product manager." It's closer to: someone who can hold the product vision, feel when something is wrong, direct execution effectively across the full stack, and knows enough about every seam to ask the right question at each one.
-
-The credential doesn't define it. The scar tissue does.
-
-The generalist who's shipped one serious thing with AI, felt the drift, learned why the layers break — that person has something the specialist doesn't. Not more depth, but more range. And range is what compounds with AI.
-
-Taste and judgment and emotional signal are not soft skills waiting to be automated. They are, as Damasio showed, the harder cognitive function. The one that doesn't work when it's removed.
-
-AI is the partner that frees you to operate more fully at that level. Not because it's less capable — because it's capable of exactly the wrong things to do alone.
-
-Units of work. Tokens in, output out.
-
-The wanting is yours.
