@@ -27,7 +27,7 @@ The repo orients you. You don't need to read every file — you need to ask the 
 
 ## What's in it
 
-**`CLAUDE.md`** — the AI's operating contract. Every Claude Code session reads this before anything else. It defines the build discipline, the tool boundary, the session rhythm, and a manifest table pointing to every other doc and when to load it. This is the spine. Everything else hangs off it. The [next post](/posts/02-claude-md-is-your-os) goes deep on how to structure it.
+**`CLAUDE.md`** — the AI's operating contract. Every Claude Code session reads this before anything else. It's split into two parts: **Core** (read every session — product truth, build discipline, session rhythm) and **Reference** (read on trigger — process docs, architecture, state files, each with a condition that fires it). The Core/Reference split is what keeps the agent from either starting blind or drowning in context. This is the spine. Everything else hangs off it. The [next post](/posts/02-claude-md-is-your-os) goes deep on how to structure it.
 
 **`.cursor/rules/`** — three short files that constrain how Cursor behaves during execution: tool boundary (Cursor executes, it doesn't plan), scope guard (only touch files in the FILES block), review loop (stop after every task, don't auto-chain). These travel unchanged across projects. Covered in depth when the series gets to runbooks.
 
