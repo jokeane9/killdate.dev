@@ -34,7 +34,10 @@ const currentPath = Astro.url.pathname;
 
     <footer>
       <span>killdate.dev</span>
-      <a href="mailto:john@primadigital.net">john@primadigital.net</a>
+      <div class="footer-contacts">
+        <a href="mailto:john@primadigital.net">john@primadigital.net</a>
+        <a href="mailto:dave@primadigital.net">dave@primadigital.net</a>
+      </div>
     </footer>
   </div>
 </body>
@@ -81,6 +84,11 @@ const currentPath = Astro.url.pathname;
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .footer-contacts {
+    display: flex;
+    gap: 24px;
   }
 
   footer a { color: var(--accent); }
