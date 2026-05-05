@@ -19,13 +19,11 @@ git clone https://github.com/your-username/killdate-kit.git
 cd killdate-kit
 ```
 
-Open it in Claude Code. Before you touch anything else, run:
+Open it in Claude Code and start with this prompt:
 
-```
-Read CLAUDE.md in full. Tell me the three things I need to fill in before the first session.
-```
+> *Read CLAUDE.md in full. What are the three things I need to fill in before the first session? Walk me through them in order.*
 
-That's your onboarding. The repo tells you what it needs.
+The repo orients you. You don't need to read every file — you need to ask the right question first.
 
 ## What's in it
 
