@@ -21,19 +21,11 @@ const currentPath = Astro.url.pathname;
 <body>
   <div class="wrap">
     <header>
-      <div class="header-top">
-        <a href="/" class="site-name">killdate.dev</a>
-        <nav>
-          <a href="/" class:list={['nav-link', { active: currentPath === '/' }]}>writing</a>
-          <a href="/about" class:list={['nav-link', { active: currentPath === '/about' }]}>about</a>
-        </nav>
-      </div>
-      {currentPath === '/' && (
-        <div class="header-hero">
-          <p class="header-tagline">Agentic dev, pragmatic process, one repo to fork.</p>
-          <a href="https://github.com/killdate-dev/killdate.dev" class="github-link" target="_blank" rel="noopener">Fork on GitHub →</a>
-        </div>
-      )}
+      <a href="/" class="site-name">killdate.dev</a>
+      <nav>
+        <a href="/" class:list={['nav-link', { active: currentPath === '/' }]}>writing</a>
+        <a href="/about" class:list={['nav-link', { active: currentPath === '/about' }]}>about</a>
+      </nav>
     </header>
 
     <main>
@@ -53,13 +45,9 @@ const currentPath = Astro.url.pathname;
     padding: 48px 0 40px;
     border-bottom: 1px solid var(--border);
     margin-bottom: 48px;
-  }
-
-  .header-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 0;
   }
 
   .site-name {
@@ -85,29 +73,6 @@ const currentPath = Astro.url.pathname;
     color: var(--text);
   }
 
-  .header-hero {
-    margin-top: 40px;
-  }
-
-  .header-tagline {
-    font-size: 22px;
-    font-weight: 500;
-    color: var(--text);
-    line-height: 1.4;
-    letter-spacing: -0.02em;
-    max-width: 520px;
-    margin-bottom: 16px;
-  }
-
-  .github-link {
-    font-size: 13px;
-    color: var(--accent);
-    font-weight: 500;
-    transition: opacity 0.15s;
-  }
-
-  .github-link:hover { opacity: 0.7; }
-
   footer {
     padding: 48px 0 80px;
     margin-top: 80px;
@@ -119,6 +84,6 @@ const currentPath = Astro.url.pathname;
     align-items: center;
   }
 
-  footer a { color: #888; }
-  footer a:hover { color: var(--text); }
+  footer a { color: var(--accent); }
+  footer a:hover { opacity: 0.7; }
 </style>
