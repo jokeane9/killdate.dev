@@ -7,7 +7,11 @@ draft: false
 tags: ["tooling", "stack"]
 ---
 
-You don't need to write this stuff fluently. You need enough to review what the AI produces, detect drift, catch when something looks wrong, and know which layer broke. Probably deep in one area, working knowledge across the rest. If that resonates — you're in the right place.
+You don't need to write this stuff fluently. You need enough to review what the AI produces, detect drift, catch when something looks wrong, and know which layer broke. Probably deep in one area, working knowledge across the rest.
+
+The ability to code isn't the full skill set — not by a long stretch. The emerging skill is being able to architect and design the system: knowing how the pieces should connect, feeling when they don't, directing execution rather than performing it. That's a different job than writing code. It's also a more interesting one — intellectually harder in the ways that matter, more creative, and considerably less repetitive.
+
+If that resonates — you're in the right place.
 
 ## Orchestration
 
