@@ -7,6 +7,8 @@ draft: false
 tags: ["claude-md", "setup", "context-management", "session-discipline"]
 ---
 
+If you've read the [repo tour](/posts/01-the-kit), you've already seen `CLAUDE.md` described as the spine — the file everything else hangs off. This post is where we slow down on that claim, because how you structure it determines everything that follows.
+
 Every time you open a Claude Code session, the agent reads `CLAUDE.md` before it does anything else. That's not a feature — it's the design. The file is your persistent context layer. It's the thing that makes the agent consistent across sessions instead of starting blank every time.
 
 If you don't have one, the agent improvises. If you have a bad one — vague, outdated, missing the stuff that actually matters — it improvises with false confidence. Both are worse than you think.
@@ -101,8 +103,8 @@ This goes in Core. Claude Code reads it at session start and applies it to every
 
 ---
 
-**In the repo:** Clone it, open it in Claude Code, and run this:
+**In the repo:** You've already cloned it and done the first orientation prompt from the [repo tour](/posts/01-the-kit). Now go a level deeper:
 
 > Read CLAUDE.md in full. Walk me through what's in Core vs Reference, what trigger conditions are already defined, and what I need to fill in for my own project. Then tell me the first three things I should change before starting any real work.
 
-That's the fastest way in. The file will tell you what it needs.
+The file will tell you what it needs. The next post covers what goes in the canonical docs — the product definition that `CLAUDE.md` points to as its source of truth.

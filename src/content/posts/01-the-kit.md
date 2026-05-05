@@ -27,9 +27,9 @@ The repo orients you. You don't need to read every file — you need to ask the 
 
 ## What's in it
 
-**`CLAUDE.md`** — the AI's operating contract. Every Claude Code session reads this before anything else. It defines the build discipline, the tool boundary, the session rhythm, and a manifest table pointing to every other doc and when to load it. This is the spine. Everything else hangs off it. Post 03 covers this in depth.
+**`CLAUDE.md`** — the AI's operating contract. Every Claude Code session reads this before anything else. It defines the build discipline, the tool boundary, the session rhythm, and a manifest table pointing to every other doc and when to load it. This is the spine. Everything else hangs off it. The [next post](/posts/02-claude-md-is-your-os) goes deep on how to structure it.
 
-**`.cursor/rules/`** — three short files that constrain how Cursor behaves during execution: tool boundary (Cursor executes, it doesn't plan), scope guard (only touch files in the FILES block), review loop (stop after every task, don't auto-chain). These travel unchanged across projects. Post 05 covers runbooks and Cursor in depth.
+**`.cursor/rules/`** — three short files that constrain how Cursor behaves during execution: tool boundary (Cursor executes, it doesn't plan), scope guard (only touch files in the FILES block), review loop (stop after every task, don't auto-chain). These travel unchanged across projects. Covered in depth when the series gets to runbooks.
 
 **`project-management/`** — the process docs. Each one has a trigger condition — a moment in the build where it fires. The folder has a README that explains each file; read that first. The short version:
 
@@ -42,7 +42,7 @@ The repo orients you. You don't need to read every file — you need to ask the 
 | `DEBUGGING-TAXONOMY.md` | When something breaks | Classifies bugs by layer before you fix anything: Data / Model / API / UI / Integration / Config / Infrastructure. Includes bug ID prefixes for `KNOWN-ISSUES.md` and a diagnostic sequence. The point: most debugging time is wasted fixing the wrong layer. |
 | `DEV-HEURISTICS.md` | By domain — fill in as you go | Blank entries indexed by domain: auth, database, API, deploy, testing. "If you're touching X, remember Y." Add an entry every time you re-learn something that should have been written down. Starts empty — the value accumulates. |
 
-**`marketing/canonical/`** — two skeleton files: `MARKETING-TRUTH.md` (who the product is for, how to talk about it) and `BEHAVIOR-SPEC.md` (what it does, what it doesn't do, what belongs in it). Fill these in before anything else. They're what every feature decision argues from. Post 04 covers this.
+**`marketing/canonical/`** — two skeleton files: `MARKETING-TRUTH.md` (who the product is for, how to talk about it) and `BEHAVIOR-SPEC.md` (what it does, what it doesn't do, what belongs in it). Fill these in before anything else. They're what every feature decision argues from. Covered in the [canonical-first post](/posts/03-canonical-first).
 
 **`feature-builds/_playbook/`** — two files you reach for every time you hand a task to Cursor.
 
