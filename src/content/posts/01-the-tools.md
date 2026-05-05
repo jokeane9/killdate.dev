@@ -41,16 +41,6 @@ Worth watching closely — the gap between this and Claude Code on complex reaso
 
 **Fork** — Mac and Windows git GUI. When an AI has made changes across 12 files, you need to see exactly what's staged and what a diff actually looks like at the hunk level before you commit. Fork makes that review fast enough that you actually do it every time.
 
-## Learning resources
-
-**[12-factor-agents](https://github.com/humanlayer/12-factor-agents)** — Principles for building reliable LLM applications. If something is going wrong in your agentic system, one of these factors is usually why.
-
-**[anthropic-cookbook](https://github.com/anthropics/anthropic-cookbook)** — Code and guides for building with Claude. Copy-paste snippets for tool use, streaming, vision, embeddings. The fastest path from "how does this API work" to working code.
-
-**[anthropic-courses](https://github.com/anthropics/anthropic-courses)** — Five structured courses: API fundamentals, prompt engineering, tool use, multi-agent systems, building with Claude. Start here if you're new to the API.
-
-**[Brex prompt engineering guide](https://github.com/brexhq/prompt-engineering)** — Production-focused. Written by engineers building with LLMs before it was mainstream. More grounding than tutorial.
-
 ## What happens when you use the wrong one
 
 Using Claude Code where you should be using Cursor: drift. Claude Code is reasoning about the whole project, not optimising for one screen. Output is harder to review because the scope is too wide.
