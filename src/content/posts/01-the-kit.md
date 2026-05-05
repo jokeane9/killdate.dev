@@ -35,14 +35,14 @@ That's your onboarding. The repo tells you what it needs.
 
 **`project-management/`** — the process docs. Each one has a trigger condition — a moment in the build where it fires. The folder has a README that explains each file; read that first. The short version:
 
-| File | Fires when |
-|---|---|
-| `FEATURE-LOCK.md` | Before writing any code for a feature |
-| `SHIP-RULES.md` | Before any versioning or shipping decision |
-| `SHIP-TO-PROD.md` | When deploying |
-| `FIRST-BUILD.md` | When scoping the first build |
-| `DEBUGGING-TAXONOMY.md` | When something breaks |
-| `DEV-HEURISTICS.md` | By domain — fill in as you go |
+| File | Fires when | What it does |
+|---|---|---|
+| `FEATURE-LOCK.md` | Before writing any code for a feature | Gate-by-gate scope lock you fill in before Cursor opens a file. Defines what's IN and OUT, the single change this build makes, blast radius (what other surfaces it touches), mock requirements, and a kill date for any temporary code. A blank gate blocks the build. |
+| `SHIP-RULES.md` | Before any versioning or shipping decision | The three shipping patterns — Parallel Change, Strangler Fig, Canary Release — and the versioning rubric (MAJOR/MINOR/PATCH/NO BUMP). Also the N-1 rule: N-1 must stay bootable, N-2 gets deleted. Rules you reason from, not just follow. |
+| `SHIP-TO-PROD.md` | When deploying | Step-by-step deploy sequence: pre-deploy checks, migrations, canary (one user first), post-deploy verification. No skipped steps. Rollback is a flag flip, not a redeploy. |
+| `FIRST-BUILD.md` | When scoping the first build | How to apply the feature lock to your very first build. Infrastructure pre-steps before Cursor opens a file, gate-by-gate notes for the MVB context. Read once at project start; use `FEATURE-LOCK.md` directly from build two onwards. |
+| `DEBUGGING-TAXONOMY.md` | When something breaks | Classifies bugs by layer before you fix anything: Data / Model / API / UI / Integration / Config / Infrastructure. Includes bug ID prefixes for `KNOWN-ISSUES.md` and a diagnostic sequence. The point: most debugging time is wasted fixing the wrong layer. |
+| `DEV-HEURISTICS.md` | By domain — fill in as you go | Blank entries indexed by domain: auth, database, API, deploy, testing. "If you're touching X, remember Y." Add an entry every time you re-learn something that should have been written down. Starts empty — the value accumulates. |
 
 **`marketing/canonical/`** — two skeleton files: `MARKETING-TRUTH.md` (who the product is for, how to talk about it) and `BEHAVIOR-SPEC.md` (what it does, what it doesn't do, what belongs in it). Fill these in before anything else. They're what every feature decision argues from. Post 04 covers this.
 
