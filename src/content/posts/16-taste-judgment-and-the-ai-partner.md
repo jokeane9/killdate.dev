@@ -1,6 +1,6 @@
 ---
 title: "Taste, judgment, and human nature"
-description: "What humans bring to systems that can't be automated. On taste, judgment, emotional signal — and why AI is revealing these rather than replacing them."
+description: "What humans bring to AI systems that can't be automated. On taste, judgment, emotional signal — and why AI is revealing these rather than replacing them."
 part: 4
 post: 16
 draft: false
