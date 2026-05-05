@@ -2,7 +2,7 @@
 title: "Agile development in an AI environment"
 description: "The development loop, the tool boundary, the three environments. How you build features on a live product without breaking what's working."
 part: 2
-post: 1
+post: 7
 draft: false
 tags: ["agile", "development-loop", "claude-code", "cursor", "environments"]
 ---
