@@ -60,9 +60,9 @@ The companion doc maps every section of the mock to the product definition doc. 
 
 ---
 
-**In the repo:** The pre-build lock template is pre-populated. Run this in Claude Code before writing any code for a new feature:
+**In the repo:** `FEATURE-LOCK.md` is pre-populated. Run this in Claude Code before writing any code for a new feature:
 
-> Open the pre-build lock template. Read it in full. Walk me through what I need to fill in for [feature name] — ask me one question at a time, starting with the scope statement.
+> Open `FEATURE-LOCK.md`. Read it in full. Walk me through what I need to fill in for [feature name] — ask me one question at a time, starting with the scope statement.
 
 After the lock is filled:
 

@@ -101,8 +101,8 @@ If you start from code, you have no foundation to trace back to. You have opinio
 
 ---
 
-**In the repo:** Two product definition docs are pre-populated with structure and examples — the marketing truth doc and the product behavior doc. Open them in Claude Code and run this:
+**In the repo:** Two product definition docs are pre-populated with structure and examples — `marketing/canonical/MARKETING-TRUTH.md` and `marketing/canonical/BEHAVIOR-SPEC.md`. Open them in Claude Code and run this:
 
-> Read the marketing doc and the product behavior doc in full. Walk me through what each section is asking for, what's already filled in as an example, and what's blank. Then ask me the questions you need answered to complete the product thesis — one at a time.
+> Read `MARKETING-TRUTH.md` and `BEHAVIOR-SPEC.md` in full. Walk me through what each section is asking for, what's already filled in as an example, and what's blank. Then ask me the questions you need answered to complete the product thesis — one at a time.
 
 That's the fastest way in. Answer the questions and the product definition doc writes itself.

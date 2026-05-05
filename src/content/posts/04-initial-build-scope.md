@@ -94,12 +94,14 @@ If your stack crosses a language boundary — a Python data pipeline writing out
 
 ---
 
-**In the repo:** The lock template and mock reference are pre-populated. Run these in Claude Code in sequence.
+**In the repo:** `FEATURE-LOCK.md` and `FIRST-BUILD.md` are pre-populated. Run these in Claude Code in sequence.
 
 **Lock**
 
-> Open FEATURE-LOCK. Read it in full. Walk me through what each section is asking for. Then ask me the questions you need answered — one at a time — to complete the lock for Build 1. Don't write the lock yet. Just ask.
+> Open `FEATURE-LOCK.md` and `FIRST-BUILD.md`. Read both in full. Walk me through what each section is asking for in the context of my first build. Then ask me the questions you need answered — one at a time — to complete the lock for Build 1. Don't write the lock yet. Just ask.
 
 **Mocks**
 
-> Open the mocks folder and read the example mock and its companion doc. Walk me through what the companion doc maps and why each section exists. Then tell me the minimum the mock for my primary surface needs to contain before Cursor can implement it without guessing.
+Mocks aren't pre-built — you create them in `feature-builds/_ux-reference/` before Cursor opens a file. Once the lock is filled, ask Claude Code:
+
+> Based on the completed lock for Build 1, tell me the minimum my mock needs to show — what states, what surfaces, what data. Then tell me what format to build it in.
