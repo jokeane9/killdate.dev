@@ -7,9 +7,13 @@ draft: false
 tags: ["philosophy", "craft", "ai", "professional-development"]
 ---
 
-Humans are pattern-matching creatures. We evolved to detect threats fast — faster than analysis allows — and a genuinely novel capability triggers the same response as a predator in the grass. The anxiety about AI isn't irrational. It's just that we're poorly adapted to the timescale of the world we've built. Our threat response operates in seconds. Technology operates in decades.
+## Why AI anxiety is different
 
-What history suggests is stranger, and more interesting, than the fear implies.
+There's a reason the anxiety about AI feels so real. Humans are wired for loss aversion — costs register at roughly twice the psychological weight of equivalent gains. And technology's costs are always vivid and immediate: the skill that's suddenly worth less, the role that looks precarious, the thing you spent years learning that a model now approximates in seconds. The benefits are abstract and future-tense. The brain does the math wrong every time, and it does it by design. We're only human.
+
+AI adds a dynamic that older technologies didn't. Every previous wave — railroads, electricity, the internet — was at least comprehensible in principle. You could understand how it worked, even if you couldn't build it. AI's decision-making is opaque to the people building it, let alone the people using it. That's ambiguity aversion with nowhere to land — not fear of a known danger, but fear of something that resists being mapped even by the people who made it. The losses are vivid in real time. The mechanism is invisible. That combination is why this one feels different from everything that came before. And it does feel different. That's not weakness — it's appropriate. This one is genuinely new.
+
+What history suggests, though, is stranger and more interesting than the fear implies.
 
 ---
 
