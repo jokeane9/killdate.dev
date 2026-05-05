@@ -22,7 +22,7 @@ There's a structural distinction that matters immediately: **Core** (read every 
 - The last 80 lines of `_log.md` — what happened in the previous session
 - The roadmap — what's next and in what order
 - Known issues — open bugs only
-- The canonical product definition — what the product actually IS, and a table pointing to every doc that governs how the agent works
+- The canonical product definition — what the product IS — and a manifest table that indexes every reference doc: what it covers, when to load it, and when to flag that a process is undocumented
 
 Every session, no exceptions. The agent can't operate without them.
 

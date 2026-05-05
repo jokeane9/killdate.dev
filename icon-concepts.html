@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { background: #0a0a0a; display: flex; gap: 48px; padding: 48px; font-family: Inter, sans-serif; align-items: flex-start; flex-wrap: wrap; }
+  .icon-wrap { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .icon-wrap span { color: #555; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+  svg { display: block; }
+</style>
+</head>
+<body>
+
+<!-- 1: Claude burst + skull -->
+<div class="icon-wrap">
+  <svg width="120" height="120" viewBox="0 0 120 120">
+    <!-- starburst spokes -->
+    <g transform="translate(60,60)" stroke="#4ade80" stroke-width="6" stroke-linecap="round" opacity="0.9">
+      <line x1="0" y1="-52" x2="0" y2="-28"/>
+      <line x1="0" y1="28" x2="0" y2="52"/>
+      <line x1="45" y1="-26" x2="24" y2="-14"/>
+      <line x1="-24" y1="14" x2="-45" y2="26"/>
+      <line x1="45" y1="26" x2="24" y2="14"/>
+      <line x1="-24" y1="-14" x2="-45" y2="-26"/>
+    </g>
+    <!-- skull -->
+    <g transform="translate(60,60)">
+      <!-- skull dome -->
+      <ellipse cx="0" cy="-4" rx="14" ry="13" fill="#4ade80"/>
+      <!-- jaw -->
+      <rect x="-10" y="7" width="20" height="8" rx="2" fill="#4ade80"/>
+      <!-- eyes -->
+      <ellipse cx="-5" cy="-5" rx="3.5" ry="4" fill="#0a0a0a"/>
+      <ellipse cx="5" cy="-5" rx="3.5" ry="4" fill="#0a0a0a"/>
+      <!-- nose -->
+      <path d="M-1.5 1 L0 4 L1.5 1 Z" fill="#0a0a0a"/>
+      <!-- teeth -->
+      <line x1="-6" y1="7" x2="-6" y2="15" stroke="#0a0a0a" stroke-width="2.5"/>
+      <line x1="0" y1="7" x2="0" y2="15" stroke="#0a0a0a" stroke-width="2.5"/>
+      <line x1="6" y1="7" x2="6" y2="15" stroke="#0a0a0a" stroke-width="2.5"/>
+    </g>
+  </svg>
+  <span>1 — Burst + Skull</span>
+</div>
+
+<!-- 2: Crossed-out Claude burst -->
+<div class="icon-wrap">
+  <svg width="120" height="120" viewBox="0 0 120 120">
+    <g transform="translate(60,60)" stroke="#4ade80" stroke-width="6" stroke-linecap="round" opacity="0.5">
+      <line x1="0" y1="-52" x2="0" y2="52"/>
+      <line x1="45" y1="-26" x2="-45" y2="26"/>
+      <line x1="45" y1="26" x2="-45" y2="-26"/>
+    </g>
+    <!-- X strike -->
+    <g transform="translate(60,60)" stroke="#ff4444" stroke-width="9" stroke-linecap="round" opacity="0.95">
+      <line x1="-30" y1="-30" x2="30" y2="30"/>
+      <line x1="30" y1="-30" x2="-30" y2="30"/>
+    </g>
+  </svg>
+  <span>2 — Crossed Out</span>
+</div>
+
+<!-- 3: Terminal cursor + crosshair -->
+<div class="icon-wrap">
+  <svg width="120" height="120" viewBox="0 0 120 120">
+    <!-- crosshair rings -->
+    <circle cx="60" cy="60" r="46" stroke="#4ade80" stroke-width="2" fill="none" opacity="0.3"/>
+    <circle cx="60" cy="60" r="30" stroke="#4ade80" stroke-width="1.5" fill="none" opacity="0.5"/>
+    <!-- crosshair lines -->
+    <g stroke="#4ade80" stroke-width="1.5" opacity="0.5">
+      <line x1="60" y1="10" x2="60" y2="30"/>
+      <line x1="60" y1="90" x2="60" y2="110"/>
+      <line x1="10" y1="60" x2="30" y2="60"/>
+      <line x1="90" y1="60" x2="110" y2="60"/>
+    </g>
+    <!-- cursor block -->
+    <rect x="46" y="44" width="14" height="22" rx="1" fill="#4ade80"/>
+    <!-- underscore blink line -->
+    <rect x="46" y="68" width="24" height="4" rx="1" fill="#4ade80" opacity="0.7"/>
+  </svg>
+  <span>3 — Cursor + Crosshair</span>
+</div>
+
+<!-- 4: Bug with kill stamp -->
+<div class="icon-wrap">
+  <svg width="120" height="120" viewBox="0 0 120 120">
+    <!-- bug body -->
+    <ellipse cx="60" cy="65" rx="18" ry="22" fill="#4ade80" opacity="0.85"/>
+    <!-- bug head -->
+    <circle cx="60" cy="40" r="11" fill="#4ade80" opacity="0.85"/>
+    <!-- antennae -->
+    <line x1="54" y1="30" x2="44" y2="16" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="66" y1="30" x2="76" y2="16" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="44" cy="16" r="2.5" fill="#4ade80"/>
+    <circle cx="76" cy="16" r="2.5" fill="#4ade80"/>
+    <!-- legs -->
+    <g stroke="#4ade80" stroke-width="2.5" stroke-linecap="round" opacity="0.7">
+      <line x1="42" y1="55" x2="26" y2="50"/>
+      <line x1="42" y1="65" x2="26" y2="65"/>
+      <line x1="42" y1="75" x2="26" y2="80"/>
+      <line x1="78" y1="55" x2="94" y2="50"/>
+      <line x1="78" y1="65" x2="94" y2="65"/>
+      <line x1="78" y1="75" x2="94" y2="80"/>
+    </g>
+    <!-- kill stamp X -->
+    <g stroke="#ff4444" stroke-width="8" stroke-linecap="round" opacity="0.95">
+      <line x1="38" y1="48" x2="82" y2="82"/>
+      <line x1="82" y1="48" x2="38" y2="82"/>
+    </g>
+  </svg>
+  <span>4 — Bug Killed</span>
+</div>
+
+<!-- 5: Tombstone with asterisk -->
+<div class="icon-wrap">
+  <svg width="120" height="120" viewBox="0 0 120 120">
+    <!-- tombstone shape -->
+    <path d="M30 108 L30 52 Q30 20 60 20 Q90 20 90 52 L90 108 Z" fill="#1f1f1f" stroke="#4ade80" stroke-width="2.5"/>
+    <!-- base slab -->
+    <rect x="22" y="104" width="76" height="10" rx="2" fill="#1f1f1f" stroke="#4ade80" stroke-width="2.5"/>
+    <!-- asterisk / starburst carved in -->
+    <g transform="translate(60,58)" stroke="#4ade80" stroke-width="4" stroke-linecap="round">
+      <line x1="0" y1="-18" x2="0" y2="18"/>
+      <line x1="-15.6" y1="-9" x2="15.6" y2="9"/>
+      <line x1="15.6" y1="-9" x2="-15.6" y2="9"/>
+    </g>
+    <!-- RIP text -->
+    <text x="60" y="95" text-anchor="middle" fill="#4ade80" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="3">RIP</text>
+  </svg>
+  <span>5 — Tombstone</span>
+</div>
+
+</body>
+</html>
