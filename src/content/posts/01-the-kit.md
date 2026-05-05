@@ -46,7 +46,13 @@ That's your onboarding. The repo tells you what it needs.
 
 **`marketing/canonical/`** — two skeleton files: `MARKETING-TRUTH.md` (who the product is for, how to talk about it) and `BEHAVIOR-SPEC.md` (what it does, what it doesn't do, what belongs in it). Fill these in before anything else. They're what every feature decision argues from. Post 04 covers this.
 
-**`feature-builds/_playbook/`** — the two files you use every time you hand a task to Cursor. `BUILD-RULES.md` is the runbook template: five mandatory blocks (FILES, TYPES, SKELETON, PROHIBITED, VALIDATE) with a fully worked example. `BUILD-LEARNINGS.md` is a growing doc of hard-won principles about how Cursor behaves — how it consumes instructions, where it drifts, what to put in the prompt vs. what to `@`-reference. Read `BUILD-LEARNINGS.md` before writing your first runbook. Per-feature folders (`feature-builds/your-feature/`) get created here as you build, each containing its own runbook files.
+**`feature-builds/_playbook/`** — two files you reach for every time you hand a task to Cursor.
+
+`BUILD-RULES.md` is the runbook template. Five blocks: FILES, TYPES, SKELETON, PROHIBITED, VALIDATE. Includes a fully worked example. Copy it per task, fill it in, hand it to Cursor.
+
+`BUILD-LEARNINGS.md` is a principles doc — hard-won lessons about how Cursor actually behaves, where it drifts, and what to put in the prompt vs. what to `@`-reference. Read this before writing your first runbook.
+
+Per-feature folders live alongside the playbook (`feature-builds/your-feature/`) and get created as you build. Each one holds the runbook files for that feature.
 
 ## How to learn it in Claude Code
 
