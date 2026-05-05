@@ -71,7 +71,7 @@ What you're more likely here for is the process underneath — how we constrain 
 
 - **No PM overhead.** Scoping, sequencing, drift prevention, session handoff — it's all in the docs. Smaller team, fully technical, ships faster because the process is in the tools, not managed by a person in the middle.
 
-That's the model. The rest of this series is the detail. Honestly? I personally wouldn't read half this shit — I'd grab the repo, open it in Claude Code, and start asking questions. Explore it like a new codebase. Read a post when you get lost. Then back to Claude Code. That's the fastest way in. The blog is scaffolding. The repo is the tool.
+That's the model. The rest of this series is the detail. Honestly? I personally wouldn't read half this prose — I'd grab the repo, open it in Claude Code, and start asking questions. Explore it like a new codebase. Read a post when you get lost. Then back to Claude Code. That's the fastest way in. The blog is scaffolding. The repo is the tool.
 
 Those are Part 2 through Part 5 of this series. Skip Part 1 if you want. It'll still be there.
 
