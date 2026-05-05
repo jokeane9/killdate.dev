@@ -1,21 +1,35 @@
 ---
 title: "Taste, judgment, and why this is a beautiful time to be building"
-description: "AI is a unit of work. What it can't do is feel the wrongness, hold the canvas, or want something. That's yours. And it always will be."
+description: "On taste, judgment, and why technology bubbles are a feature of capitalism. The infrastructure gets built either way. The question is what you build on top of it."
 part: 4
 post: 16
 draft: false
 tags: ["philosophy", "craft", "ai", "professional-development"]
 ---
 
-I'm not afraid of AI. I think most people who are haven't actually used it seriously.
+Humans are pattern-matching creatures. We evolved to detect threats fast — faster than analysis allows — and a genuinely novel capability triggers the same response as a predator in the grass. The anxiety about AI isn't irrational. It's just that we're poorly adapted to the timescale of the world we've built. Our threat response operates in seconds. Technology operates in decades.
 
-When you use it seriously — when you've built something real with it, felt it drift, reined it back in, shipped something that worked — the fear mostly dissolves. What you're left with is a clearer picture of what you actually are, and what the tool actually is.
+What history suggests is stranger, and more interesting, than the fear implies.
 
-The tool is a unit of work. Tokens in, output out. Fast, tireless, without ego, without the bad day that makes you cut a corner. Genuinely useful in a way that wasn't available before.
+---
 
-But it doesn't want anything. It doesn't feel the wrongness. It can't hold the canvas.
+## Bubbles are a feature, not a bug
 
-That's yours.
+Every major technological revolution has followed the same arc. Speculative capital floods into a new infrastructure — more than the economics can justify, more than the market can absorb. The bubble inflates. Then it bursts. Companies go bankrupt. Investors lose fortunes. And then, quietly, something unexpected happens: the infrastructure stays.
+
+The economist Carlota Perez calls this the Installation Period. Financial capital builds what production capital cannot rationally justify. The crash is not the failure of the innovation — it's a transfer mechanism. The infrastructure moves from the people who overpaid to the people who get it cheap. And that's when things get interesting.
+
+The railroad bubble of the 1840s and 50s left 70,000 miles of track across the United States. The companies that built it mostly went under. But freight costs dropped 90% over the following decades, and on top of that cheap network, things became possible that nobody had modelled during the bubble. Chicago became the food system of the world — grain markets, stockyards, commodity futures, none of it viable without cheap freight. Sears Roebuck launched a mail-order catalogue in 1897 that was, in effect, a software layer on the rail network. Carnegie negotiated freight rates to near-zero on overbuilt capacity and built a steel empire nobody could touch. The bubble built the tracks. The tracks rewired commerce. Nobody in 1845 was running a spreadsheet that showed nationwide mail-order retail as the outcome.
+
+The telecom bubble of the late 1990s is the cleaner example, because the lag was shorter. By 2001, 95% of the fibre laid during the boom was dark — the companies bankrupt, the cable sitting unused in the ground. YouTube launched in 2005. Netflix began streaming in 2007. AWS launched in 2006. Every one of these was a bet on bandwidth staying near-free. It did, because the infrastructure had been acquired at bankruptcy-auction prices. Streaming video at 1999 bandwidth pricing was economically insane. At 2005 pricing it was inevitable. The entire SaaS model — software delivered over the web, priced by the month — only works at those bandwidth costs. The bubble funded the substrate. The substrate made the application layer possible.
+
+The pattern runs through history. The canal bubble left waterways that made New York's commercial dominance possible. The electrification bubble left a grid that enabled refrigeration, radio, and the 1920s consumer economy. The PC hardware glut of 2001 made AWS's unit economics work in 2006.
+
+This is something I've come to genuinely love about capitalism — not uncritically, but specifically: it has a mechanism for funding infrastructure that no rational actor would build alone. Financial bubbles are wasteful and painful and they transfer wealth in ugly ways. They are also, in aggregate, how we build the substrate for things we can't yet imagine. The people who lose money in the bubble are never the people who win in the deployment phase. Different actors, different timescales, same infrastructure.
+
+The AI version of this argument is straightforward. The LLM and GPU buildout of 2022–2025 is being financed at bubble scale. Whether the builders profit is almost beside the point. The question is what becomes possible when inference is cheap and abundant — built by companies that no longer need to exist for the capability to be used.
+
+We're in that moment. The infrastructure is being laid. And for someone who builds, who has taste, who can feel the wrongness before it compounds — this is a strange and clarifying time to be alive.
 
 ---
 
