@@ -97,8 +97,7 @@ The catch is that it demands more of you, not less. The intuition, the product s
 
 The depth you build now isn't just technical. It's the domain knowledge that makes your intuition reliable. Klein's research shows that expert intuition is accurate precisely in domains with tight feedback loops — design, code, craft. The faster you can ship and feel the consequences, the faster the signal becomes trustworthy.
 
-You're not just learning to build. You're building the instrument of intuition — 100x faster than was previously possible. And something I'm only beginning to understand about myself: we're both evolving, the AI and the humans working alongside it. I'm coming to learn this more and more deeply. I'm evolving probably as fast as the thing underneath my feet. That's not a comfortable thought. It's an honest one.
-
+You're not just learning to build. You're building the instrument of intuition — 100x faster than was previously possible. And something I'm only beginning to understand about myself: we're both evolving, the AI and the humans working alongside it. I'm coming to learn this more and more deeply. I'm evolving probably as fast as the thing underneath my feet. 
 ---
 
 ## What this means for professional development
