@@ -93,5 +93,7 @@ But it would be dishonest not to say what the feedback loop actually feels like.
 
 Anders Ericsson, whose research on deliberate practice underpins most serious work on skill development, found that the kind of practice that builds deep competence is uniformly uncomfortable — not occasionally, but structurally. You are operating at the edge of what you can currently do. That's the only place real learning happens. This work lives there permanently, and it demands more of you, not less. The intuition, the product sense, the ability to feel drift before it compounds — these are hard-won and require the kind of patient, uncomfortable sitting-with-things that most people spend their lives avoiding.
 
-You're not just learning to build. You're building the instrument of intuition — 100x faster than was previously possible. And something I'm only beginning to understand about myself: we're both evolving, the AI and the humans working alongside it. I'm evolving probably as fast as the thing underneath my keyboard.
+You're not just learning to build. You're building the instrument of intuition — 100x faster than was previously possible. And something I'm only beginning to understand about myself: we're both evolving, the AI and the humans working alongside it.
+
+I'm evolving probably as fast as the thing underneath my keyboard.
 
