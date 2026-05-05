@@ -1,5 +1,5 @@
 ---
-title: "Taste, judgment, and why this is a beautiful time to be building"
+title: "Taste, judgment, and human nature"
 description: "On taste, judgment, and why technology bubbles are a feature of capitalism. The infrastructure gets built either way. The question is what you build on top of it."
 part: 4
 post: 16
