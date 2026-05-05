@@ -89,11 +89,15 @@ That's not a threat to the person who builds this way.
 
 Understanding where things fail — the seams between layers, why production breaks in ways staging didn't, what drift looks like before it compounds — this is more learnable right now than it's ever been. You can ship fast and see the consequences fast. The feedback loop is compressed.
 
-For someone with an inherent need to understand how things work, to own the full stack, to feel the system rather than just operate it — this is a genuinely good time to be alive.
+But it would be dishonest not to say what the feedback loop actually feels like. This way of working is genuinely brutal. You are holding the product vision, managing an AI that will confidently go wrong without noticing, reading the output of every task for drift, making architecture calls, feeling the seams of a system you're building in real time — without the institutional scaffolding that a team or a senior engineer used to provide. The cognitive load is not metaphorical. Working memory research is clear that the human brain can hold roughly four chunks of information simultaneously. This work routinely asks for more. The people who find it most demanding are often the ones with the most range, because they can see further into the consequences of each decision.
+
+Anders Ericsson, whose research on deliberate practice is the foundation of most serious work on skill development, found that the kind of practice that actually builds deep competence is uniformly uncomfortable. Not occasionally. Structurally. The discomfort is the mechanism — you are operating at the edge of what you can currently do, which is the only place real learning happens. This work lives there permanently.
+
+The catch is that it demands more of you, not less. The intuition, the product sense, the ability to feel drift before it compounds — these are hard-won and require the kind of patient, uncomfortable sitting-with-things that most people spend their lives avoiding.
 
 The depth you build now isn't just technical. It's the domain knowledge that makes your intuition reliable. Klein's research shows that expert intuition is accurate precisely in domains with tight feedback loops — design, code, craft. The faster you can ship and feel the consequences, the faster the signal becomes trustworthy.
 
-You're not just learning to build. You're building the instrument that lets you feel more precisely.
+You're not just learning to build. You're building the instrument of intuition — 100x faster than was previously possible. And something I'm only beginning to understand about myself: we're both evolving, the AI and the humans working alongside it. I'm coming to learn this more and more deeply. I'm evolving probably as fast as the thing underneath my feet. That's not a comfortable thought. It's an honest one.
 
 ---
 
