@@ -81,11 +81,11 @@ This is not a nice-to-have. For a certain kind of person — the one who builds 
 
 AI, used well, moves execution out of the way so more of the work can be this. The parts that were blocking — the boilerplate, the repetition, the translation between idea and implementation — those get offloaded. What's left is more canvas, more judgment, more expression.
 
-That's not a threat to the person who builds this way. It's the best news in a long time.
+That's not a threat to the person who builds this way.
 
 ---
 
-## The learning curve is real and it's beautiful
+## The learning curve is real
 
 Understanding where things fail — the seams between layers, why production breaks in ways staging didn't, what drift looks like before it compounds — this is more learnable right now than it's ever been. You can ship fast and see the consequences fast. The feedback loop is compressed.
 
