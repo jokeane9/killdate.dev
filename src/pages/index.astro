@@ -18,7 +18,8 @@ const appendixPosts = posts.filter(p => appendixParts.includes(p.data.part));
 ---
 <Base>
   <div class="hero">
-    <p class="hero-tagline">Process notes for shipping AI apps — repo, CLAUDE.md, and runbooks included.</p>
+    <h1 class="hero-title">Agentic Orchestration for Shipping SaaS</h1>
+    <p class="hero-tagline">A repo, a CLAUDE.md, and a process document. Fork it and start shipping.</p>
     <a href="https://github.com/killdate-dev/killdate.dev" class="hero-link" target="_blank" rel="noopener">Fork on GitHub →</a>
   </div>
 
@@ -79,12 +80,21 @@ const appendixPosts = posts.filter(p => appendixParts.includes(p.data.part));
     border-bottom: 1px solid var(--border);
   }
 
+  .hero-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
   .hero-tagline {
-    font-size: 22px;
-    font-weight: 500;
+    font-size: 16px;
+    font-weight: 400;
     color: var(--text);
-    line-height: 1.4;
-    letter-spacing: -0.02em;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
     max-width: 520px;
     margin-bottom: 20px;
   }
