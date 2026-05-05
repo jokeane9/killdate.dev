@@ -68,10 +68,14 @@ Don't read every file linearly. Instead, open Claude Code and ask questions:
 
 The repo is designed to be interrogated this way. The files answer questions; Claude Code connects them. You don't need to memorise the structure — you need to know what to ask.
 
-## How it works as a system
+## How the repo works as a system
 
-The three tools have three jobs that don't overlap: **Claude Code** holds the context and does the thinking — it reads the lock, writes the runbook, reviews the output. **Cursor** executes against the runbook, one task at a time, only touching files it's been told to touch. **You** review the diff between every task and catch drift before it compounds.
+`CLAUDE.md` is the root. It points to everything else and defines when each file matters. Without it, the rest is just a pile of docs.
 
-The docs aren't documentation — they're the memory that makes this loop work. The agent has no memory between sessions. `CLAUDE.md` is the substitute. The process docs are what it reaches for when a specific moment in the build arrives.
+The files have a sequence. `marketing/canonical/` comes first — you fill in what the product is before anything else. `FIRST-BUILD.md` gets you through the initial build. From build two onwards, every feature starts with `FEATURE-LOCK.md`, uses `SHIP-RULES.md` to decide how to ship it, and deploys via `SHIP-TO-PROD.md`. `DEBUGGING-TAXONOMY.md` and `DEV-HEURISTICS.md` fill in as the project accumulates history.
+
+The `feature-builds/` folder mirrors that history. Each feature leaves an artifact — the lock, the runbooks, the decisions made. The `_playbook/` is stable across all of them; the per-feature folders are the record.
+
+Nothing is designed to be read all at once. The trigger conditions are the point — each file is the right file at a specific moment. The repo earns its value by being reached for, not by being studied.
 
 The rest of this series covers each piece in depth. This post is just the map.
