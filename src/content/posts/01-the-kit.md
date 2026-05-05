@@ -46,7 +46,7 @@ That's your onboarding. The repo tells you what it needs.
 
 **`marketing/canonical/`** — two skeleton files: `MARKETING-TRUTH.md` (who the product is for, how to talk about it) and `BEHAVIOR-SPEC.md` (what it does, what it doesn't do, what belongs in it). Fill these in before anything else. They're what every feature decision argues from. Post 04 covers this.
 
-**`feature-builds/`** — where build artifacts live. `_playbook/` has the runbook template and a learnings doc; per-feature folders get created here as you build. Nothing to fill in upfront — this folder populates as you work.
+**`feature-builds/_playbook/`** — the two files you use every time you hand a task to Cursor. `BUILD-RULES.md` is the runbook template: five mandatory blocks (FILES, TYPES, SKELETON, PROHIBITED, VALIDATE) with a fully worked example. `BUILD-LEARNINGS.md` is a growing doc of hard-won principles about how Cursor behaves — how it consumes instructions, where it drifts, what to put in the prompt vs. what to `@`-reference. Read `BUILD-LEARNINGS.md` before writing your first runbook. Per-feature folders (`feature-builds/your-feature/`) get created here as you build, each containing its own runbook files.
 
 ## How to learn it in Claude Code
 
@@ -54,7 +54,7 @@ Don't read every file linearly. Instead, open Claude Code and ask questions:
 
 > *Read CLAUDE.md and the project-management/README.md. Walk me through the folder structure. What should I fill in before my first session?*
 
-> *What's the difference between FEATURE-LOCK.md and a runbook? When does each one fire?*
+> *What's the difference between FEATURE-LOCK.md and a runbook? When does each one fire, and what happens between them?*
 
 > *Read SHIP-RULES.md. Which pattern — Parallel Change, Strangler Fig, or Canary — applies to my first build?*
 
