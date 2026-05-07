@@ -7,6 +7,8 @@ draft: false
 tags: ["philosophy", "craft", "ai", "professional-development"]
 ---
 
+*8 minute read*
+
 ## Why AI anxiety is different
 
 The anxiety about AI isn't irrational. It's accurate.
