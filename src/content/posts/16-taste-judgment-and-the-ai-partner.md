@@ -41,7 +41,7 @@ The AI version is straightforward. The LLM and GPU buildout of 2022–2025 is bu
 
 ## Taste is the differentiator AI can't close
 
-For most of the history of building things, taste was bottlenecked by production. A bad idea was hard to ship. The friction of making something — writing the code, designing the interface, producing the copy — acted as a natural filter. Slow execution bought time to course-correct.
+For most of the history of building things, taste was bottlenecked by production. A good or bad idea was hard to ship. The friction of making something — writing the code, designing the interface, producing the copy — acted as a natural filter. Slow execution bought time to course-correct.
 
 None of that means the skill floor dropped. Deep knowledge of code, infrastructure, databases, product, and design is still the prerequisite — AI handles the gruntier production work. It demands you be more technical, not less.
 
