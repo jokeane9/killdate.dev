@@ -43,7 +43,7 @@ The AI version is straightforward. The LLM and GPU buildout of 2022–2025 is bu
 
 For most of the history of building things, taste was bottlenecked by production. A good or bad idea was hard to ship. The friction of making something — writing the code, designing the interface, producing the copy — acted as a natural filter. Slow execution bought time to course-correct.
 
-None of that means the skill floor dropped. Deep knowledge of code, infrastructure, databases, product, and design is still the prerequisite — AI handles the gruntier production work. It demands you be more technical, not less.
+None of that means the skill floor dropped. Working across Claude Code, Cursor, Codex, AWS infrastructure, complex CI/CD pipelines, Python, Node.js, and Remix requires broader technical depth than someone banging away at Python syntax on a bad-idea startup. You need to understand how the layers connect, where the seams are, and what breaks under pressure — not just what to prompt. AI handles the gruntier production work. It demands you be more technical, not less — due to the complexity of the build.
 
 AI removes that friction. Execution is becoming cheap, fast, and available to everyone. Which means the differentiator is no longer who can produce — it's who can direct. Taste has always mattered. Now it's the only thing that compounds.
 
