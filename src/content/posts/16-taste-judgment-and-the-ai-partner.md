@@ -37,8 +37,6 @@ What I've come to love about capitalism — not uncritically, but specifically �
 
 The AI version is straightforward. The LLM and GPU buildout of 2022–2025 is bubble-scale financing. Whether the builders profit is beside the point — I don't care. The question is what becomes possible when inference is cheap and abundant, built by companies that no longer need to exist for the capability to be used.
 
-We're in that moment. The infrastructure is being laid. For someone who builds, who has taste, who can feel the wrongness before it compounds — this is a strange and clarifying time to be alive.
-
 ---
 
 ## Taste is the differentiator AI can't close
