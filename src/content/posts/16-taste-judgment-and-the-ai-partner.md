@@ -93,11 +93,19 @@ That's not a threat to the person who builds this way.
 
 Understanding where things fail — the seams between layers, why production breaks in ways staging didn't, what drift looks like before it compounds — is more learnable right now than it's ever been. You can ship fast and see the consequences fast. The feedback loop is compressed.
 
-But it would be dishonest not to say what the feedback loop actually feels like. This way of working is genuinely brutal. You are holding the product vision, managing an AI that will confidently go wrong without noticing, reading output for drift, making architecture calls, feeling the seams of a system you're building in real time — on a small team, moving fast. The cognitive load is not metaphorical. Working memory research puts the human brain's capacity at roughly four chunks of information held simultaneously — and this work routinely asks for more, across more layers, with fewer people to distribute the weight. The further you can see into the consequences of each decision, the more you're holding at once. The people who find this most demanding are often the ones most capable of doing it. That's not irony. It's the nature of the work.
+But it would be dishonest not to say what the feedback loop actually feels like. This way of working is genuinely brutal. You are holding the product vision, managing an AI that will confidently go wrong without noticing, reading output for drift, making architecture calls, feeling the seams of a system you're building in real time — on a small team, moving fast.
 
-Anders Ericsson found that the kind of practice that builds deep competence is uniformly uncomfortable — not occasionally, but structurally. You are operating at the edge of what you can currently do. That's the only place real learning happens. This work lives there permanently. It demands more of you, not less.
+The further you can see into the consequences of each decision, the more you're holding at once. An architecture call isn't just the immediate output — it's the refactor it will or won't require in six weeks, the seam it will or won't expose in production, the drift it will or won't hide from you. That's the actual cognitive weight of this work.
 
-You're not just learning to build. You're building the instrument of intuition — 100x faster than was previously possible. We're both evolving, the AI and the humans working alongside it.
+If you find it demanding, that's probably the right signal. Most people fire a few prompts, get something mediocre back, and decide the tool isn't ready. The ones who stay — who hold the vision, feel the drift, catch the seams before they compound — were always going to build things that matter.
 
-I'm evolving probably as fast as the thing underneath my keyboard.
+This way of working lives at the edge of what you can currently do. That's the only place real learning happens — and it puts you there permanently. It demands more of you, not less.
+
+There's a trail between San Pancho and Sayulita in Mexico, cutting through dense jungle. If you spend enough time on it you stop seeing the beauty and start seeing the mechanics. Everything is eating something. The strangler fig wraps around its host for decades, patient and systematic, slowly taking its light and its structure until the host is just a hollow it grew around. The understory tilts every leaf toward the gap in the canopy. Nothing is passive. Nothing is waiting.
+
+It's not dissimilar to capitalism. It never was.
+
+AI is just the newest tool available to every organism in the system. The rules haven't changed — compete, adapt, find your niche, or get outgrown. What's changed is what's opening up. When a tree falls in the jungle, it doesn't look like an opportunity. It looks like a gap. Then the light hits the floor, and every organism within range moves toward it at once. The nutrients go back into the soil. New growth starts where the old thing stood.
+
+The bureaucratic overhead being automated out of existence is the fallen tree. The light is already on the floor. New resources are opening — cheaper infrastructure, freed capital, smaller teams that can now do what only large ones could. The question isn't whether the ecosystem will fill the gap. It always does. The question is whether you're already positioned where the light is landing.
 
