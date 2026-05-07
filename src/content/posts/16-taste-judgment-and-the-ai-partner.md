@@ -53,8 +53,6 @@ That's taste. Not soft. Not decoration. Analytical judgment compressed into some
 
 Gary Klein spent years studying how experts decide under pressure — engineers, commanders, surgeons. They don't analyze. They pattern-match, feel rightness, and act. The emotional response is the computation. Damasio confirmed it from the neuroscience side: people with damage to emotion-processing areas make worse decisions — not better — even with fully intact analytical reasoning.
 
-Your instinct that something is off — in a design, a product flow, a codebase — isn't a feeling to override with analysis. It's compressed domain knowledge firing. The longer you've been building, the more reliable that signal gets.
-
 The bureaucratic roles being automated out of existence required none of this. These functions weren't just replaceable — they were a productivity drag embedded in the price of everything built on top of them. As that overhead compresses, prices follow. Business free cash flow expands. Consumer discretionary income goes further. That capital doesn't evaporate — it flows into new products, new services, new companies. Most of which, I'd wager, get built by small teams running on AI.
 
 This is what the death of corporate bureaucracy actually looks like. Not collapse — compression. The creativity that was trapped inside slow, bloated organizations gets released into leaner, faster ones. AI doesn't kill human work. It kills the organizational scaffolding that was suffocating it. The function gets automated. The judgment stays human. And for the first time in a long time, that judgment has room to move.
