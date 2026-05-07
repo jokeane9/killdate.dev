@@ -35,7 +35,7 @@ The telecom bubble is the cleaner example. By 2001, 95% of the fibre laid during
 
 What I've come to love about capitalism — not uncritically, but specifically — is this: it has a mechanism for funding infrastructure that no rational actor would build alone. Bubbles are wasteful and transfer wealth in ugly ways. The people who lose in the bubble are never the people who win in the deployment phase. Different actors, different timescales, same infrastructure.
 
-The AI version is straightforward. The LLM and GPU buildout of 2022–2025 is bubble-scale financing. Whether the builders profit is beside the point — I don't care. The question is what becomes possible when inference is cheap and abundant, built by companies that no longer need to exist for the capability to be used.
+The AI version is straightforward. The LLM and GPU buildout of 2022–2025 is bubble-scale financing. Whether the builders profit is beside the point — I don't care. The bubble leaves cheap inference and models that can build alongside you. The question is what you make with it.
 
 ---
 
