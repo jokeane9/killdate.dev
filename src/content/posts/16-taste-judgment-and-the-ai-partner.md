@@ -75,15 +75,15 @@ Both of these compound with time. The canvas gets richer as your taste develops.
 
 ## The need to express yourself through work
 
-Ryan and Deci, the psychologists behind Self-Determination Theory, identified three fundamental human needs: autonomy, competence, and relatedness. Their definition of autonomy is specific — it doesn't just mean freedom. It means *acting from self*. Expressing your values and identity through what you do.
+Ryan and Deci, the psychologists behind Self-Determination Theory, identified three fundamental human needs: autonomy, competence, and relatedness. Autonomy, specifically, doesn't just mean freedom — it means acting from self. Expressing your values and identity through what you do.
 
 Work that satisfies this produces intrinsic motivation. Work that doesn't produces alienation.
 
-Csikszentmihalyi's flow research adds the phenomenology — what it actually feels like from the inside when you're fully engaged. The challenge-skill balance that produces flow is essentially the experience of your full self being in the work. Not just your analytical self. All of it.
+Csikszentmihalyi's flow research adds the phenomenology. The challenge-skill balance that produces flow is essentially your full self being in the work — not just your analytical self. All of it.
 
 This is not a nice-to-have. For a certain kind of person — the one who builds because they have to, who feels the wrongness before they can name it, who can't half-invest in anything — it's closer to a requirement.
 
-AI, used well, moves execution out of the way so more of the work can be this. The parts that were blocking — the boilerplate, the repetition, the translation between idea and implementation — those get offloaded. What's left is more canvas, more judgment, more expression.
+AI, used well, moves execution out of the way so more of the work can be this. The parts that were blocking — the boilerplate, the repetition, the translation between idea and implementation — get offloaded. What's left is more canvas, more judgment, more expression.
 
 That's not a threat to the person who builds this way.
 
@@ -91,13 +91,13 @@ That's not a threat to the person who builds this way.
 
 ## The learning curve is real
 
-Understanding where things fail — the seams between layers, why production breaks in ways staging didn't, what drift looks like before it compounds — this is more learnable right now than it's ever been. You can ship fast and see the consequences fast. The feedback loop is compressed.
+Understanding where things fail — the seams between layers, why production breaks in ways staging didn't, what drift looks like before it compounds — is more learnable right now than it's ever been. You can ship fast and see the consequences fast. The feedback loop is compressed.
 
-But it would be dishonest not to say what the feedback loop actually feels like. This way of working is genuinely brutal. You are holding the product vision, managing an AI that will confidently go wrong without noticing, reading the output of every task for drift, making architecture calls, feeling the seams of a system you're building in real time — on a small team, moving fast, with no institution slowing you down. Which, looking back at how institutions actually work, might be less of a loss than it sounds. A lot of what we called process was just humans slowing other humans down. A lot of what we called bugs were just coordination failures dressed up as technical problems. The cognitive load is not metaphorical. Working memory research puts the human brain's capacity at roughly four chunks of information held simultaneously — and this work routinely asks for more, across more layers, with fewer people to distribute the weight across. What makes it hardest is the range it requires: the further you can see into the consequences of each decision, the more you're holding at once. The people who find this most demanding are often the ones most capable of doing it. That's not irony. It's the nature of the work.
+But it would be dishonest not to say what the feedback loop actually feels like. This way of working is genuinely brutal. You are holding the product vision, managing an AI that will confidently go wrong without noticing, reading output for drift, making architecture calls, feeling the seams of a system you're building in real time — on a small team, moving fast. The cognitive load is not metaphorical. Working memory research puts the human brain's capacity at roughly four chunks of information held simultaneously — and this work routinely asks for more, across more layers, with fewer people to distribute the weight. The further you can see into the consequences of each decision, the more you're holding at once. The people who find this most demanding are often the ones most capable of doing it. That's not irony. It's the nature of the work.
 
-Anders Ericsson, whose research on deliberate practice underpins most serious work on skill development, found that the kind of practice that builds deep competence is uniformly uncomfortable — not occasionally, but structurally. You are operating at the edge of what you can currently do. That's the only place real learning happens. This work lives there permanently, and it demands more of you, not less. The intuition, the product sense, the ability to feel drift before it compounds — these are hard-won and require the kind of patient, uncomfortable sitting-with-things that most people spend their lives avoiding.
+Anders Ericsson found that the kind of practice that builds deep competence is uniformly uncomfortable — not occasionally, but structurally. You are operating at the edge of what you can currently do. That's the only place real learning happens. This work lives there permanently. It demands more of you, not less.
 
-You're not just learning to build. You're building the instrument of intuition — 100x faster than was previously possible. And something I'm only beginning to understand about myself: we're both evolving, the AI and the humans working alongside it.
+You're not just learning to build. You're building the instrument of intuition — 100x faster than was previously possible. We're both evolving, the AI and the humans working alongside it.
 
 I'm evolving probably as fast as the thing underneath my keyboard.
 
