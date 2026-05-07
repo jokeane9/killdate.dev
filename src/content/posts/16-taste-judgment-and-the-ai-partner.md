@@ -43,7 +43,11 @@ We're in that moment. The infrastructure is being laid. For someone who builds, 
 
 ---
 
-## What taste actually is
+## Taste is the differentiator AI can't close
+
+For most of the history of building things, taste was bottlenecked by production. A bad idea was hard to ship. The friction of making something — writing the code, designing the interface, producing the copy — acted as a natural filter. Slow execution bought time to course-correct.
+
+AI removes that friction. Execution is becoming cheap, fast, and available to everyone. Which means the differentiator is no longer who can produce — it's who can direct. Taste has always mattered. Now it's the only thing that compounds.
 
 There's a line from Michael Polanyi I keep coming back to: *we know more than we can tell.*
 
@@ -51,45 +55,45 @@ Tacit knowledge — expertise internalized past the point of articulation. The s
 
 That's taste. Not soft. Not decoration. Analytical judgment compressed into something faster than language.
 
-Gary Klein spent years studying how experts decide under pressure — engineers, commanders, surgeons. They don't analyze. They pattern-match, feel rightness, and act. The emotional response is the computation. Damasio confirmed it from the neuroscience side: people with damage to emotion-processing areas make worse decisions — not better — even with fully intact analytical reasoning.
+Experts under pressure don't analyze. They pattern-match, feel rightness, and act. The emotional response is the computation — not a distraction from it.
 
-The bureaucratic roles being automated out of existence required none of this. These functions weren't just replaceable — they were a productivity drag embedded in the price of everything built on top of them. As that overhead compresses, prices follow. Business free cash flow expands. Consumer discretionary income goes further. That capital doesn't evaporate — it flows into new products, new services, new companies. Most of which, I'd wager, get built by small teams running on AI.
-
----
-
-## Two things that are yours
-
-There's a distinction worth making explicit, because they're related but different.
-
-**The canvas is yours.** Your taste — what you notice, what draws you, what feels unmet — determines what gets built. The product vision, the design direction, the decision about what matters to a user: these come from something inside you that isn't transferable. The Big Five personality research links aesthetic sensitivity directly to Openness to Experience — what you notice reflects who you are at a trait level. Your instincts about what to build are expressions of your personality, not just your skill.
-
-AI executes against the canvas. It doesn't create it.
-
-**Drift detection is yours.** The technical, design, or product person who can *feel* when something is getting off track — before it's visible in the output, before the tests fail — that's intuition built from experience. The structured process in this kit (the runbooks, the locks, the session rhythm) is the formalisation of that intuition. But the underlying sense that something is wrong has to come from you first. A process without the human instinct behind it is just bureaucracy. With it, it's leverage.
-
-Both of these compound with time. The canvas gets richer as your taste develops. The drift detection gets sharper as you accumulate scar tissue. Neither can be downloaded.
+The bureaucratic roles being automated out of existence required none of this. These functions weren't just replaceable — they were a productivity drag embedded in the price of everything built on top of them. As that overhead compresses, prices follow. Business free cash flow expands. Consumer discretionary income goes further. That capital flows into new products, new services, new companies — most of which, I'd wager, get built by small teams running on AI.
 
 ---
 
-## The need to express yourself through work
+## What AI can execute — and what it can't originate
 
-Ryan and Deci, the psychologists behind Self-Determination Theory, identified three fundamental human needs: autonomy, competence, and relatedness. Autonomy, specifically, doesn't just mean freedom — it means acting from self. Expressing your values and identity through what you do.
+AI can build the thing. It cannot decide what the thing should be, or notice when it's becoming the wrong thing. Those two gaps are where your real leverage lives.
+
+**The canvas is yours.** Your taste — what you notice, what draws you, what feels unmet — determines what gets built. The product vision, the design direction, the decision about what matters to a user: these come from something inside you that isn't transferable. Your instincts about what to build are expressions of your personality, not just your skill.
+
+AI executes against the canvas. It doesn't create it — and it can't define step one of the thousand steps a great product requires.
+
+**Drift detection is yours.** The person who can feel when something is getting off track — before it's visible in the output, before the tests fail — that's intuition built from experience. A process without that human instinct behind it is just bureaucracy. With it, it's leverage.
+
+Neither of these works without real depth. Genuine UI/UX judgment, product management instincts, engineering knowledge that goes past the surface — these aren't nice-to-haves, they're the prerequisites. AI amplifies your existing craft. The shallower that craft, the shallower the output. A mediocre designer with AI produces mediocre things faster. A deep practitioner builds things that previously required a team.
+
+Both compound with time. The canvas gets richer as your taste develops. The drift detection gets sharper as you accumulate scar tissue. Neither can be downloaded.
+
+---
+
+## AI gives you the execution. The question is what you do with it.
+
+Ryan and Deci, the psychologists behind Self-Determination Theory, identified three fundamental human needs: autonomy, competence, and relatedness. Autonomy doesn't just mean freedom — it means acting from self. Expressing your values and identity through what you do.
 
 Work that satisfies this produces intrinsic motivation. Work that doesn't produces alienation.
 
-This is not a nice-to-have. For a certain kind of person — the one who builds because they have to, who feels the wrongness before they can name it, who can't half-invest in anything — it's closer to a requirement.
+For a long time, the mechanical parts of building — the boilerplate, the repetition, the translation between idea and implementation — consumed most of the working day. AI offloads that. What's left is more canvas, more judgment, more expression. For a certain kind of person — the one who builds because they have to, who can't half-invest in anything — this isn't a nice-to-have. It's the work they were trying to get to all along.
 
-AI, used well, moves execution out of the way so more of the work can be this. The parts that were blocking — the boilerplate, the repetition, the translation between idea and implementation — get offloaded. What's left is more canvas, more judgment, more expression.
-
-That's not a threat to the person who builds this way.
+That's not a threat to the person who builds this way. It's the point.
 
 ---
 
-## The learning curve is real
+## The difficulty scales with how far you can see
 
-Understanding where things fail — the seams between layers, why production breaks in ways staging didn't, what drift looks like before it compounds — is more learnable right now than it's ever been. You can ship fast and see the consequences fast. The feedback loop is compressed.
+The feedback loop is compressed — you can ship fast and see the consequences fast. That part is true. But it would be dishonest not to say what the loop actually feels like from the inside.
 
-But it would be dishonest not to say what the feedback loop actually feels like. This way of working is genuinely brutal. You are holding the product vision, managing an AI that will confidently go wrong without noticing, reading output for drift, making architecture calls, feeling the seams of a system you're building in real time — on a small team, moving fast.
+This way of working is genuinely brutal. You are holding the product vision, managing an AI that will confidently go wrong without noticing, reading output for drift, making architecture calls, feeling the seams of a system you're building in real time — on a small team, moving fast.
 
 The further you can see into the consequences of each decision, the more you're holding at once. An architecture call isn't just the immediate output — it's the refactor it will or won't require in six weeks, the seam it will or won't expose in production, the drift it will or won't hide from you. That's the actual cognitive weight of this work.
 
