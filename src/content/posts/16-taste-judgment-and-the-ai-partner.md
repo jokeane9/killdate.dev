@@ -101,11 +101,3 @@ If you find it demanding, that's probably the right signal. Most people fire a f
 
 This way of working lives at the edge of what you can currently do. That's the only place real learning happens — and it puts you there permanently. It demands more of you, not less.
 
-There's a trail between San Pancho and Sayulita in Mexico, cutting through dense jungle. If you spend enough time on it you stop seeing the beauty and start seeing the mechanics. Everything is eating something. The strangler fig wraps around its host for decades, patient and systematic, slowly taking its light and its structure until the host is just a hollow it grew around. The understory tilts every leaf toward the gap in the canopy. Nothing is passive. Nothing is waiting.
-
-It's not dissimilar to capitalism. It never was.
-
-AI is just the newest tool available to every organism in the system. The rules haven't changed — compete, adapt, find your niche, or get outgrown. What's changed is what's opening up. When a tree falls in the jungle, it doesn't look like an opportunity. It looks like a gap. Then the light hits the floor, and every organism within range moves toward it at once. The nutrients go back into the soil. New growth starts where the old thing stood.
-
-The bureaucratic overhead being automated out of existence is the fallen tree. The light is already on the floor. New resources are opening — cheaper infrastructure, freed capital, smaller teams that can now do what only large ones could. The question isn't whether the ecosystem will fill the gap. It always does. The question is whether you're already positioned where the light is landing.
-
