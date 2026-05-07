@@ -43,6 +43,8 @@ The AI version is straightforward. The LLM and GPU buildout of 2022–2025 is bu
 
 For most of the history of building things, taste was bottlenecked by production. A bad idea was hard to ship. The friction of making something — writing the code, designing the interface, producing the copy — acted as a natural filter. Slow execution bought time to course-correct.
 
+None of that means the skill floor dropped. Deep knowledge of code, infrastructure, databases, product, and design is still the prerequisite — AI handles the gruntier production work. It demands you be more technical, not less.
+
 AI removes that friction. Execution is becoming cheap, fast, and available to everyone. Which means the differentiator is no longer who can produce — it's who can direct. Taste has always mattered. Now it's the only thing that compounds.
 
 There's a line from Michael Polanyi I keep coming back to: *we know more than we can tell.*
