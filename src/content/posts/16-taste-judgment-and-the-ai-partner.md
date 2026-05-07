@@ -43,19 +43,19 @@ We're in that moment. The infrastructure is being laid. For someone who builds, 
 
 ## What taste actually is
 
-There's a line from Michael Polanyi, a philosopher of science, that I keep coming back to: *we know more than we can tell.*
+There's a line from Michael Polanyi I keep coming back to: *we know more than we can tell.*
 
-He was writing about tacit knowledge — the expertise that's been internalized past the point of articulation. The surgeon who can't explain why they made a particular cut. The designer who knows something's wrong before they can say what. The engineer who feels a system is about to break before the logs confirm it.
+Tacit knowledge — expertise internalized past the point of articulation. The surgeon who can't explain the cut. The designer who knows something's wrong before they can say what. The engineer who feels a system about to break before the logs confirm it.
 
-That's taste. It's not soft. It's not decoration. It's analytical judgment that's been compressed into something faster than language.
+That's taste. Not soft. Not decoration. Analytical judgment compressed into something faster than language.
 
-Gary Klein spent years studying how experts make decisions under pressure — firefighters, military commanders, surgeons. His finding: they don't analyze. They pattern-match and *feel* rightness, then act. The emotional response is the computation. The feeling of wrongness is load-bearing signal, not noise.
+Gary Klein spent years studying how experts decide under pressure — engineers, commanders, surgeons. They don't analyze. They pattern-match, feel rightness, and act. The emotional response is the computation. Damasio confirmed it from the neuroscience side: people with damage to emotion-processing areas make worse decisions — not better — even with fully intact analytical reasoning. The emotion isn't a distraction from clear thinking. It is the thinking.
 
-Antonio Damasio proved the same from the neuroscience side. People with damage to emotion-processing areas of the brain make worse decisions — not better ones — even when their analytical reasoning is completely intact. The emotion is part of the decision-making apparatus, not separate from it.
+Your instinct that something is off — in a design, a product flow, a codebase — isn't a feeling to override with analysis. It's compressed domain knowledge firing. The longer you've been building, the more reliable that signal gets.
 
-What this means practically: your instinct that something is off — in a design, in a product flow, in a codebase — is not a feeling you should override with analysis. It's a compressed body of domain knowledge firing. The longer you've been building, the more reliable that signal gets.
+The bureaucratic roles being automated out of existence required none of this. No tacit knowledge. No compressed judgment. No human input that a form or a prompt couldn't replicate. Replacing them isn't a loss — it's a positive correction. These functions weren't just replaceable — they were a productivity drag embedded in the price of everything built on top of them. As that overhead compresses, prices follow. Business free cash flow expands. Consumer discretionary income goes further. That capital doesn't evaporate — it flows into new products, new services, new companies. Most of which, I'd wager, get built by small teams running on AI.
 
-And here's the thing AI can't do: it cannot feel the wrongness. It will confidently go further in the wrong direction without noticing. You're the check. That's not a limitation to work around — it's the entire point of the collaboration.
+This is what the death of corporate bureaucracy actually looks like. Not collapse — compression. The creativity that was trapped inside slow, bloated organizations gets released into leaner, faster ones. AI doesn't kill human work. It kills the organizational scaffolding that was suffocating it. The function gets automated. The judgment stays human. And for the first time in a long time, that judgment has room to move.
 
 ---
 
