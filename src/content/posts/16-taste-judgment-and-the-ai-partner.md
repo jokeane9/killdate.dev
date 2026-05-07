@@ -55,8 +55,6 @@ Gary Klein spent years studying how experts decide under pressure — engineers,
 
 The bureaucratic roles being automated out of existence required none of this. These functions weren't just replaceable — they were a productivity drag embedded in the price of everything built on top of them. As that overhead compresses, prices follow. Business free cash flow expands. Consumer discretionary income goes further. That capital doesn't evaporate — it flows into new products, new services, new companies. Most of which, I'd wager, get built by small teams running on AI.
 
-This is what the death of corporate bureaucracy actually looks like. Not collapse — compression. The creativity that was trapped inside slow, bloated organizations gets released into leaner, faster ones. AI doesn't kill human work. It kills the organizational scaffolding that was suffocating it. The function gets automated. The judgment stays human. And for the first time in a long time, that judgment has room to move.
-
 ---
 
 ## Two things that are yours
