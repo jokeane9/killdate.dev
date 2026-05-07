@@ -33,9 +33,9 @@ The railroad bubble of the 1840s left 70,000 miles of track. The companies mostl
 
 The telecom bubble is the cleaner example. By 2001, 95% of the fibre laid during the boom was dark — the companies bankrupt, the cable unused. YouTube launched in 2005. Netflix in 2007. AWS in 2006. Each was a bet on bandwidth staying near-free. It did — infrastructure acquired at bankruptcy-auction prices. Streaming video at 1999 pricing was economically insane. At 2005 pricing it was inevitable. The substrate made the application layer possible.
 
-The pattern runs through history. The canal bubble left waterways that made New York's commercial dominance possible. The electrification bubble left a grid that enabled refrigeration, radio, and the 1920s consumer economy. The PC hardware glut of 2001 made AWS's unit economics work in 2006.
+The canal bubble left waterways that made New York's commercial dominance possible. The electrification bubble left a grid that enabled refrigeration, radio, and the 1920s consumer economy. The PC hardware glut of 2001 made AWS's unit economics work in 2006.
 
-What I've come to love about capitalism — not uncritically, but specifically — is this: it has a mechanism for funding infrastructure that no rational actor would build alone. Bubbles are wasteful and transfer wealth in ugly ways. They are also how we build the substrate for things we can't yet imagine. The people who lose in the bubble are never the people who win in the deployment phase. Different actors, different timescales, same infrastructure.
+What I've come to love about capitalism — not uncritically, but specifically — is this: it has a mechanism for funding infrastructure that no rational actor would build alone. Bubbles are wasteful and transfer wealth in ugly ways. The people who lose in the bubble are never the people who win in the deployment phase. Different actors, different timescales, same infrastructure.
 
 The AI version is straightforward. The LLM and GPU buildout of 2022–2025 is bubble-scale financing. Whether the builders profit is beside the point — I don't care. The question is what becomes possible when inference is cheap and abundant, built by companies that no longer need to exist for the capability to be used.
 
@@ -51,11 +51,11 @@ Tacit knowledge — expertise internalized past the point of articulation. The s
 
 That's taste. Not soft. Not decoration. Analytical judgment compressed into something faster than language.
 
-Gary Klein spent years studying how experts decide under pressure — engineers, commanders, surgeons. They don't analyze. They pattern-match, feel rightness, and act. The emotional response is the computation. Damasio confirmed it from the neuroscience side: people with damage to emotion-processing areas make worse decisions — not better — even with fully intact analytical reasoning. The emotion isn't a distraction from clear thinking. It is the thinking.
+Gary Klein spent years studying how experts decide under pressure — engineers, commanders, surgeons. They don't analyze. They pattern-match, feel rightness, and act. The emotional response is the computation. Damasio confirmed it from the neuroscience side: people with damage to emotion-processing areas make worse decisions — not better — even with fully intact analytical reasoning.
 
 Your instinct that something is off — in a design, a product flow, a codebase — isn't a feeling to override with analysis. It's compressed domain knowledge firing. The longer you've been building, the more reliable that signal gets.
 
-The bureaucratic roles being automated out of existence required none of this. No tacit knowledge. No compressed judgment. No human input that a form or a prompt couldn't replicate. Replacing them isn't a loss — it's a positive correction. These functions weren't just replaceable — they were a productivity drag embedded in the price of everything built on top of them. As that overhead compresses, prices follow. Business free cash flow expands. Consumer discretionary income goes further. That capital doesn't evaporate — it flows into new products, new services, new companies. Most of which, I'd wager, get built by small teams running on AI.
+The bureaucratic roles being automated out of existence required none of this. These functions weren't just replaceable — they were a productivity drag embedded in the price of everything built on top of them. As that overhead compresses, prices follow. Business free cash flow expands. Consumer discretionary income goes further. That capital doesn't evaporate — it flows into new products, new services, new companies. Most of which, I'd wager, get built by small teams running on AI.
 
 This is what the death of corporate bureaucracy actually looks like. Not collapse — compression. The creativity that was trapped inside slow, bloated organizations gets released into leaner, faster ones. AI doesn't kill human work. It kills the organizational scaffolding that was suffocating it. The function gets automated. The judgment stays human. And for the first time in a long time, that judgment has room to move.
 
@@ -80,8 +80,6 @@ Both of these compound with time. The canvas gets richer as your taste develops.
 Ryan and Deci, the psychologists behind Self-Determination Theory, identified three fundamental human needs: autonomy, competence, and relatedness. Autonomy, specifically, doesn't just mean freedom — it means acting from self. Expressing your values and identity through what you do.
 
 Work that satisfies this produces intrinsic motivation. Work that doesn't produces alienation.
-
-Csikszentmihalyi's flow research adds the phenomenology. The challenge-skill balance that produces flow is essentially your full self being in the work — not just your analytical self. All of it.
 
 This is not a nice-to-have. For a certain kind of person — the one who builds because they have to, who feels the wrongness before they can name it, who can't half-invest in anything — it's closer to a requirement.
 
