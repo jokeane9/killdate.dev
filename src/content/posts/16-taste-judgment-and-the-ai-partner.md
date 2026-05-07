@@ -75,16 +75,6 @@ Both compound with time. The canvas gets richer as your taste develops. The drif
 
 ---
 
-## AI gives you the execution. The question is what you do with it.
-
-Ryan and Deci, the psychologists behind Self-Determination Theory, identified three fundamental human needs: autonomy, competence, and relatedness. Autonomy doesn't just mean freedom — it means acting from self. Expressing your values and identity through what you do.
-
-For a long time, the mechanical parts of building — the boilerplate, the repetition, the translation between idea and implementation — consumed most of the working day. AI offloads that. What's left is more canvas, more judgment, more expression. For a certain kind of person — the one who builds because they have to, who can't half-invest in anything — this isn't a nice-to-have. It's the work they were trying to get to all along.
-
-That's not a threat to the person who builds this way. It's the point.
-
----
-
 ## The difficulty scales with how far you can see
 
 The feedback loop is compressed — you can ship fast and see the consequences fast. That part is true. But it would be dishonest not to say what the loop actually feels like from the inside.
