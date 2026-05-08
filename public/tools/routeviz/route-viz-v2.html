@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RouteViz v2 — Shelf</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  background: #0d1117;
+  color: #c9d1d9;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+}
+
+/* ── Header ── */
+header {
+  padding: 10px 16px;
+  border-bottom: 1px solid #21262d;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.logo { color: #58a6ff; font-weight: 700; font-size: 13px; letter-spacing: 0.04em; }
+.project { color: #6e7681; font-size: 12px; }
+
+.tabs { display: flex; gap: 2px; margin-left: auto; }
+.tab {
+  padding: 5px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #6e7681;
+  font-size: 12px;
+  transition: all 0.1s;
+}
+.tab.active { background: #21262d; color: #e6edf3; }
+.tab:hover:not(.active) { color: #c9d1d9; }
+
+/* ── URL search ── */
+.url-search {
+  padding: 8px 16px;
+  border-bottom: 1px solid #21262d;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.url-search input {
+  flex: 1;
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  padding: 7px 12px;
+  color: #e6edf3;
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.1s;
+}
+.url-search input:focus { border-color: #58a6ff; }
+.url-search input::placeholder { color: #6e7681; }
+.url-hint { font-size: 11px; color: #6e7681; white-space: nowrap; }
+
+/* ── Main layout ── */
+.app { display: flex; flex: 1; overflow: hidden; }
+
+/* ── Left: URL tree ── */
+.tree-panel {
+  width: 320px;
+  flex-shrink: 0;
+  border-right: 1px solid #21262d;
+  overflow-y: auto;
+  padding: 12px 0;
+}
+
+.tree-group-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #6e7681;
+  padding: 8px 14px 4px;
+}
+
+.tree-url {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin: 0 6px;
+  transition: background 0.1s;
+  white-space: nowrap;
+}
+.tree-url:hover { background: #161b22; }
+.tree-url.active { background: #1f2937; border: 1px solid #2d4a70; }
+
+.tree-url .indent { width: 14px; flex-shrink: 0; }
+.tree-url .url-seg { color: #6e7681; }
+.tree-url .url-seg.seg-final { color: #e6edf3; font-weight: 500; }
+.tree-url.is-layout .url-seg.seg-final { color: #a371f7; }
+.tree-url.is-resource .url-seg.seg-final { color: #6e7681; }
+
+.tree-url .lock { font-size: 10px; margin-right: 1px; }
+.tree-url .layout-tag {
+  font-size: 9px;
+  color: #6e7681;
+  font-style: italic;
+  margin-left: 2px;
+}
+
+.badges { display: flex; gap: 3px; margin-left: auto; }
+.badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+.L { background: #0d419d; color: #79c0ff; }
+.A { background: #3d2b00; color: #e3b341; }
+.U { background: #0f2d1a; color: #56d364; }
+.W { background: #2d1b69; color: #d2a8ff; }
+
+/* ── Right: Inspector ── */
+.inspector { flex: 1; overflow-y: auto; padding: 20px 24px; }
+
+.empty {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  color: #6e7681;
+}
+.empty .arrow { font-size: 28px; }
+.empty p { font-size: 12px; }
+
+/* ── Containment view ── */
+.insp-section { margin-bottom: 24px; }
+.insp-section h3 {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #6e7681;
+  margin-bottom: 12px;
+}
+
+/* URL title bar */
+.url-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 24px;
+}
+.url-title .url-path { font-size: 15px; color: #58a6ff; font-weight: 600; flex: 1; }
+.url-title .route-kind {
+  font-size: 10px;
+  color: #6e7681;
+  background: #21262d;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+.url-title .lock-indicator {
+  font-size: 11px;
+  color: #e3b341;
+  background: #1a1200;
+  border: 1px solid #3d2b00;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+/* Nested containment boxes */
+.contain-root {
+  border: 1px solid #1f4068;
+  border-radius: 10px;
+  background: #0a1628;
+  overflow: hidden;
+}
+
+.contain-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  border-bottom: 1px solid transparent;
+}
+.contain-header .c-file { flex: 1; }
+.contain-header .c-file .dim { color: #6e7681; }
+.contain-header .c-tags { display: flex; gap: 3px; }
+.contain-header .c-note {
+  font-size: 10px;
+  color: #6e7681;
+  margin-top: 1px;
+}
+
+/* depth styling */
+.depth-0 { background: #040d1a; border-color: #1f4068; }
+.depth-0 .contain-header { background: #060f21; border-color: #1f4068; }
+.depth-0 .contain-header .c-file { color: #79c0ff; }
+
+.depth-1-auth { background: #0d0d00; border-color: #3d3000; }
+.depth-1-auth .contain-header { background: #100f00; border-color: #3d3000; }
+.depth-1-auth .contain-header .c-file { color: #e3b341; }
+
+.depth-1 { background: #060f21; border-color: #1c3252; }
+.depth-1 .contain-header { background: #081328; border-color: #1c3252; }
+.depth-1 .contain-header .c-file { color: #58a6ff; }
+
+.depth-2-layout { background: #0d0017; border-color: #2d1b55; }
+.depth-2-layout .contain-header { background: #10001e; border-color: #2d1b55; }
+.depth-2-layout .contain-header .c-file { color: #d2a8ff; }
+
+.depth-2 { background: #060f21; border-color: #1c3252; }
+.depth-2 .contain-header { background: #081328; }
+.depth-2 .contain-header .c-file { color: #58a6ff; }
+
+.depth-3 { background: #001a0a; border-color: #0f3d1f; }
+.depth-3 .contain-header { background: #002010; border-color: #0f3d1f; }
+.depth-3 .contain-header .c-file { color: #56d364; }
+
+.leaf-node {
+  border: 1px solid #0f3d1f;
+  border-radius: 8px;
+  background: #00110a;
+  overflow: hidden;
+}
+.leaf-node .contain-header { background: #001a0d; }
+.leaf-node .contain-header .c-file { color: #56d364; font-weight: 600; }
+
+.contain-inner { padding: 10px; }
+.outlet-label {
+  font-size: 10px;
+  color: #6e7681;
+  padding: 4px 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.outlet-label::before, .outlet-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #21262d;
+}
+
+/* Loader sequence */
+.loader-list { display: flex; flex-direction: column; gap: 8px; }
+.loader-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #161b22;
+  border: 1px solid #21262d;
+  border-radius: 6px;
+  padding: 9px 12px;
+}
+.loader-row.has-auth { border-color: #3d3000; background: #100f00; }
+.loader-num {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: #0d419d;
+  color: #79c0ff;
+  font-size: 9px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.loader-row.has-auth .loader-num { background: #3d3000; color: #e3b341; }
+.loader-info { flex: 1; }
+.loader-file { color: #79c0ff; font-size: 12px; margin-bottom: 3px; }
+.loader-row.has-auth .loader-file { color: #e3b341; }
+.loader-desc { color: #6e7681; font-size: 11px; }
+.loader-auth-tag {
+  font-size: 9px;
+  background: #3d3000;
+  color: #e3b341;
+  padding: 1px 6px;
+  border-radius: 3px;
+  margin-top: 4px;
+  display: inline-block;
+}
+
+/* Watch out for */
+.callout-list { display: flex; flex-direction: column; gap: 8px; }
+.callout {
+  padding: 10px 13px;
+  border-radius: 6px;
+  border-left: 3px solid;
+  background: #161b22;
+  font-size: 12px;
+}
+.callout.warn { border-color: #e3b341; }
+.callout.info { border-color: #58a6ff; }
+.callout.ok   { border-color: #56d364; }
+.callout .c-title { color: #e6edf3; font-weight: 600; margin-bottom: 3px; font-size: 12px; }
+.callout .c-body  { color: #8b949e; line-height: 1.5; }
+
+/* ── Pros/Cons tab ── */
+.guide-panel { padding: 24px; max-width: 760px; }
+.guide-panel h2 { color: #e6edf3; font-size: 16px; margin-bottom: 6px; }
+.guide-panel .guide-sub { color: #6e7681; font-size: 12px; margin-bottom: 28px; line-height: 1.6; }
+
+.viz-grid { display: flex; flex-direction: column; gap: 20px; }
+
+.viz-card {
+  border: 1px solid #21262d;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.viz-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #161b22;
+  border-bottom: 1px solid #21262d;
+}
+.viz-icon { font-size: 18px; }
+.viz-name { color: #e6edf3; font-weight: 600; font-size: 13px; }
+.viz-tagline { color: #6e7681; font-size: 11px; margin-top: 1px; }
+.viz-best-for {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-left: auto;
+  white-space: nowrap;
+}
+.best-orient { background: #0d2d6e; color: #79c0ff; }
+.best-debug  { background: #3d2000; color: #e3b341; }
+.best-data   { background: #002d1a; color: #56d364; }
+.best-deploy { background: #2d002d; color: #d2a8ff; }
+
+.viz-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+.viz-col {
+  padding: 14px 16px;
+}
+.viz-col:first-child { border-right: 1px solid #21262d; }
+.viz-col h4 { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+.viz-col.pros h4 { color: #56d364; }
+.viz-col.cons h4 { color: #e3b341; }
+.viz-col ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.viz-col li { font-size: 12px; color: #8b949e; line-height: 1.5; padding-left: 14px; position: relative; }
+.viz-col.pros li::before { content: '+'; position: absolute; left: 0; color: #56d364; font-weight: 700; }
+.viz-col.cons li::before { content: '−'; position: absolute; left: 0; color: #e3b341; font-weight: 700; }
+
+.viz-footer {
+  padding: 10px 16px;
+  border-top: 1px solid #21262d;
+  background: #0d1117;
+  font-size: 11px;
+  color: #6e7681;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.viz-footer strong { color: #c9d1d9; }
+
+.verdict {
+  margin-top: 28px;
+  padding: 16px 20px;
+  background: #161b22;
+  border: 1px solid #21262d;
+  border-radius: 10px;
+}
+.verdict h3 { color: #e6edf3; font-size: 13px; margin-bottom: 10px; }
+.verdict-steps { display: flex; flex-direction: column; gap: 8px; }
+.verdict-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 12px;
+  color: #8b949e;
+  line-height: 1.5;
+}
+.verdict-step .step-n {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: #21262d;
+  color: #c9d1d9;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.verdict-step strong { color: #c9d1d9; }
+
+/* legend */
+.legend {
+  padding: 8px 16px;
+  border-top: 1px solid #21262d;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+.legend-item { display: flex; align-items: center; gap: 5px; font-size: 10px; color: #6e7681; }
+
+/* show/hide panels */
+.panel { display: none; }
+.panel.visible { display: block; }
+.inspector-wrap { flex: 1; overflow-y: auto; }
+.inspector-wrap.visible { display: flex; flex-direction: column; }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="logo">⬡ RouteViz</span>
+  <span class="project">shelf / app/routes</span>
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('routes')">Route Map</div>
+    <div class="tab" onclick="switchTab('guide')">Viz Guide</div>
+  </div>
+</header>
+
+<!-- URL search -->
+<div class="url-search" id="url-search-bar">
+  <input type="text" id="url-input" placeholder="Type a URL to inspect... e.g. /app/settings" oninput="filterByUrl(this.value)" />
+  <span class="url-hint">↵ jump to route</span>
+</div>
+
+<div class="app" id="routes-tab">
+
+  <!-- LEFT: URL tree -->
+  <div class="tree-panel">
+
+    <div class="tree-group-label">Public</div>
+
+    <div class="tree-url" onclick="sel('root_index')" id="n-root_index">
+      <span class="url-seg seg-final">/</span>
+      <div class="badges"><span class="badge L">L</span><span class="badge U">UI</span></div>
+    </div>
+
+    <div class="tree-url is-resource" onclick="sel('webhooks')" id="n-webhooks">
+      <span class="url-seg seg-final">/webhooks</span>
+      <div class="badges"><span class="badge A">A</span></div>
+    </div>
+
+    <div class="tree-group-label" style="margin-top:8px">Auth</div>
+
+    <div class="tree-url" onclick="sel('auth_login')" id="n-auth_login">
+      <span class="url-seg seg-final">/auth/login</span>
+      <div class="badges"><span class="badge L">L</span><span class="badge A">A</span><span class="badge U">UI</span></div>
+    </div>
+    <div class="tree-url is-resource" onclick="sel('auth_cb')" id="n-auth_cb">
+      <span class="url-seg seg-final">/auth/callback</span>
+      <div class="badges"><span class="badge L">L</span><span class="badge A">A</span></div>
+    </div>
+
+    <div class="tree-group-label" style="margin-top:8px">App <span style="color:#e3b341">🔒</span></div>
+
+    <div class="tree-url" onclick="sel('app_index')" id="n-app_index">
+      <span class="lock">🔒</span>
+      <span class="url-seg seg-final">/app</span>
+      <div class="badges"><span class="badge L">L</span><span class="badge A">A</span><span class="badge U">UI</span></div>
+    </div>
+
+    <div class="tree-url" onclick="sel('billing')" id="n-billing">
+      <span class="lock">🔒</span>
+      <span class="indent"></span>
+      <span class="url-seg">/app/</span><span class="url-seg seg-final">billing</span>
+      <div class="badges"><span class="badge L">L</span><span class="badge A">A</span><span class="badge U">UI</span></div>
+    </div>
+
+    <div class="tree-url is-resource" onclick="sel('billing_cb')" id="n-billing_cb">
+      <span class="lock">🔒</span>
+      <span class="indent"></span>
+      <span class="url-seg">/app/billing/</span><span class="url-seg seg-final">callback</span>
+      <div class="badges"><span class="badge L">L</span></div>
+    </div>
+
+    <div class="tree-url is-layout" onclick="sel('settings_layout')" id="n-settings_layout">
+      <span class="lock">🔒</span>
+      <span class="indent"></span>
+      <span class="url-seg">/app/</span><span class="url-seg seg-final">settings</span>
+      <span class="layout-tag">layout wrapper</span>
+      <div class="badges"><span class="badge W">layout</span></div>
+    </div>
+
+    <div class="tree-url" onclick="sel('settings_index')" id="n-settings_index">
+      <span class="lock">🔒</span>
+      <span class="indent"></span><span class="indent"></span>
+      <span class="url-seg">/app/settings</span>
+      <div class="badges"><span class="badge L">L</span><span class="badge A">A</span><span class="badge U">UI</span></div>
+    </div>
+
+    <div class="tree-url" onclick="sel('settings_products')" id="n-settings_products">
+      <span class="lock">🔒</span>
+      <span class="indent"></span><span class="indent"></span>
+      <span class="url-seg">/app/settings/</span><span class="url-seg seg-final">add-products</span>
+      <div class="badges"><span class="badge L">L</span><span class="badge A">A</span><span class="badge U">UI</span></div>
+    </div>
+
+    <div class="tree-url" onclick="sel('settings_match')" id="n-settings_match">
+      <span class="lock">🔒</span>
+      <span class="indent"></span><span class="indent"></span>
+      <span class="url-seg">/app/settings/</span><span class="url-seg seg-final">match-competitor</span>
+      <div class="badges"><span class="badge L">L</span><span class="badge A">A</span><span class="badge U">UI</span></div>
+    </div>
+
+    <div class="tree-url is-layout" onclick="sel('onboarding_layout')" id="n-onboarding_layout">
+      <span class="lock">🔒</span>
+      <span class="indent"></span>
+      <span class="url-seg">/app/</span><span class="url-seg seg-final">onboarding</span>
+      <span class="layout-tag">layout wrapper</span>
+      <div class="badges"><span class="badge W">layout</span></div>
+    </div>
+
+    <div class="tree-url" onclick="sel('onboarding_welcome')" id="n-onboarding_welcome">
+      <span class="lock">🔒</span>
+      <span class="indent"></span><span class="indent"></span>
+      <span class="url-seg">/app/onboarding/</span><span class="url-seg seg-final">welcome</span>
+      <div class="badges"><span class="badge L">L</span><span class="badge A">A</span><span class="badge U">UI</span></div>
+    </div>
+
+    <div class="tree-url" onclick="sel('onboarding_urls')" id="n-onboarding_urls">
+      <span class="lock">🔒</span>
+      <span class="indent"></span><span class="indent"></span>
+      <span class="url-seg">/app/onboarding/</span><span class="url-seg seg-final">urls</span>
+      <div class="badges"><span class="badge L">L</span><span class="badge A">A</span><span class="badge U">UI</span></div>
+    </div>
+
+    <div class="tree-url" onclick="sel('onboarding_pending')" id="n-onboarding_pending">
+      <span class="lock">🔒</span>
+      <span class="indent"></span><span class="indent"></span>
+      <span class="url-seg">/app/onboarding/</span><span class="url-seg seg-final">pending</span>
+      <div class="badges"><span class="badge L">L</span><span class="badge A">A</span><span class="badge U">UI</span></div>
+    </div>
+
+    <div class="tree-group-label" style="margin-top:8px">API / Resource</div>
+
+    <div class="tree-url is-resource" onclick="sel('api_sidekick')" id="n-api_sidekick">
+      <span class="url-seg seg-final">/api/sidekick</span>
+      <div class="badges"><span class="badge L">L</span></div>
+    </div>
+    <div class="tree-url is-resource" onclick="sel('api_crawl')" id="n-api_crawl">
+      <span class="url-seg seg-final">/api/crawl-status</span>
+      <div class="badges"><span class="badge L">L</span></div>
+    </div>
+    <div class="tree-url is-resource" onclick="sel('api_health')" id="n-api_health">
+      <span class="url-seg seg-final">/api/health</span>
+      <div class="badges"><span class="badge L">L</span></div>
+    </div>
+    <div class="tree-url is-resource" onclick="sel('api_validate')" id="n-api_validate">
+      <span class="url-seg seg-final">/api/validate-url</span>
+      <div class="badges"><span class="badge A">A</span></div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT: Inspector -->
+  <div class="inspector-wrap visible" id="inspector-wrap">
+    <div class="inspector" id="inspector">
+      <div class="empty">
+        <div class="arrow">←</div>
+        <p>Click a URL to inspect its render chain</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- GUIDE TAB -->
+<div class="panel" id="guide-tab">
+  <div class="inspector-wrap visible" style="overflow-y:auto">
+  <div class="guide-panel">
+    <h2>Visualization approaches for understanding your app</h2>
+    <p class="guide-sub">Different mental models surface different things. The right view depends on what question you're actually trying to answer — orientation, debugging, data, or deployment. Here's the honest tradeoff of each.</p>
+
+    <div class="viz-grid">
+
+      <!-- Route map -->
+      <div class="viz-card">
+        <div class="viz-card-header">
+          <span class="viz-icon">🗺</span>
+          <div>
+            <div class="viz-name">Route / URL map</div>
+            <div class="viz-tagline">What renders at each URL and what fires to get there</div>
+          </div>
+          <span class="viz-best-for best-orient">Best for: orientation</span>
+        </div>
+        <div class="viz-body">
+          <div class="viz-col pros">
+            <h4>Pros</h4>
+            <ul>
+              <li>Maps to how users and browsers think — URLs not filenames</li>
+              <li>Auth model becomes instantly visible (who's gated where)</li>
+              <li>Parseable from file conventions alone — no deep analysis</li>
+              <li>Stays useful as codebase grows — doesn't get noisy</li>
+            </ul>
+          </div>
+          <div class="viz-col cons">
+            <h4>Cons</h4>
+            <ul>
+              <li>Doesn't show what data actually flows through loaders</li>
+              <li>Doesn't show component composition within a page</li>
+              <li>Misses dynamic routes and catch-all complexity</li>
+              <li>Framework-specific — doesn't generalize to all apps</li>
+            </ul>
+          </div>
+        </div>
+        <div class="viz-footer">
+          <strong>When to use:</strong> first day on a codebase, debugging a redirect, understanding auth scope, pre-deploy blast radius check
+        </div>
+      </div>
+
+      <!-- Data flow -->
+      <div class="viz-card">
+        <div class="viz-card-header">
+          <span class="viz-icon">↕</span>
+          <div>
+            <div class="viz-name">Data flow diagram</div>
+            <div class="viz-tagline">What each loader fetches, what actions mutate, where it goes</div>
+          </div>
+          <span class="viz-best-for best-debug">Best for: debugging</span>
+        </div>
+        <div class="viz-body">
+          <div class="viz-col pros">
+            <h4>Pros</h4>
+            <ul>
+              <li>Shows where a bug lives — DB → loader → component → action</li>
+              <li>Makes useLoaderData vs useRouteLoaderData explicit</li>
+              <li>Reveals which routes share data vs fetch independently</li>
+            </ul>
+          </div>
+          <div class="viz-col cons">
+            <h4>Cons</h4>
+            <ul>
+              <li>Requires TypeScript type analysis or runtime tracing to build accurately</li>
+              <li>Goes stale fast — every loader change breaks the diagram</li>
+              <li>Gets noisy at scale — too many edges</li>
+              <li>Hard to generate statically, needs runtime instrumentation</li>
+            </ul>
+          </div>
+        </div>
+        <div class="viz-footer">
+          <strong>When to use:</strong> "why is this component getting stale data", tracing a specific fetch, understanding shared state
+        </div>
+      </div>
+
+      <!-- DB schema -->
+      <div class="viz-card">
+        <div class="viz-card-header">
+          <span class="viz-icon">🗄</span>
+          <div>
+            <div class="viz-name">Database schema / ER diagram</div>
+            <div class="viz-tagline">Tables, relationships, foreign keys</div>
+          </div>
+          <span class="viz-best-for best-data">Best for: data model</span>
+        </div>
+        <div class="viz-body">
+          <div class="viz-col pros">
+            <h4>Pros</h4>
+            <ul>
+              <li>100% parseable from schema.sql or Prisma schema — no inference</li>
+              <li>Stable — schema changes less often than code</li>
+              <li>Prisma already does this reasonably well</li>
+              <li>Essential for writing queries correctly</li>
+            </ul>
+          </div>
+          <div class="viz-col cons">
+            <h4>Cons</h4>
+            <ul>
+              <li>Doesn't show which routes touch which tables</li>
+              <li>No information about query patterns or N+1 risks</li>
+              <li>Disconnected from the UI layer — you bridge it manually</li>
+            </ul>
+          </div>
+        </div>
+        <div class="viz-footer">
+          <strong>When to use:</strong> writing a new query, understanding join paths, before a migration, explaining data model to a new hire
+        </div>
+      </div>
+
+      <!-- CI/CD pipeline -->
+      <div class="viz-card">
+        <div class="viz-card-header">
+          <span class="viz-icon">⚙</span>
+          <div>
+            <div class="viz-name">CI/CD pipeline graph</div>
+            <div class="viz-tagline">GitHub Actions jobs, dependencies, triggers, critical path</div>
+          </div>
+          <span class="viz-best-for best-deploy">Best for: deploy</span>
+        </div>
+        <div class="viz-body">
+          <div class="viz-col pros">
+            <h4>Pros</h4>
+            <ul>
+              <li>100% parseable from YAML — no inference needed</li>
+              <li>Present in every repo regardless of language or framework</li>
+              <li>Job dependencies are exactly the kind of graph that needs visualization</li>
+              <li>Critical path analysis tells you where to optimize</li>
+            </ul>
+          </div>
+          <div class="viz-col cons">
+            <h4>Cons</h4>
+            <ul>
+              <li>GitHub already shows a basic version at runtime</li>
+              <li>Static view misses conditional logic and matrix builds</li>
+              <li>Less useful for small pipelines (2-3 jobs)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="viz-footer">
+          <strong>When to use:</strong> optimizing CI time, understanding what blocks a deploy, debugging a failed job, onboarding to a new repo's pipeline
+        </div>
+      </div>
+
+      <!-- Module dependency -->
+      <div class="viz-card">
+        <div class="viz-card-header">
+          <span class="viz-icon">🕸</span>
+          <div>
+            <div class="viz-name">Module dependency graph</div>
+            <div class="viz-tagline">Which files import which — coupling and shared code</div>
+          </div>
+          <span class="viz-best-for best-debug">Best for: refactoring</span>
+        </div>
+        <div class="viz-body">
+          <div class="viz-col pros">
+            <h4>Pros</h4>
+            <ul>
+              <li>Reveals unexpected coupling between modules</li>
+              <li>Identifies shared utilities vs per-route code</li>
+              <li>Tools exist (Madge, dependency-cruiser)</li>
+            </ul>
+          </div>
+          <div class="viz-col cons">
+            <h4>Cons</h4>
+            <ul>
+              <li>Extremely noisy at any meaningful scale — unusable past ~30 files</li>
+              <li>All the existing tools have terrible UX</li>
+              <li>Not useful for orientation — too much detail, no hierarchy</li>
+              <li>Rarely the actual question you're trying to answer</li>
+            </ul>
+          </div>
+        </div>
+        <div class="viz-footer">
+          <strong>When to use:</strong> pre-refactor audit, finding circular deps, understanding what breaks if you move a util file. Otherwise skip.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Verdict -->
+    <div class="verdict">
+      <h3>The right order for a dev getting oriented</h3>
+      <div class="verdict-steps">
+        <div class="verdict-step">
+          <div class="step-n">1</div>
+          <div><strong>Route map first.</strong> Understand the URL space, auth model, and which routes are layouts vs pages. 5 minutes, answers "how does navigation work and where do I start."</div>
+        </div>
+        <div class="verdict-step">
+          <div class="step-n">2</div>
+          <div><strong>DB schema second.</strong> Read the tables and relationships. Understand the data model before reading any queries. 10 minutes, answers "what is this app actually storing."</div>
+        </div>
+        <div class="verdict-step">
+          <div class="step-n">3</div>
+          <div><strong>Data flow on demand.</strong> Don't pre-read it. Pull it up when you hit a specific bug — "why is this loader getting null?" Trace that path specifically.</div>
+        </div>
+        <div class="verdict-step">
+          <div class="step-n">4</div>
+          <div><strong>CI pipeline before first deploy.</strong> Know what gates exist, what can block a ship, and what the canary step is. One read, then you know.</div>
+        </div>
+        <div class="verdict-step">
+          <div class="step-n">5</div>
+          <div><strong>Module graph almost never.</strong> Only if you're doing a major refactor and need to know blast radius. Otherwise the noise isn't worth it.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  </div>
+</div>
+
+<div class="legend" id="legend-bar">
+  <div class="legend-item"><span class="badge L">L</span> loader — runs server-side on GET</div>
+  <div class="legend-item"><span class="badge A">A</span> action — runs on POST/PUT/DELETE</div>
+  <div class="legend-item"><span class="badge U">UI</span> renders JSX</div>
+  <div class="legend-item"><span class="badge W">layout</span> wraps children, not a page</div>
+  <div class="legend-item">🔒 auth gated via app.tsx loader</div>
+</div>
+
+<script>
+const DATA = {
+  root_index: {
+    url: '/',
+    kind: 'Page',
+    locked: false,
+    chain: [
+      { file: 'root.tsx', depth: 'depth-0', badges: ['U'], note: 'App shell — always present.' },
+      { file: '_index.tsx', depth: 'depth-3', leaf: true, badges: ['L','U'], note: 'Redirects to /app or /auth/login depending on session.' }
+    ],
+    loaders: [{ file: '_index.tsx', desc: 'Checks session → redirects.', auth: false }],
+    callouts: [{ level:'info', title:'_index.tsx is the "/" catch', body:'In Remix, _index.tsx at the routes root is the index route for "/" — no nesting, no layout wrapper.' }]
+  },
+
+  webhooks: {
+    url: '/webhooks',
+    kind: 'Resource route',
+    locked: false,
+    chain: [
+      { file: 'webhooks.tsx', depth: 'depth-3', leaf: true, badges: ['A'], note: 'Shopify webhook receiver. Action only — no UI, not inside root layout.' }
+    ],
+    loaders: [],
+    callouts: [
+      { level:'warn', title:'Not wrapped by root.tsx', body:'Resource routes with no default export skip the root layout entirely. The action just returns a raw Response.' },
+      { level:'info', title:'HMAC verified in action', body:'Action validates the Shopify HMAC signature header before processing any event.' }
+    ]
+  },
+
+  auth_login: {
+    url: '/auth/login',
+    kind: 'Page',
+    locked: false,
+    chain: [
+      { file: 'root.tsx', depth: 'depth-0', badges: ['U'], note: 'App shell.' },
+      { file: 'auth.login.tsx', depth: 'depth-3', leaf: true, badges: ['L','A','U'], note: 'Shopify OAuth entry. Lives outside app.tsx — no auth gate needed.' }
+    ],
+    loaders: [{ file: 'auth.login.tsx', desc: 'Begins Shopify OAuth flow. Redirects to Shopify authorize URL.', auth: false }],
+    callouts: [{ level:'ok', title:'Auth routes are siblings of app.tsx', body:'auth.* routes are not nested under app.tsx. They\'re reachable when logged out — that\'s the point.' }]
+  },
+
+  auth_cb: {
+    url: '/auth/callback',
+    kind: 'Resource route',
+    locked: false,
+    chain: [
+      { file: 'root.tsx', depth: 'depth-0', badges: ['U'], note: 'App shell.' },
+      { file: 'auth.callback.tsx', depth: 'depth-3', leaf: true, badges: ['L','A'], note: 'OAuth code exchange. Validates, stores session, redirects to /app.' }
+    ],
+    loaders: [{ file: 'auth.callback.tsx', desc: 'Validates OAuth state, exchanges code for token, upserts merchant, redirects.', auth: false }],
+    callouts: [{ level:'warn', title:'Both loader and action present', body:'Shopify can hit this as GET (redirect) or POST (token exchange). Both paths are handled.' }]
+  },
+
+  app_index: {
+    url: '/app',
+    kind: 'Page',
+    locked: true,
+    chain: [
+      { file: 'root.tsx', depth: 'depth-0', badges: ['U'], note: 'App shell.' },
+      { file: 'app.tsx', depth: 'depth-1-auth', badges: ['L'], note: '🔒 Auth gate for all /app/* routes. Runs requireAuth(), renders <Outlet/>.', outlet: true },
+      { file: 'app._index.tsx', depth: 'depth-3', leaf: true, badges: ['L','A','U'], note: 'Dashboard — the main product card feed.' }
+    ],
+    loaders: [
+      { file: 'app.tsx', desc: 'requireAuth() → merchant session. Fires first on every /app/* hit.', auth: true },
+      { file: 'app._index.tsx', desc: 'Loads competitor products, crawl status, briefing data.', auth: false }
+    ],
+    callouts: [
+      { level:'warn', title:'Two loaders fire for this URL', body:'app.tsx loader runs first (auth + session), then app._index.tsx (data). useLoaderData() in the component only gets app._index.tsx\'s return value.' },
+      { level:'info', title:'Want app.tsx data in a child?', body:'Use useRouteLoaderData("routes/app") — not useLoaderData(), which only sees the closest loader.' }
+    ]
+  },
+
+  billing: {
+    url: '/app/billing',
+    kind: 'Page',
+    locked: true,
+    chain: [
+      { file: 'root.tsx', depth: 'depth-0', badges: ['U'], note: 'App shell.' },
+      { file: 'app.tsx', depth: 'depth-1-auth', badges: ['L'], note: '🔒 Auth gate.', outlet: true },
+      { file: 'app.billing.tsx', depth: 'depth-3', leaf: true, badges: ['L','A','U'], note: 'Plan selection + Shopify billing API.' }
+    ],
+    loaders: [
+      { file: 'app.tsx', desc: 'requireAuth().', auth: true },
+      { file: 'app.billing.tsx', desc: 'Loads current plan, available plans, trial status. Builds Shopify confirmation URL.', auth: false }
+    ],
+    callouts: [{ level:'info', title:'Action handles plan upgrade', body:'Action creates a Shopify billing charge and redirects to Shopify\'s confirmation, which returns to /app/billing/callback.' }]
+  },
+
+  billing_cb: {
+    url: '/app/billing/callback',
+    kind: 'Resource route — no UI',
+    locked: true,
+    chain: [
+      { file: 'root.tsx', depth: 'depth-0', badges: ['U'], note: 'App shell.' },
+      { file: 'app.tsx', depth: 'depth-1-auth', badges: ['L'], note: '🔒 Auth gate.', outlet: true },
+      { file: 'app.billing.callback.tsx', depth: 'depth-3', leaf: true, badges: ['L'], note: 'Validates charge, activates plan, redirects to /app. No UI.' }
+    ],
+    loaders: [
+      { file: 'app.tsx', desc: 'requireAuth().', auth: true },
+      { file: 'app.billing.callback.tsx', desc: 'Reads charge_id from Shopify redirect, activates plan in DB.', auth: false }
+    ],
+    callouts: [{ level:'warn', title:'No UI — loader redirects immediately', body:'This route never renders. app.tsx\'s <Outlet/> has nothing to render here — the loader does all the work and throws a redirect.' }]
+  },
+
+  settings_layout: {
+    url: '/app/settings (layout wrapper)',
+    kind: 'Layout — not a navigable destination',
+    locked: true,
+    chain: [
+      { file: 'root.tsx', depth: 'depth-0', badges: ['U'], note: 'App shell.' },
+      { file: 'app.tsx', depth: 'depth-1-auth', badges: ['L'], note: '🔒 Auth gate.', outlet: true },
+      { file: 'app.settings.tsx', depth: 'depth-2-layout', badges: ['W'], note: 'Pure layout wrapper — NO loader, NO action. Provides settings chrome, renders <Outlet/>.', outlet: true }
+    ],
+    loaders: [{ file: 'app.tsx', desc: 'requireAuth(). Only loader that fires for this layout.', auth: true }],
+    callouts: [
+      { level:'warn', title:'app.settings.tsx has NO loader', body:'The most common confusion point. Settings chrome renders but fetches nothing. All data comes from whichever child route is active.' },
+      { level:'warn', title:'/app/settings always hits the _index child', body:'Navigating to /app/settings renders app.settings._index.tsx inside this layout — not the layout itself. The layout is never the leaf.' }
+    ]
+  },
+
+  settings_index: {
+    url: '/app/settings',
+    kind: 'Page',
+    locked: true,
+    chain: [
+      { file: 'root.tsx', depth: 'depth-0', badges: ['U'], note: 'App shell.' },
+      { file: 'app.tsx', depth: 'depth-1-auth', badges: ['L'], note: '🔒 Auth gate.', outlet: true },
+      { file: 'app.settings.tsx', depth: 'depth-2-layout', badges: ['W'], note: 'Settings chrome — NO loader. Renders <Outlet/>.', outlet: true },
+      { file: 'app.settings._index.tsx', depth: 'depth-3', leaf: true, badges: ['L','A','U'], note: 'Competitor matching settings.' }
+    ],
+    loaders: [
+      { file: 'app.tsx', desc: 'requireAuth().', auth: true },
+      { file: 'app.settings._index.tsx', desc: 'Loads competitor list, match candidates, merchant config.', auth: false }
+    ],
+    callouts: [
+      { level:'warn', title:'3 files, 2 loaders', body:'root → app.tsx (L) → app.settings.tsx (no loader) → app.settings._index.tsx (L). The layout has no loader — only 2 fire.' },
+      { level:'info', title:'useLoaderData() scope', body:'Inside app.settings._index.tsx, useLoaderData() returns only this file\'s data. Access app.tsx\'s data via useRouteLoaderData("routes/app").' }
+    ]
+  },
+
+  settings_products: {
+    url: '/app/settings/add-products',
+    kind: 'Page',
+    locked: true,
+    chain: [
+      { file: 'root.tsx', depth: 'depth-0', badges: ['U'], note: 'App shell.' },
+      { file: 'app.tsx', depth: 'depth-1-auth', badges: ['L'], note: '🔒 Auth gate.', outlet: true },
+      { file: 'app.settings.tsx', depth: 'depth-2-layout', badges: ['W'], note: 'Settings chrome — no loader.', outlet: true },
+      { file: 'app.settings.add-products.tsx', depth: 'depth-3', leaf: true, badges: ['L','A','U'], note: 'Product selector — browse and pin products to track.' }
+    ],
+    loaders: [
+      { file: 'app.tsx', desc: 'requireAuth().', auth: true },
+      { file: 'app.settings.add-products.tsx', desc: 'Loads tracked products + Shopify product search candidates.', auth: false }
+    ],
+    callouts: []
+  },
+
+  settings_match: {
+    url: '/app/settings/match-competitor',
+    kind: 'Page',
+    locked: true,
+    chain: [
+      { file: 'root.tsx', depth: 'depth-0', badges: ['U'], note: 'App shell.' },
+      { file: 'app.tsx', depth: 'depth-1-auth', badges: ['L'], note: '🔒 Auth gate.', outlet: true },
+      { file: 'app.settings.tsx', depth: 'depth-2-layout', badges: ['W'], note: 'Settings chrome — no loader.', outlet: true },
+      { file: 'app.settings.match-competitor.tsx', depth: 'depth-3', leaf: true, badges: ['L','A','U'], note: 'Manual competitor URL entry + validation.' }
+    ],
+    loaders: [
+      { file: 'app.tsx', desc: 'requireAuth().', auth: true },
+      { file: 'app.settings.match-competitor.tsx', desc: 'Loads existing competitor matches.', auth: false }
+    ],
+    callouts: []
+  },
+
+  onboarding_layout: {
+    url: '/app/onboarding (layout wrapper)',
+    kind: 'Layout — not a navigable destination',
+    locked: true,
+    chain: [
+      { file: 'root.tsx', depth: 'depth-0', badges: ['U'], note: 'App shell.' },
+      { file: 'app.tsx', depth: 'depth-1-auth', badges: ['L'], note: '🔒 Auth gate.', outlet: true },
+      { file: 'app.onboarding.tsx', depth: 'depth-2-layout', badges: ['W'], note: 'Onboarding chrome (step indicator, progress). NO loader — pure layout.', outlet: true }
+    ],
+    loaders: [{ file: 'app.tsx', desc: 'requireAuth(). Only loader for this layout.', auth: true }],
+    callouts: [{ level:'warn', title:'Same no-loader pattern as app.settings.tsx', body:'Layout provides step-progress chrome but fetches nothing. Each onboarding step is its own leaf route with its own loader + action.' }]
+  },
+
+  onboarding_welcome: {
+    url: '/app/onboarding/welcome',
+    kind: 'Page',
+    locked: true,
+    chain: [
+      { file: 'root.tsx', depth: 'depth-0', badges: ['U'], note: 'App shell.' },
+      { file: 'app.tsx', depth: 'depth-1-auth', badges: ['L'], note: '🔒 Auth gate.', outlet: true },
+      { file: 'app.onboarding.tsx', depth: 'depth-2-layout', badges: ['W'], note: 'Onboarding chrome — no loader.', outlet: true },
+      { file: 'app.onboarding.welcome.tsx', depth: 'depth-3', leaf: true, badges: ['L','A','U'], note: 'Step 1 — plan selection.' }
+    ],
+    loaders: [
+      { file: 'app.tsx', desc: 'requireAuth().', auth: true },
+      { file: 'app.onboarding.welcome.tsx', desc: 'Checks if merchant already finished onboarding → redirects to /app if so.', auth: false }
+    ],
+    callouts: []
+  },
+
+  onboarding_urls: {
+    url: '/app/onboarding/urls',
+    kind: 'Page',
+    locked: true,
+    chain: [
+      { file: 'root.tsx', depth: 'depth-0', badges: ['U'], note: 'App shell.' },
+      { file: 'app.tsx', depth: 'depth-1-auth', badges: ['L'], note: '🔒 Auth gate.', outlet: true },
+      { file: 'app.onboarding.tsx', depth: 'depth-2-layout', badges: ['W'], note: 'Onboarding chrome — no loader.', outlet: true },
+      { file: 'app.onboarding.urls.tsx', depth: 'depth-3', leaf: true, badges: ['L','A','U'], note: 'Step 2 — competitor URL entry.' }
+    ],
+    loaders: [
+      { file: 'app.tsx', desc: 'requireAuth().', auth: true },
+      { file: 'app.onboarding.urls.tsx', desc: 'Loads any pre-filled competitor URLs.', auth: false }
+    ],
+    callouts: []
+  },
+
+  onboarding_pending: {
+    url: '/app/onboarding/pending',
+    kind: 'Page',
+    locked: true,
+    chain: [
+      { file: 'root.tsx', depth: 'depth-0', badges: ['U'], note: 'App shell.' },
+      { file: 'app.tsx', depth: 'depth-1-auth', badges: ['L'], note: '🔒 Auth gate.', outlet: true },
+      { file: 'app.onboarding.tsx', depth: 'depth-2-layout', badges: ['W'], note: 'Onboarding chrome — no loader.', outlet: true },
+      { file: 'app.onboarding.pending.tsx', depth: 'depth-3', leaf: true, badges: ['L','A','U'], note: 'Waiting screen — polls crawl progress.' }
+    ],
+    loaders: [
+      { file: 'app.tsx', desc: 'requireAuth().', auth: true },
+      { file: 'app.onboarding.pending.tsx', desc: 'Checks crawl job status. Redirects to /app when complete.', auth: false }
+    ],
+    callouts: [{ level:'info', title:'Polling via fetcher', body:'Uses a fetcher on an interval hitting /api/crawl-status — a resource route, not a loader re-run.' }]
+  },
+
+  api_sidekick: {
+    url: '/api/sidekick',
+    kind: 'Resource route — JSON API',
+    locked: false,
+    chain: [
+      { file: 'api.sidekick.tsx', depth: 'depth-3', leaf: true, badges: ['L'], note: 'Returns JSON for Sidekick iframe. Auth via Authorization header, not app.tsx.' }
+    ],
+    loaders: [{ file: 'api.sidekick.tsx', desc: 'Validates Shopify session token from Authorization header. Returns combined briefing payload.', auth: false }],
+    callouts: [
+      { level:'warn', title:'Manual auth — not inherited', body:'This route is not under app.tsx so the auth gate doesn\'t run. It validates the Shopify session token directly from the Authorization header.' },
+      { level:'info', title:'Called by fetcher, never navigated to', body:'Sidekick uses useFetcher() inside its iframe to hit this endpoint. It never renders UI.' }
+    ]
+  },
+
+  api_crawl: {
+    url: '/api/crawl-status',
+    kind: 'Resource route — JSON',
+    locked: false,
+    chain: [{ file: 'api.crawl-status.tsx', depth: 'depth-3', leaf: true, badges: ['L'], note: 'Returns crawl job status. Polled by onboarding/pending.' }],
+    loaders: [{ file: 'api.crawl-status.tsx', desc: 'Reads pg-boss job status for the requesting merchant.', auth: false }],
+    callouts: []
+  },
+
+  api_health: {
+    url: '/api/health',
+    kind: 'Resource route — JSON',
+    locked: false,
+    chain: [{ file: 'api.health.tsx', depth: 'depth-3', leaf: true, badges: ['L'], note: 'Health check. Returns 200 + uptime.' }],
+    loaders: [{ file: 'api.health.tsx', desc: 'Checks DB connectivity, returns { status: "ok" }.', auth: false }],
+    callouts: []
+  },
+
+  api_validate: {
+    url: '/api/validate-url',
+    kind: 'Resource route — JSON',
+    locked: false,
+    chain: [{ file: 'api.validate-url.tsx', depth: 'depth-3', leaf: true, badges: ['A'], note: 'Validates a competitor URL. Action only.' }],
+    loaders: [],
+    callouts: [{ level:'info', title:'Action-only resource route', body:'No loader — only responds to POST. Returns { valid: bool, reason: string }.' }]
+  }
+};
+
+function badgeHTML(b) {
+  const cls = { L:'L', A:'A', UI:'U', U:'U', W:'W' }[b] || 'L';
+  const label = { UI:'UI' }[b] || b;
+  return `<span class="badge ${cls}">${label}</span>`;
+}
+
+function buildChain(frames) {
+  if (!frames.length) return '';
+
+  function wrap(index) {
+    if (index >= frames.length) return '';
+    const f = frames[index];
+    const isLast = index === frames.length - 1;
+    const badges = (f.badges||[]).map(badgeHTML).join('');
+    const noteHTML = f.note ? `<div style="padding:4px 12px 8px;font-size:11px;color:#6e7681">${f.note}</div>` : '';
+
+    if (isLast || f.leaf) {
+      const cls = f.leaf ? 'leaf-node' : (f.depth || '');
+      return `
+        <div class="${cls}">
+          <div class="contain-header">
+            <span class="c-file">${f.file}</span>
+            <div class="c-tags">${badges}</div>
+          </div>
+          ${noteHTML}
+        </div>`;
+    }
+
+    const inner = wrap(index + 1);
+    const outletLabel = f.outlet ? `<div class="outlet-label">&lt;Outlet/&gt;</div>` : '';
+    return `
+      <div class="contain-root ${f.depth||''}">
+        <div class="contain-header">
+          <span class="c-file">${f.file}</span>
+          <div class="c-tags">${badges}</div>
+        </div>
+        ${noteHTML}
+        <div class="contain-inner">
+          ${outletLabel}
+          ${inner}
+        </div>
+      </div>`;
+  }
+
+  return wrap(0);
+}
+
+function sel(id) {
+  document.querySelectorAll('.tree-url').forEach(n => n.classList.remove('active'));
+  const node = document.getElementById('n-' + id);
+  if (node) node.classList.add('active');
+
+  const r = DATA[id];
+  if (!r) return;
+
+  const chainHTML = buildChain(r.chain);
+
+  const loadersHTML = r.loaders.length === 0
+    ? '<div style="font-size:12px;color:#6e7681;padding:4px 0">No loaders — action or redirect only.</div>'
+    : r.loaders.map((l, i) => `
+      <div class="loader-row ${l.auth ? 'has-auth' : ''}">
+        <div class="loader-num">${i + 1}</div>
+        <div class="loader-info">
+          <div class="loader-file">${l.file}</div>
+          <div class="loader-desc">${l.desc}</div>
+          ${l.auth ? '<div class="loader-auth-tag">🔒 auth gate — fires first on every /app/* request</div>' : ''}
+        </div>
+      </div>`).join('');
+
+  const calloutsHTML = r.callouts.length === 0 ? '' : `
+    <div class="insp-section">
+      <h3>Watch out for</h3>
+      <div class="callout-list">
+        ${r.callouts.map(c => `
+          <div class="callout ${c.level}">
+            <div class="c-title">${c.title}</div>
+            <div class="c-body">${c.body}</div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+
+  document.getElementById('inspector').innerHTML = `
+    <div class="url-title">
+      <span class="url-path">${r.url}</span>
+      ${r.locked ? '<span class="lock-indicator">🔒 auth gated</span>' : ''}
+      <span class="route-kind">${r.kind}</span>
+    </div>
+
+    <div class="insp-section">
+      <h3>Render chain — what actually renders (outermost → leaf)</h3>
+      ${chainHTML}
+    </div>
+
+    <div class="insp-section">
+      <h3>Loaders that fire (in order)</h3>
+      <div class="loader-list">${loadersHTML}</div>
+    </div>
+
+    ${calloutsHTML}
+  `;
+}
+
+// URL search
+const URL_MAP = {
+  '/': 'root_index', '/webhooks': 'webhooks',
+  '/auth/login': 'auth_login', '/auth/callback': 'auth_cb',
+  '/app': 'app_index', '/app/billing': 'billing',
+  '/app/billing/callback': 'billing_cb',
+  '/app/settings': 'settings_index',
+  '/app/settings/add-products': 'settings_products',
+  '/app/settings/match-competitor': 'settings_match',
+  '/app/onboarding': 'onboarding_layout',
+  '/app/onboarding/welcome': 'onboarding_welcome',
+  '/app/onboarding/urls': 'onboarding_urls',
+  '/app/onboarding/pending': 'onboarding_pending',
+  '/api/sidekick': 'api_sidekick',
+  '/api/crawl-status': 'api_crawl',
+  '/api/health': 'api_health',
+  '/api/validate-url': 'api_validate'
+};
+
+function filterByUrl(val) {
+  const v = val.toLowerCase().trim();
+  if (!v) { document.querySelectorAll('.tree-url').forEach(n => n.style.opacity = '1'); return; }
+  document.querySelectorAll('.tree-url').forEach(n => {
+    const text = n.innerText.toLowerCase();
+    n.style.opacity = text.includes(v) ? '1' : '0.25';
+  });
+  const exact = URL_MAP[v] || URL_MAP[v.replace(/\/$/, '')];
+  if (exact) sel(exact);
+}
+
+document.getElementById('url-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    const exact = URL_MAP[this.value] || URL_MAP[this.value.replace(/\/$/, '')];
+    if (exact) sel(exact);
+  }
+});
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+
+  if (tab === 'routes') {
+    document.getElementById('routes-tab').style.display = 'flex';
+    document.getElementById('guide-tab').classList.remove('visible');
+    document.getElementById('url-search-bar').style.display = 'flex';
+    document.getElementById('legend-bar').style.display = 'flex';
+  } else {
+    document.getElementById('routes-tab').style.display = 'none';
+    document.getElementById('guide-tab').classList.add('visible');
+    document.getElementById('url-search-bar').style.display = 'none';
+    document.getElementById('legend-bar').style.display = 'none';
+  }
+}
+</script>
+</body>
+</html>

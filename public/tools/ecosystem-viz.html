@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shelf — App Ecosystem</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  background: #0d1117;
+  color: #c9d1d9;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+header {
+  padding: 10px 20px;
+  border-bottom: 1px solid #21262d;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.logo { color: #58a6ff; font-weight: 700; font-size: 13px; }
+.project { color: #6e7681; font-size: 12px; }
+.legend { display: flex; gap: 16px; margin-left: auto; align-items: center; }
+.leg { display: flex; align-items: center; gap: 5px; font-size: 10px; color: #6e7681; }
+.leg-line { width: 20px; height: 2px; border-radius: 1px; }
+.leg-line.read     { background: #58a6ff; }
+.leg-line.write    { background: #e3b341; }
+.leg-line.trigger  { background: #d2a8ff; }
+.leg-line.model    { background: #56d364; }
+.leg-line.external { border-top: 2px dashed #6e7681; height: 0; width: 20px; }
+
+.ecosystem-wrap { flex: 1; overflow: auto; position: relative; }
+
+.ecosystem {
+  display: flex;
+  min-height: 100%;
+  position: relative;
+  padding: 24px 20px;
+  gap: 48px;
+}
+
+#svg-lines {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 200px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.col-header {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #6e7681;
+  padding: 0 0 8px;
+  border-bottom: 1px solid #21262d;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.node {
+  border: 1px solid #21262d;
+  border-radius: 8px;
+  padding: 9px 11px;
+  background: #0d1117;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.node:hover, .node.highlighted { border-color: #30363d; background: #161b22; }
+.node.dimmed { opacity: 0.2; }
+
+.node .node-label { font-size: 12px; color: #e6edf3; font-weight: 500; margin-bottom: 3px; }
+.node .node-sub   { font-size: 10px; color: #6e7681; margin-bottom: 6px; line-height: 1.4; }
+.node .node-badges { display: flex; gap: 3px; flex-wrap: wrap; }
+
+.badge { font-size: 9px; font-weight: 700; padding: 1px 4px; border-radius: 3px; }
+.badge-L  { background: #0d419d; color: #79c0ff; }
+.badge-A  { background: #3d2b00; color: #e3b341; }
+.badge-UI { background: #0f2d1a; color: #56d364; }
+
+.col-routes .node { border-left: 3px solid #1f4068; }
+.col-db .node     { border-left: 3px solid #1a3000; }
+.col-ai .node     { border-left: 3px solid #2d1b69; }
+.col-ext .node    { border-left: 3px solid #3d1500; }
+
+.col-routes .node .node-label { color: #79c0ff; }
+.col-db .node .node-label     { color: #56d364; }
+.col-ai .node .node-label     { color: #d2a8ff; }
+.col-ext .node .node-label    { color: #e3b341; }
+
+/* ── Info panel ── */
+.info-panel {
+  width: 300px;
+  flex-shrink: 0;
+  border-left: 1px solid #21262d;
+  overflow-y: auto;
+  z-index: 2;
+  background: #0d1117;
+}
+
+.info-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #6e7681;
+  font-size: 12px;
+  text-align: center;
+  padding: 40px 20px;
+  line-height: 1.8;
+}
+
+/* Info panel sections */
+.ip-node-header {
+  padding: 16px 16px 12px;
+  border-bottom: 1px solid #21262d;
+}
+
+.ip-layer-tag {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 2px 7px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+.tag-routes  { background: #0d2d6e; color: #79c0ff; }
+.tag-db      { background: #0a2000; color: #56d364; }
+.tag-ai      { background: #1a0d3d; color: #d2a8ff; }
+.tag-ext     { background: #3d1500; color: #e3b341; }
+
+.ip-title { font-size: 14px; color: #e6edf3; font-weight: 600; margin-bottom: 4px; }
+.ip-file  { font-size: 10px; color: #6e7681; margin-bottom: 8px; }
+
+.ip-badges { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 4px; }
+
+.ip-auth {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 10px;
+  background: #1a1200;
+  border: 1px solid #3d3000;
+  color: #e3b341;
+}
+
+.ip-section {
+  padding: 12px 16px;
+  border-bottom: 1px solid #21262d;
+}
+
+.ip-section-title {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6e7681;
+  margin-bottom: 8px;
+}
+
+/* Key-value rows */
+.kv-list { display: flex; flex-direction: column; gap: 5px; }
+.kv-row { display: flex; gap: 8px; font-size: 11px; align-items: baseline; }
+.kv-key { color: #6e7681; flex-shrink: 0; min-width: 70px; }
+.kv-val { color: #c9d1d9; }
+.kv-val.mono { color: #79c0ff; font-size: 10px; }
+.kv-val.green { color: #56d364; }
+.kv-val.purple { color: #d2a8ff; }
+.kv-val.orange { color: #e3b341; }
+
+/* Data shape pills */
+.shape-list { display: flex; flex-direction: column; gap: 4px; }
+.shape-item {
+  font-size: 10px;
+  padding: 3px 8px;
+  background: #161b22;
+  border: 1px solid #21262d;
+  border-radius: 4px;
+  color: #8b949e;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.shape-item .shape-type { color: #d2a8ff; }
+.shape-item .shape-name { color: #c9d1d9; }
+
+/* Connections */
+.conn-list { display: flex; flex-direction: column; gap: 5px; }
+.conn-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 7px 10px;
+  background: #161b22;
+  border-radius: 6px;
+  border: 1px solid #21262d;
+  font-size: 11px;
+}
+.conn-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.conn-dot.read      { background: #58a6ff; }
+.conn-dot.write     { background: #e3b341; }
+.conn-dot.readwrite { background: #a57bff; }
+.conn-dot.trigger   { background: #d2a8ff; }
+.conn-dot.model     { background: #56d364; }
+.conn-dot.external  { background: #6e7681; }
+.conn-dir   { color: #6e7681; flex-shrink: 0; }
+.conn-body  { flex: 1; }
+.conn-target { color: #e6edf3; font-weight: 500; }
+.conn-label { color: #6e7681; font-size: 10px; margin-top: 1px; }
+
+/* column count chips */
+.count-chips { display: flex; gap: 6px; }
+.chip {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: #161b22;
+  border: 1px solid #21262d;
+  color: #8b949e;
+}
+.chip strong { color: #c9d1d9; }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="logo">⬡ Ecosystem</span>
+  <span class="project">shelf — cross-layer dependency map</span>
+  <div class="legend">
+    <div class="leg"><div class="leg-line read"></div> reads</div>
+    <div class="leg"><div class="leg-line write"></div> writes</div>
+    <div class="leg"><div class="leg-line trigger"></div> triggers</div>
+    <div class="leg"><div class="leg-line model"></div> model call</div>
+    <div class="leg"><div class="leg-line external"></div> external</div>
+  </div>
+</header>
+
+<div style="display:flex;flex:1;overflow:hidden">
+
+<div class="ecosystem-wrap">
+<div class="ecosystem" id="ecosystem">
+  <svg id="svg-lines"></svg>
+
+  <!-- ROUTES -->
+  <div class="col col-routes">
+    <div class="col-header">🗺 Routes</div>
+    <div class="node" id="n-app"><div class="node-label">/app</div><div class="node-sub">app._index.tsx</div><div class="node-badges"><span class="badge badge-L">L</span><span class="badge badge-A">A</span><span class="badge badge-UI">UI</span></div></div>
+    <div class="node" id="n-onboarding"><div class="node-label">/app/onboarding/*</div><div class="node-sub">6 step routes</div><div class="node-badges"><span class="badge badge-L">L</span><span class="badge badge-A">A</span><span class="badge badge-UI">UI</span></div></div>
+    <div class="node" id="n-billing"><div class="node-label">/app/billing</div><div class="node-sub">app.billing.tsx</div><div class="node-badges"><span class="badge badge-L">L</span><span class="badge badge-A">A</span><span class="badge badge-UI">UI</span></div></div>
+    <div class="node" id="n-sidekick"><div class="node-label">/api/sidekick</div><div class="node-sub">api.sidekick.tsx</div><div class="node-badges"><span class="badge badge-L">L</span></div></div>
+    <div class="node" id="n-crawl-status"><div class="node-label">/api/crawl-status</div><div class="node-sub">api.crawl-status.tsx</div><div class="node-badges"><span class="badge badge-L">L</span></div></div>
+    <div class="node" id="n-webhooks"><div class="node-label">/webhooks</div><div class="node-sub">webhooks.tsx</div><div class="node-badges"><span class="badge badge-A">A</span></div></div>
+    <div class="node" id="n-auth"><div class="node-label">/auth/*</div><div class="node-sub">auth.*.tsx</div><div class="node-badges"><span class="badge badge-L">L</span><span class="badge badge-A">A</span></div></div>
+  </div>
+
+  <!-- DATABASE -->
+  <div class="col col-db">
+    <div class="col-header">🗄 Database</div>
+    <div class="node" id="n-merchants"><div class="node-label">merchants</div><div class="node-sub">session · plan · config</div></div>
+    <div class="node" id="n-products"><div class="node-label">products</div><div class="node-sub">tracked SKUs</div></div>
+    <div class="node" id="n-competitors"><div class="node-label">competitors</div><div class="node-sub">URLs · homepage extras</div></div>
+    <div class="node" id="n-briefings"><div class="node-label">briefings</div><div class="node-sub">AI output · per cycle</div></div>
+    <div class="node" id="n-jobs"><div class="node-label">crawl_jobs</div><div class="node-sub">pg-boss queue</div></div>
+  </div>
+
+  <!-- AI LAYER -->
+  <div class="col col-ai">
+    <div class="col-header">🤖 AI Layer</div>
+    <div class="node" id="n-crawl-py"><div class="node-label">crawl pipeline</div><div class="node-sub">Python · ECS task</div></div>
+    <div class="node" id="n-layer4"><div class="node-label">Layer 4 prompt</div><div class="node-sub">crawl/prompts/</div></div>
+    <div class="node" id="n-model"><div class="node-label">claude-3-5-sonnet</div><div class="node-sub">anthropic model</div></div>
+    <div class="node" id="n-schema"><div class="node-label">briefing schema</div><div class="node-sub">JSON output shape</div></div>
+  </div>
+
+  <!-- EXTERNAL -->
+  <div class="col col-ext">
+    <div class="col-header">🌐 External</div>
+    <div class="node" id="n-shopify-admin"><div class="node-label">Shopify Admin API</div><div class="node-sub">product catalogue</div></div>
+    <div class="node" id="n-shopify-billing"><div class="node-label">Shopify Billing API</div><div class="node-sub">subscriptions</div></div>
+    <div class="node" id="n-shopify-oauth"><div class="node-label">Shopify OAuth</div><div class="node-sub">app install · token</div></div>
+    <div class="node" id="n-shopify-hooks"><div class="node-label">Shopify Webhooks</div><div class="node-sub">inbound events</div></div>
+    <div class="node" id="n-anthropic"><div class="node-label">Anthropic API</div><div class="node-sub">claude-3-5-sonnet</div></div>
+    <div class="node" id="n-playwright"><div class="node-label">Playwright / web</div><div class="node-sub">headless crawl</div></div>
+  </div>
+</div>
+</div>
+
+<!-- INFO PANEL -->
+<div class="info-panel" id="info-panel">
+  <div class="info-empty" id="info-empty">← Hover any node<br>to inspect it</div>
+  <div id="info-content" style="display:none"></div>
+</div>
+
+</div>
+
+<script>
+// ── Rich node metadata ──────────────────────────────────────────
+const NODE_DATA = {
+  'n-app': {
+    layer: 'routes', label: '/app', tag: 'Route',
+    file: 'app/routes/app._index.tsx',
+    auth: true, badges: ['L','A','UI'],
+    chain: ['root.tsx', 'app.tsx 🔒', 'app._index.tsx'],
+    loaderReturns: [
+      { type: 'Merchant',      name: 'merchant' },
+      { type: 'Product[]',     name: 'products' },
+      { type: 'Competitor[]',  name: 'competitors' },
+      { type: 'Briefing',      name: 'latestBriefing' },
+      { type: 'JobStatus',     name: 'crawlStatus' },
+    ],
+    actionDoes: ['Enqueues crawl job via pg-boss', 'Returns updated crawl status'],
+  },
+  'n-onboarding': {
+    layer: 'routes', label: '/app/onboarding/*', tag: 'Route group',
+    file: 'app/routes/app.onboarding.*.tsx (6 files)',
+    auth: true, badges: ['L','A','UI'],
+    chain: ['root.tsx', 'app.tsx 🔒', 'app.onboarding.tsx (layout)', '<step>.tsx'],
+    loaderReturns: [
+      { type: 'Merchant',     name: 'merchant' },
+      { type: 'Product[]',    name: 'shopifyProducts' },
+      { type: 'JobStatus',    name: 'crawlStatus' },
+    ],
+    actionDoes: ['Writes merchant config', 'Writes initial competitors', 'Advances onboarding step'],
+  },
+  'n-billing': {
+    layer: 'routes', label: '/app/billing', tag: 'Route',
+    file: 'app/routes/app.billing.tsx',
+    auth: true, badges: ['L','A','UI'],
+    chain: ['root.tsx', 'app.tsx 🔒', 'app.billing.tsx'],
+    loaderReturns: [
+      { type: 'Merchant',  name: 'merchant' },
+      { type: 'Plan[]',    name: 'availablePlans' },
+      { type: 'string',    name: 'confirmationUrl' },
+    ],
+    actionDoes: ['Creates Shopify billing charge', 'Redirects to Shopify confirmation'],
+  },
+  'n-sidekick': {
+    layer: 'routes', label: '/api/sidekick', tag: 'Resource route',
+    file: 'app/routes/api.sidekick.tsx',
+    auth: false, authNote: 'Manual — validates Shopify session token from Authorization header',
+    badges: ['L'],
+    chain: ['api.sidekick.tsx (no root layout)'],
+    loaderReturns: [
+      { type: 'Briefing',      name: 'briefing' },
+      { type: 'Competitor[]',  name: 'competitors' },
+      { type: 'MarketOverview',name: 'market' },
+    ],
+    actionDoes: [],
+  },
+  'n-crawl-status': {
+    layer: 'routes', label: '/api/crawl-status', tag: 'Resource route',
+    file: 'app/routes/api.crawl-status.tsx',
+    auth: false, badges: ['L'],
+    chain: ['api.crawl-status.tsx'],
+    loaderReturns: [
+      { type: 'JobStatus', name: 'status' },
+      { type: 'number',    name: 'progress' },
+    ],
+    actionDoes: [],
+    note: 'Polled by onboarding/pending on an interval via useFetcher()',
+  },
+  'n-webhooks': {
+    layer: 'routes', label: '/webhooks', tag: 'Resource route',
+    file: 'app/routes/webhooks.tsx',
+    auth: false, authNote: 'HMAC signature verified in action before processing',
+    badges: ['A'],
+    chain: ['webhooks.tsx (no root layout)'],
+    loaderReturns: [],
+    actionDoes: ['Validates Shopify HMAC', 'Handles app/uninstalled → deletes merchant', 'Handles shop/update → syncs merchant record'],
+    note: 'Inbound from Shopify. No UI — action returns raw Response.',
+  },
+  'n-auth': {
+    layer: 'routes', label: '/auth/*', tag: 'Route group',
+    file: 'app/routes/auth.*.tsx',
+    auth: false, badges: ['L','A'],
+    chain: ['root.tsx', 'auth.login / auth.callback'],
+    loaderReturns: [{ type: 'redirect', name: '→ Shopify OAuth URL' }],
+    actionDoes: ['Exchanges OAuth code for token', 'Upserts merchant record', 'Redirects to /app'],
+    note: 'Siblings of app.tsx — outside the auth gate by design.',
+  },
+
+  // Database
+  'n-merchants': {
+    layer: 'db', label: 'merchants', tag: 'Table',
+    columns: [
+      { name: 'id',                   type: 'uuid' },
+      { name: 'shopify_domain',        type: 'text' },
+      { name: 'access_token',          type: 'text' },
+      { name: 'plan_name',             type: 'text' },
+      { name: 'prompt_version',        type: 'text' },
+      { name: 'onboarding_complete',   type: 'bool' },
+    ],
+    relations: ['→ products (1:many)', '→ competitors (1:many)', '→ briefings (1:many)'],
+    note: 'Most-read table in the app. Central to every auth-gated route.',
+  },
+  'n-products': {
+    layer: 'db', label: 'products', tag: 'Table',
+    columns: [
+      { name: 'id',           type: 'uuid' },
+      { name: 'merchant_id',  type: 'uuid FK' },
+      { name: 'shopify_id',   type: 'text' },
+      { name: 'title',        type: 'text' },
+      { name: 'price',        type: 'numeric' },
+      { name: 'pinned',       type: 'bool' },
+    ],
+    relations: ['← merchants (many:1)'],
+  },
+  'n-competitors': {
+    layer: 'db', label: 'competitors', tag: 'Table',
+    columns: [
+      { name: 'id',              type: 'uuid' },
+      { name: 'merchant_id',     type: 'uuid FK' },
+      { name: 'url',             type: 'text' },
+      { name: 'name',            type: 'text' },
+      { name: 'homepage_extras', type: 'jsonb' },
+      { name: 'last_crawled_at', type: 'timestamptz' },
+    ],
+    relations: ['← merchants (many:1)'],
+    note: 'homepage_extras stores Playwright-enriched data: SDK tags, promo banners, badges.',
+  },
+  'n-briefings': {
+    layer: 'db', label: 'briefings', tag: 'Table',
+    columns: [
+      { name: 'id',           type: 'uuid' },
+      { name: 'merchant_id',  type: 'uuid FK' },
+      { name: 'payload',      type: 'jsonb' },
+      { name: 'prompt_ver',   type: 'text' },
+      { name: 'created_at',   type: 'timestamptz' },
+    ],
+    relations: ['← merchants (many:1)'],
+    note: 'Written by crawl pipeline, read by /app and /api/sidekick. The core product output.',
+  },
+  'n-jobs': {
+    layer: 'db', label: 'crawl_jobs', tag: 'Table (pg-boss)',
+    columns: [
+      { name: 'id',          type: 'uuid' },
+      { name: 'name',        type: 'text' },
+      { name: 'data',        type: 'jsonb' },
+      { name: 'state',       type: 'enum' },
+      { name: 'created_on',  type: 'timestamptz' },
+    ],
+    relations: [],
+    note: 'Bridge between routes and the crawl pipeline. Routes enqueue, ECS dequeues. pg-boss handles retries + dead-letter.',
+  },
+
+  // AI
+  'n-crawl-py': {
+    layer: 'ai', label: 'Crawl pipeline', tag: 'Process',
+    file: 'crawl/main.py',
+    runtime: 'Python 3.11 · AWS ECS Fargate',
+    layers: ['Layer 0: URL fetch', 'Layer 1: HTML parse', 'Layer 2: Playwright extras', 'Layer 3: data assembly', 'Layer 4: LLM briefing'],
+    note: 'Dequeues a pg-boss job, runs the full 5-layer pipeline, writes briefing to DB. Triggered by routes, not called directly.',
+  },
+  'n-layer4': {
+    layer: 'ai', label: 'Layer 4 prompt', tag: 'System prompt',
+    file: 'crawl/system_prompt.txt',
+    version: 'v3.0.2',
+    model: 'claude-3-5-sonnet-20241022',
+    inputShape: [
+      { type: 'Product[]',    name: 'trackedProducts' },
+      { type: 'Competitor[]', name: 'competitors' },
+      { type: 'PriceData[]',  name: 'priceSignals' },
+      { type: 'string',       name: 'merchantContext' },
+    ],
+    outputShape: [
+      { type: 'BriefingCard[]', name: 'cards' },
+      { type: 'string',         name: 'cycleLabel' },
+      { type: 'Insight[]',      name: 'insights' },
+    ],
+    note: 'The only LLM-facing surface in the app. All briefing intelligence lives here.',
+  },
+  'n-model': {
+    layer: 'ai', label: 'claude-3-5-sonnet', tag: 'Model',
+    modelId: 'claude-3-5-sonnet-20241022',
+    provider: 'Anthropic',
+    contextWindow: '200k tokens',
+    outputFormat: 'Structured JSON via tool_use',
+    calledBy: 'crawl/main.py (Layer 4 only)',
+    note: 'Never called directly by routes. Only the Python pipeline touches it.',
+  },
+  'n-schema': {
+    layer: 'ai', label: 'Briefing schema', tag: 'Output contract',
+    file: 'crawl/schemas/briefing_v3.py',
+    version: 'v3',
+    fields: [
+      { type: 'string',         name: 'cycleLabel' },
+      { type: 'BriefingCard[]', name: 'cards' },
+      { type: 'Insight[]',      name: 'insights' },
+      { type: 'string',         name: 'promptVersion' },
+    ],
+    note: 'Defines what the dashboard can render. Changing this schema requires a migration + dashboard update.',
+  },
+
+  // External
+  'n-shopify-admin': {
+    layer: 'ext', label: 'Shopify Admin API', tag: 'External API',
+    protocol: 'GraphQL',
+    auth: 'Access token (from OAuth)',
+    direction: 'Outbound',
+    endpoints: ['products.list', 'shop.get'],
+    calledBy: ['/app/onboarding/*'],
+    rateLimits: '2 req/s (leaky bucket)',
+  },
+  'n-shopify-billing': {
+    layer: 'ext', label: 'Shopify Billing API', tag: 'External API',
+    protocol: 'REST',
+    auth: 'Access token',
+    direction: 'Outbound',
+    endpoints: ['RecurringApplicationCharge.create', 'RecurringApplicationCharge.get'],
+    calledBy: ['/app/billing'],
+    note: 'Shopify hosts the payment UI. Shelf only creates the charge + handles the callback.',
+  },
+  'n-shopify-oauth': {
+    layer: 'ext', label: 'Shopify OAuth', tag: 'External API',
+    protocol: 'OAuth 2.0',
+    auth: 'Client ID + Secret',
+    direction: 'Outbound',
+    endpoints: ['authorize', 'access_token'],
+    calledBy: ['/auth/*'],
+    note: 'Standard Shopify OAuth install flow. Token stored in merchants.access_token.',
+  },
+  'n-shopify-hooks': {
+    layer: 'ext', label: 'Shopify Webhooks', tag: 'External (inbound)',
+    protocol: 'HTTPS POST',
+    auth: 'HMAC-SHA256 verified',
+    direction: 'Inbound → /webhooks',
+    endpoints: ['app/uninstalled', 'shop/update', 'app/subscriptions/approaching_capped_amount'],
+    note: 'Shopify pushes to our /webhooks route. Direction is reversed — external → us.',
+  },
+  'n-anthropic': {
+    layer: 'ext', label: 'Anthropic API', tag: 'External API',
+    protocol: 'REST',
+    auth: 'API key (ANTHROPIC_API_KEY)',
+    direction: 'Outbound',
+    endpoints: ['messages.create (tool_use)'],
+    calledBy: ['crawl pipeline (ECS)'],
+    note: 'Never called by routes directly. Isolated inside the Python pipeline.',
+  },
+  'n-playwright': {
+    layer: 'ext', label: 'Playwright / web', tag: 'External (headless)',
+    protocol: 'HTTP/HTTPS via headless browser',
+    auth: 'None — public web crawl',
+    direction: 'Outbound',
+    endpoints: ['competitor homepages (public URLs)'],
+    calledBy: ['crawl pipeline Layer 0–2'],
+    note: 'Fetches competitor pages. playwright_extra.py handles SDK detection, promo banners, badge scraping.',
+  },
+};
+
+// ── Edges ──────────────────────────────────────────────────────
+const EDGES = [
+  { from: 'n-app', to: 'n-merchants',       type: 'read',    label: 'reads merchant + plan' },
+  { from: 'n-app', to: 'n-products',        type: 'read',    label: 'reads tracked SKUs' },
+  { from: 'n-app', to: 'n-competitors',     type: 'read',    label: 'reads competitor list' },
+  { from: 'n-app', to: 'n-briefings',       type: 'read',    label: 'reads latest briefing' },
+  { from: 'n-app', to: 'n-jobs',            type: 'write',   label: 'enqueues crawl job' },
+  { from: 'n-onboarding', to: 'n-merchants',    type: 'write',    label: 'writes onboarding state' },
+  { from: 'n-onboarding', to: 'n-competitors',  type: 'write',    label: 'writes initial competitors' },
+  { from: 'n-onboarding', to: 'n-products',     type: 'write',    label: 'writes pinned products' },
+  { from: 'n-onboarding', to: 'n-shopify-admin', type: 'external', label: 'fetches product catalogue' },
+  { from: 'n-billing', to: 'n-merchants',        type: 'readwrite', label: 'reads + updates plan' },
+  { from: 'n-billing', to: 'n-shopify-billing',  type: 'external',  label: 'creates billing charge' },
+  { from: 'n-sidekick', to: 'n-briefings',   type: 'read', label: 'serves briefing to iframe' },
+  { from: 'n-sidekick', to: 'n-competitors', type: 'read', label: 'reads competitor profiles' },
+  { from: 'n-crawl-status', to: 'n-jobs',    type: 'read', label: 'polls job status' },
+  { from: 'n-shopify-hooks', to: 'n-webhooks', type: 'external', label: 'pushes events inbound', reverse: true },
+  { from: 'n-webhooks', to: 'n-merchants',     type: 'write',    label: 'updates on uninstall/update' },
+  { from: 'n-auth', to: 'n-merchants',      type: 'write',    label: 'upserts merchant on install' },
+  { from: 'n-auth', to: 'n-shopify-oauth',  type: 'external', label: 'OAuth token exchange' },
+  { from: 'n-jobs',     to: 'n-crawl-py',   type: 'trigger', label: 'ECS task dequeues job' },
+  { from: 'n-crawl-py', to: 'n-layer4',     type: 'trigger', label: 'runs Layer 4 prompt' },
+  { from: 'n-crawl-py', to: 'n-playwright', type: 'trigger', label: 'runs Layer 0–2 crawl' },
+  { from: 'n-layer4',  to: 'n-model',       type: 'model',   label: 'prompt → model call' },
+  { from: 'n-model',   to: 'n-schema',      type: 'model',   label: 'structured JSON output' },
+  { from: 'n-model',   to: 'n-anthropic',   type: 'external', label: 'API call' },
+  { from: 'n-schema',   to: 'n-briefings',   type: 'write', label: 'writes briefing output', reverse: true },
+  { from: 'n-crawl-py', to: 'n-competitors', type: 'write', label: 'enriches competitor data', reverse: true },
+];
+
+// ── SVG drawing ────────────────────────────────────────────────
+const eco  = document.getElementById('ecosystem');
+const svg  = document.getElementById('svg-lines');
+const wrap = document.querySelector('.ecosystem-wrap');
+
+const TYPE_COLOR = { read:'#58a6ff', write:'#e3b341', readwrite:'#a57bff', trigger:'#d2a8ff', model:'#56d364', external:'#6e7681' };
+const TYPE_DASH  = { read:'4,3', external:'5,4' };
+
+function pos(id) {
+  const el = document.getElementById(id);
+  if (!el) return null;
+  const er = el.getBoundingClientRect();
+  const cr = eco.getBoundingClientRect();
+  const sl = wrap.scrollLeft, st = wrap.scrollTop;
+  return {
+    left: er.left - cr.left + sl, right: er.right - cr.left + sl,
+    top:  er.top  - cr.top  + st, bottom: er.bottom - cr.top + st,
+    cy: er.top - cr.top + st + er.height / 2,
+    cx: er.left - cr.left + sl + er.width / 2,
+  };
+}
+
+function drawEdges(activeId) {
+  svg.innerHTML = '';
+  svg.setAttribute('height', eco.scrollHeight);
+
+  EDGES.forEach(e => {
+    const f = pos(e.from), t = pos(e.to);
+    if (!f || !t) return;
+
+    const color = TYPE_COLOR[e.type] || '#6e7681';
+    const dash  = TYPE_DASH[e.type] || '';
+    const rev   = e.reverse || (f.cx > t.cx);
+
+    const x1 = rev ? f.left  : f.right;
+    const y1 = f.cy;
+    const x2 = rev ? t.right : t.left;
+    const y2 = t.cy;
+
+    const dx = Math.abs(x2 - x1);
+    const cp = Math.max(dx * 0.5, 40);
+    const d = rev
+      ? `M ${x1} ${y1} C ${x1 - cp} ${y1}, ${x2 + cp} ${y2}, ${x2} ${y2}`
+      : `M ${x1} ${y1} C ${x1 + cp} ${y1}, ${x2 - cp} ${y2}, ${x2} ${y2}`;
+
+    const lit = activeId && (e.from === activeId || e.to === activeId);
+    const op  = activeId ? (lit ? 0.85 : 0.04) : 0.3;
+
+    if (lit) {
+      const glow = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      glow.setAttribute('d', d); glow.setAttribute('fill', 'none');
+      glow.setAttribute('stroke', color); glow.setAttribute('stroke-width', '8');
+      glow.setAttribute('stroke-opacity', '0.12'); glow.setAttribute('stroke-linecap', 'round');
+      svg.appendChild(glow);
+    }
+
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', d); path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', color);
+    path.setAttribute('stroke-width', lit ? '2' : '1.5');
+    path.setAttribute('stroke-opacity', op);
+    path.setAttribute('stroke-linecap', 'round');
+    if (dash) path.setAttribute('stroke-dasharray', dash);
+    svg.appendChild(path);
+
+    // arrowhead
+    const ang = Math.atan2(y2 - y1, x2 - x1);
+    const as = 6;
+    const arrow = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+    arrow.setAttribute('points', `${x2},${y2} ${x2 - as * Math.cos(ang - 0.4)},${y2 - as * Math.sin(ang - 0.4)} ${x2 - as * Math.cos(ang + 0.4)},${y2 - as * Math.sin(ang + 0.4)}`);
+    arrow.setAttribute('fill', color);
+    arrow.setAttribute('fill-opacity', op * 1.5);
+    svg.appendChild(arrow);
+  });
+}
+
+// ── Info panel rendering ───────────────────────────────────────
+const LAYER_TAG_CLASS = { routes: 'tag-routes', db: 'tag-db', ai: 'tag-ai', ext: 'tag-ext' };
+const LAYER_LABEL     = { routes: 'Route', db: 'Database', ai: 'AI Layer', ext: 'External' };
+
+function section(title, inner) {
+  return `<div class="ip-section"><div class="ip-section-title">${title}</div>${inner}</div>`;
+}
+
+function shapeList(items) {
+  return `<div class="shape-list">${items.map(i =>
+    `<div class="shape-item"><span class="shape-type">${i.type}</span><span class="shape-name">${i.name}</span></div>`
+  ).join('')}</div>`;
+}
+
+function kvList(rows) {
+  return `<div class="kv-list">${rows.map(r =>
+    `<div class="kv-row"><span class="kv-key">${r.k}</span><span class="kv-val ${r.cls||''}">${r.v}</span></div>`
+  ).join('')}</div>`;
+}
+
+function renderRoute(d) {
+  let out = '';
+  const authHTML = d.auth
+    ? `<div class="ip-auth">🔒 auth gated via app.tsx</div>`
+    : d.authNote
+    ? `<div class="ip-auth" style="background:#0a1a00;border-color:#1a3000;color:#56d364">⚡ ${d.authNote}</div>`
+    : `<div class="ip-auth" style="background:#001a0a;border-color:#0f3d1f;color:#56d364">✓ public route</div>`;
+
+  out += `<div class="ip-section">${authHTML}</div>`;
+
+  if (d.chain) {
+    out += section('Render chain',
+      `<div class="kv-list">${d.chain.map((f,i) =>
+        `<div class="kv-row"><span class="kv-key" style="color:#6e7681">${i+1}</span><span class="kv-val mono">${f}</span></div>`
+      ).join('')}</div>`);
+  }
+
+  if (d.loaderReturns?.length) {
+    out += section('Loader returns', shapeList(d.loaderReturns));
+  }
+
+  if (d.actionDoes?.length) {
+    out += section('Action does',
+      `<div class="shape-list">${d.actionDoes.map(a =>
+        `<div class="shape-item"><span class="shape-name" style="color:#e3b341">${a}</span></div>`
+      ).join('')}</div>`);
+  }
+
+  if (d.note) {
+    out += section('Note', `<div style="font-size:11px;color:#6e7681;line-height:1.6">${d.note}</div>`);
+  }
+  return out;
+}
+
+function renderDb(d) {
+  let out = '';
+  if (d.columns) {
+    const connEdges = EDGES.filter(e => e.to === currentNode || e.from === currentNode);
+    const readCount  = EDGES.filter(e => e.to === currentNode && e.type === 'read').length;
+    const writeCount = EDGES.filter(e => e.to === currentNode && (e.type === 'write' || e.type === 'readwrite')).length;
+    out += section('Access pattern',
+      `<div class="count-chips">
+        <div class="chip"><strong>${readCount}</strong> readers</div>
+        <div class="chip"><strong>${writeCount}</strong> writers</div>
+      </div>`);
+    out += section('Key columns',
+      `<div class="shape-list">${d.columns.map(c =>
+        `<div class="shape-item"><span class="shape-type">${c.type}</span><span class="shape-name">${c.name}</span></div>`
+      ).join('')}</div>`);
+  }
+  if (d.relations?.length) {
+    out += section('Relations',
+      `<div class="kv-list">${d.relations.map(r =>
+        `<div class="kv-row"><span class="kv-val mono">${r}</span></div>`).join('')}</div>`);
+  }
+  if (d.note) {
+    out += section('Note', `<div style="font-size:11px;color:#6e7681;line-height:1.6">${d.note}</div>`);
+  }
+  return out;
+}
+
+function renderAi(d) {
+  let out = '';
+  if (d.runtime) {
+    out += section('Runtime', kvList([
+      { k: 'Runtime', v: d.runtime },
+      { k: 'File', v: d.file, cls: 'mono' },
+    ]));
+    out += section('Pipeline layers',
+      `<div class="shape-list">${d.layers.map(l =>
+        `<div class="shape-item"><span class="shape-name">${l}</span></div>`
+      ).join('')}</div>`);
+  }
+  if (d.version) {
+    out += section('Config', kvList([
+      { k: 'Version', v: d.version, cls: 'purple' },
+      { k: 'Model', v: d.model || d.modelId, cls: 'mono' },
+      d.file ? { k: 'File', v: d.file, cls: 'mono' } : null,
+      d.contextWindow ? { k: 'Context', v: d.contextWindow } : null,
+      d.outputFormat ? { k: 'Output', v: d.outputFormat } : null,
+      d.calledBy ? { k: 'Called by', v: d.calledBy } : null,
+    ].filter(Boolean)));
+  }
+  if (d.modelId && !d.version) {
+    out += section('Model', kvList([
+      { k: 'Model ID', v: d.modelId, cls: 'mono' },
+      { k: 'Provider', v: d.provider },
+      { k: 'Context', v: d.contextWindow },
+      { k: 'Output', v: d.outputFormat },
+      { k: 'Called by', v: d.calledBy },
+    ]));
+  }
+  if (d.inputShape) out += section('Input shape', shapeList(d.inputShape));
+  if (d.outputShape) out += section('Output shape', shapeList(d.outputShape));
+  if (d.fields) out += section('Schema fields', shapeList(d.fields));
+  if (d.note) {
+    out += section('Note', `<div style="font-size:11px;color:#6e7681;line-height:1.6">${d.note}</div>`);
+  }
+  return out;
+}
+
+function renderExt(d) {
+  let out = '';
+  out += section('Details', kvList([
+    { k: 'Protocol', v: d.protocol },
+    { k: 'Auth', v: d.auth, cls: 'orange' },
+    { k: 'Direction', v: d.direction, cls: d.direction?.includes('Inbound') ? 'orange' : 'green' },
+    d.rateLimits ? { k: 'Rate limit', v: d.rateLimits } : null,
+  ].filter(Boolean)));
+  if (d.endpoints?.length) {
+    out += section('Endpoints used',
+      `<div class="shape-list">${d.endpoints.map(ep =>
+        `<div class="shape-item"><span class="shape-name" style="color:#79c0ff">${ep}</span></div>`
+      ).join('')}</div>`);
+  }
+  if (d.calledBy) {
+    const callers = Array.isArray(d.calledBy) ? d.calledBy : [d.calledBy];
+    out += section('Called by',
+      `<div class="shape-list">${callers.map(c =>
+        `<div class="shape-item"><span class="shape-name">${c}</span></div>`
+      ).join('')}</div>`);
+  }
+  if (d.note) {
+    out += section('Note', `<div style="font-size:11px;color:#6e7681;line-height:1.6">${d.note}</div>`);
+  }
+  return out;
+}
+
+function renderConnections(id) {
+  const edges = EDGES.filter(e => e.from === id || e.to === id);
+  if (!edges.length) return '';
+
+  const items = edges.map(e => {
+    const isFrom = e.from === id;
+    const otherId = isFrom ? e.to : e.from;
+    const other = NODE_DATA[otherId];
+    const dir = isFrom ? '→' : '←';
+    const targetLabel = other?.label || otherId;
+    return `<div class="conn-item">
+      <div class="conn-dot ${e.type}"></div>
+      <span class="conn-dir">${dir}</span>
+      <div class="conn-body">
+        <div class="conn-target">${targetLabel}</div>
+        <div class="conn-label">${e.label}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  return section('Connections', `<div class="conn-list">${items}</div>`);
+}
+
+let currentNode = null;
+
+function showInfo(id) {
+  currentNode = id;
+  const d = NODE_DATA[id];
+  if (!d) return;
+
+  const tagClass = LAYER_TAG_CLASS[d.layer] || '';
+  const badgeHTML = (d.badges || []).map(b => `<span class="badge badge-${b}">${b === 'UI' ? 'UI' : b}</span>`).join('');
+
+  let body = '';
+  if (d.layer === 'routes') body = renderRoute(d);
+  else if (d.layer === 'db')  body = renderDb(d);
+  else if (d.layer === 'ai')  body = renderAi(d);
+  else if (d.layer === 'ext') body = renderExt(d);
+
+  body += renderConnections(id);
+
+  document.getElementById('info-empty').style.display = 'none';
+  const content = document.getElementById('info-content');
+  content.style.display = 'block';
+  content.innerHTML = `
+    <div class="ip-node-header">
+      <div class="ip-layer-tag ${tagClass}">${d.tag || LAYER_LABEL[d.layer]}</div>
+      <div class="ip-title">${d.label}</div>
+      ${d.file ? `<div class="ip-file">${d.file}</div>` : ''}
+      ${badgeHTML ? `<div class="ip-badges">${badgeHTML}</div>` : ''}
+    </div>
+    ${body}
+  `;
+}
+
+function clearInfo() {
+  currentNode = null;
+  document.getElementById('info-empty').style.display = 'flex';
+  document.getElementById('info-content').style.display = 'none';
+}
+
+// ── Interaction ────────────────────────────────────────────────
+document.querySelectorAll('.node').forEach(node => {
+  node.addEventListener('mouseenter', () => {
+    const id = node.id;
+    document.querySelectorAll('.node').forEach(n => {
+      const connected = n.id === id || EDGES.some(e =>
+        (e.from === id && e.to === n.id) || (e.to === id && e.from === n.id)
+      );
+      n.classList.toggle('dimmed', !connected);
+      n.classList.toggle('highlighted', n.id === id);
+    });
+    drawEdges(id);
+    showInfo(id);
+  });
+
+  node.addEventListener('mouseleave', () => {
+    document.querySelectorAll('.node').forEach(n => n.classList.remove('dimmed', 'highlighted'));
+    drawEdges(null);
+    clearInfo();
+  });
+});
+
+wrap.addEventListener('scroll', () => {
+  const h = document.querySelector('.node.highlighted');
+  drawEdges(h ? h.id : null);
+});
+
+window.addEventListener('load',   () => setTimeout(() => drawEdges(null), 50));
+window.addEventListener('resize', () => drawEdges(null));
+</script>
+</body>
+</html>

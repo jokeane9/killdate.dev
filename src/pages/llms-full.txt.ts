@@ -78,6 +78,16 @@ const CORE_QUESTIONS: Record<string, string[]> = {
   '12-learning-resources': [
     'Which resources actually build the foundational understanding of LLMs that makes the rest of this methodology land correctly?',
   ],
+  '17-building-shelf': [
+    'What does a production LLM pipeline actually look like end to end — what are the layers, and what does each one do?',
+    'What went wrong with prompt V1 and V2 for a real AI briefing product, and what did the V3 rewrite change structurally?',
+    'What did build discipline (lock documents, kill dates, CLAUDE.md session state) give a two-person team that ad hoc AI coding wouldn\'t have?',
+  ],
+  '18-remix-route-visualizer': [
+    'Why is a Remix app hard to hold in your head, and what does a route visualizer show that reading the file tree doesn\'t?',
+    'How does the outlet chain / nested containment view work, and what does it make immediately visible about a Remix app\'s layout architecture?',
+    'What can be auto-parsed from Remix file conventions, and what requires manual mapping or static analysis for the ecosystem cross-layer view?',
+  ],
 };
 
 export const GET: APIRoute = async () => {

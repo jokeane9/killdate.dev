@@ -1,0 +1,151 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="In Prod" description="Real software, real constraints. Build processes and custom tooling from a small studio.">
+
+  <div class="intro">
+    <p class="section-label">Prima Digital</p>
+    <h1>In Prod</h1>
+    <p class="tagline">Real software, real constraints. Build processes and custom tooling from a small studio.</p>
+  </div>
+
+  <div class="prod-list">
+
+    <div class="prod-entry">
+      <div class="entry-meta">
+        <a href="/posts/17-building-shelf" class="entry-title">Building Shelf: a technical post-mortem</a>
+        <span class="entry-tag">case study</span>
+      </div>
+      <p class="entry-desc">A Shopify competitor intelligence app, built end to end with agentic tools. The stack, the four-layer AI pipeline, and why the prompt took six months to get right.</p>
+      <a href="/posts/17-building-shelf" class="entry-link">Read →</a>
+    </div>
+
+    <div class="prod-entry">
+      <div class="entry-meta">
+        <a href="/posts/18-remix-route-visualizer" class="entry-title">Visualizing a Remix app</a>
+        <span class="entry-tag">tooling</span>
+      </div>
+      <p class="entry-desc">Six months in, our mental model of the codebase was partially wrong. So we built a tool to see it clearly — route trees, outlet chains, and a cross-layer dependency map.</p>
+      <a href="/tools/ecosystem-viz.html" class="viz-preview" target="_blank" rel="noopener">
+        <img src="/images/ecosystem-viz-preview.png" alt="Shelf ecosystem cross-layer dependency map — routes, database, AI layer, external APIs" class="viz-img" />
+        <span class="viz-caption">Open interactive map →</span>
+      </a>
+      <a href="/posts/18-remix-route-visualizer" class="entry-link">Read →</a>
+    </div>
+
+  </div>
+
+</Base>
+
+<style>
+  .intro {
+    margin-bottom: 56px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .intro h1 {
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+
+  .tagline {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .prod-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .prod-entry {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .prod-entry:first-child {
+    border-top: 1px solid var(--border);
+  }
+
+  .entry-meta {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .entry-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    transition: color 0.15s;
+  }
+
+  .entry-title:hover { color: var(--accent); }
+
+  .entry-tag {
+    font-size: 11px;
+    color: var(--muted);
+    background: var(--border);
+    padding: 2px 8px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+
+  .entry-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .viz-preview {
+    display: block;
+    margin-bottom: 16px;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+
+  .viz-preview:hover { border-color: var(--accent); }
+
+  .viz-img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .viz-caption {
+    display: block;
+    font-size: 12px;
+    color: var(--accent);
+    padding: 10px 14px;
+    background: #0f0f0f;
+    border-top: 1px solid var(--border);
+  }
+
+  .entry-link {
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+    transition: opacity 0.15s;
+  }
+
+  .entry-link:hover { opacity: 0.7; }
+</style>

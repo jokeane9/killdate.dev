@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Remix Route Visualizer — Shelf</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    background: #0d1117;
+    color: #c9d1d9;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    padding: 12px 20px;
+    border-bottom: 1px solid #21262d;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  header .logo {
+    font-size: 13px;
+    color: #58a6ff;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  header .project {
+    font-size: 12px;
+    color: #6e7681;
+  }
+
+  header .sep { color: #21262d; }
+
+  .app {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* LEFT: Tree */
+  .tree-panel {
+    width: 340px;
+    flex-shrink: 0;
+    border-right: 1px solid #21262d;
+    overflow-y: auto;
+    padding: 16px 0;
+  }
+
+  .tree-section-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #6e7681;
+    padding: 8px 16px 4px;
+  }
+
+  .tree-node {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 0 6px;
+    transition: background 0.1s;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .tree-node:hover { background: #161b22; }
+  .tree-node.active { background: #1f2937; border: 1px solid #374151; }
+
+  .tree-node .indent { display: inline-block; width: 16px; flex-shrink: 0; }
+
+  .tree-node .filename {
+    color: #e6edf3;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .tree-node.layout-only .filename { color: #a371f7; }
+  .tree-node.api-route .filename { color: #6e7681; }
+
+  .badge {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 1px 4px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  .badge-L { background: #0d419d; color: #79c0ff; }
+  .badge-A { background: #3d2b00; color: #e3b341; }
+  .badge-UI { background: #0f2d1a; color: #56d364; }
+  .badge-layout { background: #2d1b69; color: #d2a8ff; }
+
+  /* RIGHT: Inspector */
+  .inspector {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .empty-state {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    color: #6e7681;
+  }
+
+  .empty-state .arrow { font-size: 32px; }
+  .empty-state p { font-size: 13px; }
+
+  .inspector-content { display: none; flex-direction: column; gap: 24px; }
+  .inspector-content.visible { display: flex; }
+
+  .insp-section h3 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #6e7681;
+    margin-bottom: 12px;
+  }
+
+  /* URL bar */
+  .url-bar {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .url-bar .method-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: #0f2d1a;
+    color: #56d364;
+  }
+
+  .url-bar .url-text {
+    font-size: 14px;
+    color: #58a6ff;
+    font-weight: 600;
+  }
+
+  .url-bar .route-type {
+    margin-left: auto;
+    font-size: 10px;
+    color: #6e7681;
+    background: #21262d;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  /* Outlet chain */
+  .outlet-chain {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .outlet-frame {
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .outlet-frame + .outlet-frame {
+    margin-top: -1px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  .outlet-frame:first-child {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .outlet-frame:not(:first-child):not(:last-child) {
+    border-radius: 0;
+  }
+
+  .outlet-header {
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #161b22;
+    font-size: 12px;
+  }
+
+  .outlet-header.is-auth-gate { background: #1a1500; border-left: 3px solid #e3b341; }
+  .outlet-header.is-layout-only { background: #12001a; border-left: 3px solid #a371f7; }
+  .outlet-header.is-leaf { background: #001a0a; border-left: 3px solid #56d364; }
+  .outlet-header.is-root { background: #001222; border-left: 3px solid #58a6ff; }
+
+  .outlet-filename { color: #e6edf3; flex: 1; }
+  .outlet-filename .dim { color: #6e7681; }
+
+  .outlet-tags { display: flex; gap: 4px; }
+
+  .outlet-note {
+    padding: 6px 14px;
+    font-size: 11px;
+    color: #6e7681;
+    background: #0d1117;
+    border-top: 1px solid #21262d;
+  }
+
+  .outlet-arrow {
+    text-align: center;
+    color: #30363d;
+    font-size: 16px;
+    line-height: 1;
+    padding: 2px 0;
+  }
+
+  /* Loader sequence */
+  .loader-sequence {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .loader-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 14px;
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 6px;
+    font-size: 12px;
+  }
+
+  .loader-item .order {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #0d419d;
+    color: #79c0ff;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .loader-item .loader-detail { flex: 1; }
+  .loader-item .loader-file { color: #79c0ff; margin-bottom: 3px; }
+  .loader-item .loader-desc { color: #6e7681; font-size: 11px; }
+  .loader-item .loader-tag {
+    font-size: 9px;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: #3d2b00;
+    color: #e3b341;
+    align-self: flex-start;
+    margin-top: 2px;
+  }
+
+  /* Confusion points */
+  .confusions { display: flex; flex-direction: column; gap: 8px; }
+
+  .confusion-item {
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    border-left: 3px solid;
+    background: #161b22;
+  }
+
+  .confusion-item.warn { border-color: #e3b341; }
+  .confusion-item.info { border-color: #58a6ff; }
+  .confusion-item.ok { border-color: #56d364; }
+
+  .confusion-item .conf-title {
+    font-weight: 600;
+    color: #e6edf3;
+    margin-bottom: 4px;
+  }
+
+  .confusion-item .conf-body { color: #8b949e; }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 12px 16px;
+    background: #0d1117;
+    border-top: 1px solid #21262d;
+    flex-shrink: 0;
+  }
+
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #6e7681; }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="logo">⬡ RouteViz</span>
+  <span class="sep">|</span>
+  <span class="project">shelf / app/routes</span>
+</header>
+
+<div class="app">
+  <!-- LEFT PANEL: route tree -->
+  <div class="tree-panel">
+    <div class="tree-section-label">App Routes</div>
+
+    <div class="tree-node" onclick="select('root')">
+      <span class="filename">root.tsx</span>
+      <span class="badge badge-UI">UI</span>
+    </div>
+    <div class="tree-node" onclick="select('index')">
+      <span class="indent"></span>
+      <span class="filename">_index.tsx</span>
+      <span class="badge badge-L">L</span>
+      <span class="badge badge-UI">UI</span>
+    </div>
+
+    <div class="tree-node layout-only" onclick="select('app')">
+      <span class="filename">app.tsx</span>
+      <span class="badge badge-L">L</span>
+      <span class="badge badge-layout">layout</span>
+    </div>
+    <div class="tree-node" onclick="select('app_index')">
+      <span class="indent"></span>
+      <span class="filename">app._index.tsx</span>
+      <span class="badge badge-L">L</span>
+      <span class="badge badge-A">A</span>
+      <span class="badge badge-UI">UI</span>
+    </div>
+    <div class="tree-node" onclick="select('billing')">
+      <span class="indent"></span>
+      <span class="filename">app.billing.tsx</span>
+      <span class="badge badge-L">L</span>
+      <span class="badge badge-A">A</span>
+      <span class="badge badge-UI">UI</span>
+    </div>
+    <div class="tree-node" onclick="select('billing_cb')">
+      <span class="indent"></span>
+      <span class="filename">app.billing.callback.tsx</span>
+      <span class="badge badge-L">L</span>
+    </div>
+
+    <div class="tree-node layout-only" onclick="select('settings')">
+      <span class="indent"></span>
+      <span class="filename">app.settings.tsx</span>
+      <span class="badge badge-layout">layout</span>
+    </div>
+    <div class="tree-node" onclick="select('settings_index')">
+      <span class="indent"></span><span class="indent"></span>
+      <span class="filename">app.settings._index.tsx</span>
+      <span class="badge badge-L">L</span>
+      <span class="badge badge-A">A</span>
+      <span class="badge badge-UI">UI</span>
+    </div>
+    <div class="tree-node" onclick="select('settings_products')">
+      <span class="indent"></span><span class="indent"></span>
+      <span class="filename">app.settings.add-products.tsx</span>
+      <span class="badge badge-L">L</span>
+      <span class="badge badge-A">A</span>
+      <span class="badge badge-UI">UI</span>
+    </div>
+    <div class="tree-node" onclick="select('settings_match')">
+      <span class="indent"></span><span class="indent"></span>
+      <span class="filename">app.settings.match-competitor.tsx</span>
+      <span class="badge badge-L">L</span>
+      <span class="badge badge-A">A</span>
+      <span class="badge badge-UI">UI</span>
+    </div>
+
+    <div class="tree-node layout-only" onclick="select('onboarding')">
+      <span class="indent"></span>
+      <span class="filename">app.onboarding.tsx</span>
+      <span class="badge badge-layout">layout</span>
+    </div>
+    <div class="tree-node" onclick="select('onboarding_welcome')">
+      <span class="indent"></span><span class="indent"></span>
+      <span class="filename">app.onboarding.welcome.tsx</span>
+      <span class="badge badge-L">L</span>
+      <span class="badge badge-A">A</span>
+      <span class="badge badge-UI">UI</span>
+    </div>
+    <div class="tree-node" onclick="select('onboarding_urls')">
+      <span class="indent"></span><span class="indent"></span>
+      <span class="filename">app.onboarding.urls.tsx</span>
+      <span class="badge badge-L">L</span>
+      <span class="badge badge-A">A</span>
+      <span class="badge badge-UI">UI</span>
+    </div>
+    <div class="tree-node" onclick="select('onboarding_pending')">
+      <span class="indent"></span><span class="indent"></span>
+      <span class="filename">app.onboarding.pending.tsx</span>
+      <span class="badge badge-L">L</span>
+      <span class="badge badge-A">A</span>
+      <span class="badge badge-UI">UI</span>
+    </div>
+
+    <div class="tree-section-label" style="margin-top:12px">Auth</div>
+    <div class="tree-node api-route" onclick="select('auth_login')">
+      <span class="filename">auth.login.tsx</span>
+      <span class="badge badge-L">L</span>
+      <span class="badge badge-A">A</span>
+      <span class="badge badge-UI">UI</span>
+    </div>
+    <div class="tree-node api-route" onclick="select('auth_cb')">
+      <span class="filename">auth.callback.tsx</span>
+      <span class="badge badge-L">L</span>
+      <span class="badge badge-A">A</span>
+    </div>
+
+    <div class="tree-section-label" style="margin-top:12px">Resource Routes</div>
+    <div class="tree-node api-route" onclick="select('webhooks')">
+      <span class="filename">webhooks.tsx</span>
+      <span class="badge badge-A">A</span>
+    </div>
+    <div class="tree-node api-route" onclick="select('api_sidekick')">
+      <span class="filename">api.sidekick.tsx</span>
+      <span class="badge badge-L">L</span>
+    </div>
+    <div class="tree-node api-route" onclick="select('api_crawl')">
+      <span class="filename">api.crawl-status.tsx</span>
+      <span class="badge badge-L">L</span>
+    </div>
+    <div class="tree-node api-route" onclick="select('api_health')">
+      <span class="filename">api.health.tsx</span>
+      <span class="badge badge-L">L</span>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL: inspector -->
+  <div class="inspector" id="inspector">
+    <div class="empty-state">
+      <div class="arrow">←</div>
+      <p>Click a route to inspect its Outlet chain</p>
+    </div>
+    <div class="inspector-content" id="content"></div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><span class="badge badge-L">L</span> loader (runs server-side on GET)</div>
+  <div class="legend-item"><span class="badge badge-A">A</span> action (runs server-side on POST/PUT/DELETE)</div>
+  <div class="legend-item"><span class="badge badge-UI">UI</span> renders JSX</div>
+  <div class="legend-item"><span class="badge badge-layout">layout</span> wraps children via &lt;Outlet/&gt;</div>
+</div>
+
+<script>
+const ROUTES = {
+  root: {
+    url: '(all routes)',
+    type: 'Root layout',
+    chain: [
+      { file: 'root.tsx', kind: 'root', badges: ['UI'], note: 'App shell: global providers, <ScrollRestoration/>, <Scripts/>. Always renders.' }
+    ],
+    loaders: [],
+    confusions: [
+      { level: 'info', title: 'root.tsx is always in the chain', body: 'Every route in the app renders inside root.tsx. It has no loader here — but if it did, it would fire on every page load.' }
+    ]
+  },
+
+  index: {
+    url: '/',
+    type: 'Page',
+    chain: [
+      { file: 'root.tsx', kind: 'root', badges: ['UI'], note: 'App shell.' },
+      { file: '_index.tsx', kind: 'leaf', badges: ['L', 'UI'], note: 'Leaf — redirects to /app after auth check.' }
+    ],
+    loaders: [
+      { order: 1, file: '_index.tsx', desc: 'Checks auth state, redirects to /app or /auth/login.', tag: null }
+    ],
+    confusions: [
+      { level: 'info', title: '_index.tsx is the "/" catch', body: 'In Remix, _index.tsx inside routes/ is the index route for the root segment — it renders at "/" with no nesting.' }
+    ]
+  },
+
+  app: {
+    url: '/app (layout — never renders alone)',
+    type: 'Layout wrapper',
+    chain: [
+      { file: 'root.tsx', kind: 'root', badges: ['UI'], note: 'App shell.' },
+      { file: 'app.tsx', kind: 'layout', badges: ['L', 'layout'], note: 'Auth gate for all /app/* routes. Runs requireAuth(), sets up AppProvider, renders <Outlet/>.' }
+    ],
+    loaders: [
+      { order: 1, file: 'app.tsx', desc: 'requireAuth() → redirects to /auth/login if no session. Loads merchant record.', tag: '🔒 auth gate' }
+    ],
+    confusions: [
+      { level: 'warn', title: 'app.tsx is a layout, not a page', body: 'It has no index route — navigating to /app directly hits app._index.tsx. app.tsx just wraps everything under /app/* with auth + layout.' },
+      { level: 'ok', title: 'Auth is inherited — not per-route', body: 'Every child of app.tsx gets auth protection automatically because app.tsx\'s loader runs first on every /app/* request. No per-route auth checks needed.' }
+    ]
+  },
+
+  app_index: {
+    url: '/app',
+    type: 'Page',
+    chain: [
+      { file: 'root.tsx', kind: 'root', badges: ['UI'], note: 'App shell.' },
+      { file: 'app.tsx', kind: 'auth-gate', badges: ['L', 'layout'], note: '🔒 Auth gate. Renders <Outlet/>.' },
+      { file: 'app._index.tsx', kind: 'leaf', badges: ['L', 'A', 'UI'], note: 'Dashboard — the main product card feed.' }
+    ],
+    loaders: [
+      { order: 1, file: 'app.tsx', desc: 'requireAuth() → merchant session. Fires first on every /app/* hit.', tag: '🔒 auth gate' },
+      { order: 2, file: 'app._index.tsx', desc: 'Loads competitor products, crawl status, briefing data for the dashboard.' }
+    ],
+    confusions: [
+      { level: 'warn', title: 'Two loaders fire for this URL', body: 'app.tsx loader runs first (auth), then app._index.tsx loader (data). Both run in parallel after session is validated. useLoaderData() in the component only gets app._index.tsx\'s data.' },
+      { level: 'info', title: 'Why _index.tsx?', body: 'app._index.tsx is the "index" of the app.tsx layout — it renders when no other child segment matches. The dot-notation maps: app._index → /app (index).' }
+    ]
+  },
+
+  billing: {
+    url: '/app/billing',
+    type: 'Page',
+    chain: [
+      { file: 'root.tsx', kind: 'root', badges: ['UI'], note: 'App shell.' },
+      { file: 'app.tsx', kind: 'auth-gate', badges: ['L', 'layout'], note: '🔒 Auth gate. Renders <Outlet/>.' },
+      { file: 'app.billing.tsx', kind: 'leaf', badges: ['L', 'A', 'UI'], note: 'Plan selection + Shopify billing API integration.' }
+    ],
+    loaders: [
+      { order: 1, file: 'app.tsx', desc: 'requireAuth() → merchant session.', tag: '🔒 auth gate' },
+      { order: 2, file: 'app.billing.tsx', desc: 'Loads current plan, available plans, trial status. Builds Shopify billing confirmation URL.' }
+    ],
+    confusions: [
+      { level: 'info', title: 'Action handles plan upgrade', body: 'app.billing.tsx has both loader + action. The action creates a Shopify billing charge and redirects to Shopify\'s confirmation flow, which returns to /app/billing/callback.' }
+    ]
+  },
+
+  billing_cb: {
+    url: '/app/billing/callback',
+    type: 'Resource route (no UI)',
+    chain: [
+      { file: 'root.tsx', kind: 'root', badges: ['UI'], note: 'App shell.' },
+      { file: 'app.tsx', kind: 'auth-gate', badges: ['L', 'layout'], note: '🔒 Auth gate.' },
+      { file: 'app.billing.callback.tsx', kind: 'leaf', badges: ['L'], note: 'Shopify redirects here after billing confirmation. Loader validates charge + activates plan, then redirects.' }
+    ],
+    loaders: [
+      { order: 1, file: 'app.tsx', desc: 'requireAuth().', tag: '🔒 auth gate' },
+      { order: 2, file: 'app.billing.callback.tsx', desc: 'Reads charge_id from Shopify redirect, activates the plan in DB, redirects to /app.' }
+    ],
+    confusions: [
+      { level: 'warn', title: 'No UI export — loader only', body: 'This route never renders anything. The loader does all the work and redirects. app.tsx\'s <Outlet/> will never render app.billing.callback.tsx\'s JSX because there is none.' }
+    ]
+  },
+
+  settings: {
+    url: '/app/settings (layout — never renders alone)',
+    type: 'Layout wrapper — NO loader',
+    chain: [
+      { file: 'root.tsx', kind: 'root', badges: ['UI'], note: 'App shell.' },
+      { file: 'app.tsx', kind: 'auth-gate', badges: ['L', 'layout'], note: '🔒 Auth gate.' },
+      { file: 'app.settings.tsx', kind: 'layout', badges: ['layout'], note: 'Pure layout — no loader, no action. Just renders <Outlet/>. Provides the settings page chrome.' }
+    ],
+    loaders: [
+      { order: 1, file: 'app.tsx', desc: 'requireAuth().', tag: '🔒 auth gate' }
+    ],
+    confusions: [
+      { level: 'warn', title: 'app.settings.tsx has NO loader', body: 'This is the classic confusion point. The settings layout provides chrome (sidebar, heading) but doesn\'t fetch any data itself. Data comes from the child route\'s loader.' },
+      { level: 'warn', title: 'Navigating to /app/settings hits app.settings._index.tsx', body: 'app.settings.tsx is never the leaf. It\'s always a wrapper. The _index child handles /app/settings directly.' }
+    ]
+  },
+
+  settings_index: {
+    url: '/app/settings',
+    type: 'Page',
+    chain: [
+      { file: 'root.tsx', kind: 'root', badges: ['UI'], note: 'App shell.' },
+      { file: 'app.tsx', kind: 'auth-gate', badges: ['L', 'layout'], note: '🔒 Auth gate.' },
+      { file: 'app.settings.tsx', kind: 'layout', badges: ['layout'], note: 'Settings chrome — no loader. Renders <Outlet/>.' },
+      { file: 'app.settings._index.tsx', kind: 'leaf', badges: ['L', 'A', 'UI'], note: 'Competitor matching settings.' }
+    ],
+    loaders: [
+      { order: 1, file: 'app.tsx', desc: 'requireAuth().', tag: '🔒 auth gate' },
+      { order: 2, file: 'app.settings._index.tsx', desc: 'Loads current competitor list, match candidates, merchant config.' }
+    ],
+    confusions: [
+      { level: 'warn', title: 'Three components, one loader', body: 'root → app.tsx (L) → app.settings.tsx (no L) → app.settings._index.tsx (L). Only two loaders fire, not three — app.settings.tsx has none.' },
+      { level: 'info', title: 'useLoaderData() scope', body: 'In app.settings._index.tsx, useLoaderData() returns THIS file\'s loader data. In app.settings.tsx, you\'d need useRouteLoaderData("routes/app") to access app.tsx\'s data.' }
+    ]
+  },
+
+  settings_products: {
+    url: '/app/settings/add-products',
+    type: 'Page',
+    chain: [
+      { file: 'root.tsx', kind: 'root', badges: ['UI'], note: 'App shell.' },
+      { file: 'app.tsx', kind: 'auth-gate', badges: ['L', 'layout'], note: '🔒 Auth gate.' },
+      { file: 'app.settings.tsx', kind: 'layout', badges: ['layout'], note: 'Settings chrome — no loader.' },
+      { file: 'app.settings.add-products.tsx', kind: 'leaf', badges: ['L', 'A', 'UI'], note: 'Product selector — browse + pin products to track.' }
+    ],
+    loaders: [
+      { order: 1, file: 'app.tsx', desc: 'requireAuth().', tag: '🔒 auth gate' },
+      { order: 2, file: 'app.settings.add-products.tsx', desc: 'Loads tracked products + Shopify product search candidates.' }
+    ],
+    confusions: []
+  },
+
+  settings_match: {
+    url: '/app/settings/match-competitor',
+    type: 'Page',
+    chain: [
+      { file: 'root.tsx', kind: 'root', badges: ['UI'], note: 'App shell.' },
+      { file: 'app.tsx', kind: 'auth-gate', badges: ['L', 'layout'], note: '🔒 Auth gate.' },
+      { file: 'app.settings.tsx', kind: 'layout', badges: ['layout'], note: 'Settings chrome — no loader.' },
+      { file: 'app.settings.match-competitor.tsx', kind: 'leaf', badges: ['L', 'A', 'UI'], note: 'Manual competitor URL entry + validation.' }
+    ],
+    loaders: [
+      { order: 1, file: 'app.tsx', desc: 'requireAuth().', tag: '🔒 auth gate' },
+      { order: 2, file: 'app.settings.match-competitor.tsx', desc: 'Loads existing competitor matches.' }
+    ],
+    confusions: []
+  },
+
+  onboarding: {
+    url: '/app/onboarding (layout)',
+    type: 'Layout wrapper — NO loader',
+    chain: [
+      { file: 'root.tsx', kind: 'root', badges: ['UI'], note: 'App shell.' },
+      { file: 'app.tsx', kind: 'auth-gate', badges: ['L', 'layout'], note: '🔒 Auth gate.' },
+      { file: 'app.onboarding.tsx', kind: 'layout', badges: ['layout'], note: 'Onboarding chrome (step indicator, progress bar). No loader — pure layout.' }
+    ],
+    loaders: [
+      { order: 1, file: 'app.tsx', desc: 'requireAuth().', tag: '🔒 auth gate' }
+    ],
+    confusions: [
+      { level: 'warn', title: 'Same pattern as app.settings.tsx', body: 'Layout with no loader. Provides the step-progress UI shell. Each onboarding step is its own child route with its own loader + action.' }
+    ]
+  },
+
+  onboarding_welcome: {
+    url: '/app/onboarding/welcome',
+    type: 'Page',
+    chain: [
+      { file: 'root.tsx', kind: 'root', badges: ['UI'], note: 'App shell.' },
+      { file: 'app.tsx', kind: 'auth-gate', badges: ['L', 'layout'], note: '🔒 Auth gate.' },
+      { file: 'app.onboarding.tsx', kind: 'layout', badges: ['layout'], note: 'Onboarding chrome — no loader.' },
+      { file: 'app.onboarding.welcome.tsx', kind: 'leaf', badges: ['L', 'A', 'UI'], note: 'Step 1 — plan selection + welcome copy.' }
+    ],
+    loaders: [
+      { order: 1, file: 'app.tsx', desc: 'requireAuth().', tag: '🔒 auth gate' },
+      { order: 2, file: 'app.onboarding.welcome.tsx', desc: 'Checks if merchant already completed onboarding → redirects to /app if so.' }
+    ],
+    confusions: []
+  },
+
+  onboarding_urls: {
+    url: '/app/onboarding/urls',
+    type: 'Page',
+    chain: [
+      { file: 'root.tsx', kind: 'root', badges: ['UI'], note: 'App shell.' },
+      { file: 'app.tsx', kind: 'auth-gate', badges: ['L', 'layout'], note: '🔒 Auth gate.' },
+      { file: 'app.onboarding.tsx', kind: 'layout', badges: ['layout'], note: 'Onboarding chrome — no loader.' },
+      { file: 'app.onboarding.urls.tsx', kind: 'leaf', badges: ['L', 'A', 'UI'], note: 'Step 2 — competitor URL entry.' }
+    ],
+    loaders: [
+      { order: 1, file: 'app.tsx', desc: 'requireAuth().', tag: '🔒 auth gate' },
+      { order: 2, file: 'app.onboarding.urls.tsx', desc: 'Loads any pre-filled competitor URLs from prior attempts.' }
+    ],
+    confusions: []
+  },
+
+  onboarding_pending: {
+    url: '/app/onboarding/pending',
+    type: 'Page',
+    chain: [
+      { file: 'root.tsx', kind: 'root', badges: ['UI'], note: 'App shell.' },
+      { file: 'app.tsx', kind: 'auth-gate', badges: ['L', 'layout'], note: '🔒 Auth gate.' },
+      { file: 'app.onboarding.tsx', kind: 'layout', badges: ['layout'], note: 'Onboarding chrome — no loader.' },
+      { file: 'app.onboarding.pending.tsx', kind: 'leaf', badges: ['L', 'A', 'UI'], note: 'Waiting screen — polls crawl progress.' }
+    ],
+    loaders: [
+      { order: 1, file: 'app.tsx', desc: 'requireAuth().', tag: '🔒 auth gate' },
+      { order: 2, file: 'app.onboarding.pending.tsx', desc: 'Checks crawl job status. Redirects to /app when complete.' }
+    ],
+    confusions: [
+      { level: 'info', title: 'Polling via action', body: 'The pending screen uses a fetcher to poll api.crawl-status on an interval — a resource route, not a loader re-run.' }
+    ]
+  },
+
+  auth_login: {
+    url: '/auth/login',
+    type: 'Page',
+    chain: [
+      { file: 'root.tsx', kind: 'root', badges: ['UI'], note: 'App shell.' },
+      { file: 'auth.login.tsx', kind: 'leaf', badges: ['L', 'A', 'UI'], note: 'Shopify OAuth entry point. No app.tsx — outside the auth gate.' }
+    ],
+    loaders: [
+      { order: 1, file: 'auth.login.tsx', desc: 'Begins Shopify OAuth flow. Redirects to Shopify authorize URL.' }
+    ],
+    confusions: [
+      { level: 'ok', title: 'Auth routes live outside app.tsx', body: 'auth.* routes are siblings of app.tsx, not children. They never go through the auth gate — that\'s what makes them reachable when logged out.' }
+    ]
+  },
+
+  auth_cb: {
+    url: '/auth/callback',
+    type: 'Resource route (no UI)',
+    chain: [
+      { file: 'root.tsx', kind: 'root', badges: ['UI'], note: 'App shell.' },
+      { file: 'auth.callback.tsx', kind: 'leaf', badges: ['L', 'A'], note: 'Shopify redirects here with OAuth code. Validates + stores session, redirects to /app.' }
+    ],
+    loaders: [
+      { order: 1, file: 'auth.callback.tsx', desc: 'Validates OAuth state param, exchanges code for token, upserts merchant record.' }
+    ],
+    confusions: [
+      { level: 'warn', title: 'Loader and action both present — unusual', body: 'Shopify can call this as GET (redirect) or POST (token exchange depending on flow version). Both are handled.' }
+    ]
+  },
+
+  webhooks: {
+    url: '/webhooks',
+    type: 'Resource route (action only)',
+    chain: [
+      { file: 'webhooks.tsx', kind: 'leaf', badges: ['A'], note: 'Shopify webhook receiver. Action only — no loader, no UI, not inside root.tsx layout.' }
+    ],
+    loaders: [],
+    confusions: [
+      { level: 'warn', title: 'No root.tsx wrapping?', body: 'Resource routes that export no default component don\'t render inside the root layout. The action just returns a Response directly — Shopify gets a 200, nothing else.' },
+      { level: 'info', title: 'HMAC verification happens in action', body: 'The action validates the Shopify HMAC header before processing. Returns 401 on failure.' }
+    ]
+  },
+
+  api_sidekick: {
+    url: '/api/sidekick (+ /market-overview, /peer-profiles, /product-comparisons)',
+    type: 'Resource routes — JSON API',
+    chain: [
+      { file: 'api.sidekick.tsx', kind: 'leaf', badges: ['L'], note: 'Resource route — returns JSON for the Sidekick embedded iframe.' }
+    ],
+    loaders: [
+      { order: 1, file: 'api.sidekick.tsx', desc: 'Validates Shopify session token from Authorization header. Returns combined briefing payload.' }
+    ],
+    confusions: [
+      { level: 'info', title: 'These are called by fetcher, not navigated to', body: 'Sidekick uses useFetcher() to hit these endpoints from inside an iframe. They never render UI.' },
+      { level: 'warn', title: 'Auth is manual here', body: 'Unlike /app/* routes, these resource routes don\'t inherit app.tsx\'s auth. They validate the Shopify session token from the Authorization header directly.' }
+    ]
+  },
+
+  api_crawl: {
+    url: '/api/crawl-status',
+    type: 'Resource route — JSON',
+    chain: [
+      { file: 'api.crawl-status.tsx', kind: 'leaf', badges: ['L'], note: 'Returns current crawl job status + progress for a merchant.' }
+    ],
+    loaders: [
+      { order: 1, file: 'api.crawl-status.tsx', desc: 'Reads pg-boss job status. Used by onboarding/pending to poll.' }
+    ],
+    confusions: []
+  },
+
+  api_health: {
+    url: '/api/health',
+    type: 'Resource route — JSON',
+    chain: [
+      { file: 'api.health.tsx', kind: 'leaf', badges: ['L'], note: 'Health check endpoint. Returns 200 + uptime info.' }
+    ],
+    loaders: [
+      { order: 1, file: 'api.health.tsx', desc: 'Checks DB connectivity, returns { status: "ok", ts: ... }.' }
+    ],
+    confusions: []
+  }
+};
+
+function kindClass(kind) {
+  return {
+    root: 'is-root',
+    'auth-gate': 'is-auth-gate',
+    layout: 'is-layout-only',
+    leaf: 'is-leaf'
+  }[kind] || '';
+}
+
+function renderBadges(badges) {
+  return badges.map(b => {
+    const cls = { L: 'badge-L', A: 'badge-A', UI: 'badge-UI', layout: 'badge-layout' }[b] || '';
+    return `<span class="badge ${cls}">${b}</span>`;
+  }).join('');
+}
+
+function select(id) {
+  document.querySelectorAll('.tree-node').forEach(n => n.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+
+  const r = ROUTES[id];
+  if (!r) return;
+
+  const chainHTML = r.chain.map((frame, i) => {
+    const arrow = i < r.chain.length - 1 ? `<div class="outlet-arrow">↓ <span style="font-size:10px;color:#6e7681">&lt;Outlet/&gt;</span></div>` : '';
+    return `
+      <div class="outlet-frame">
+        <div class="outlet-header ${kindClass(frame.kind)}">
+          <span class="outlet-filename">${frame.file}</span>
+          <div class="outlet-tags">${renderBadges(frame.badges)}</div>
+        </div>
+        ${frame.note ? `<div class="outlet-note">${frame.note}</div>` : ''}
+      </div>
+      ${arrow}
+    `;
+  }).join('');
+
+  const loadersHTML = r.loaders.length === 0
+    ? '<div style="font-size:12px;color:#6e7681;padding:8px 0">No loaders fire for this route.</div>'
+    : r.loaders.map(l => `
+      <div class="loader-item">
+        <div class="order">${l.order}</div>
+        <div class="loader-detail">
+          <div class="loader-file">${l.file}</div>
+          <div class="loader-desc">${l.desc}</div>
+          ${l.tag ? `<div class="loader-tag">${l.tag}</div>` : ''}
+        </div>
+      </div>
+    `).join('');
+
+  const confusionsHTML = r.confusions.length === 0 ? '' : `
+    <div class="insp-section confusions-section">
+      <h3>Watch out for</h3>
+      <div class="confusions">
+        ${r.confusions.map(c => `
+          <div class="confusion-item ${c.level}">
+            <div class="conf-title">${c.title}</div>
+            <div class="conf-body">${c.body}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  const html = `
+    <div class="insp-section">
+      <div class="url-bar">
+        <span class="method-badge">GET</span>
+        <span class="url-text">${r.url}</span>
+        <span class="route-type">${r.type}</span>
+      </div>
+    </div>
+
+    <div class="insp-section">
+      <h3>Outlet chain — components that render</h3>
+      <div class="outlet-chain">${chainHTML}</div>
+    </div>
+
+    <div class="insp-section">
+      <h3>Loaders that fire (in order)</h3>
+      <div class="loader-sequence">${loadersHTML}</div>
+    </div>
+
+    ${confusionsHTML}
+  `;
+
+  document.querySelector('.empty-state').style.display = 'none';
+  const content = document.getElementById('content');
+  content.innerHTML = html;
+  content.classList.add('visible');
+}
+</script>
+</body>
+</html>
