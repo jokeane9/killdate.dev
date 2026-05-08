@@ -11,7 +11,7 @@ tags: ["tooling", "remix", "visualization", "open-source"]
 
 ## The problem nobody talks about
 
-Six months into building Shelf, I realised I was holding a mental model of the app that was partially wrong. Not catastrophically wrong — the app was working — but wrong in the way a hand-drawn map is wrong. Good enough to navigate. Not accurate enough to trust for anything precise.
+Deep into building Shelf, I realised I was holding a mental model of the app that was partially wrong. Not catastrophically wrong — the app was working — but wrong in the way a hand-drawn map is wrong. Good enough to navigate. Not accurate enough to trust for anything precise.
 
 The Remix router is file-based. Routes live in `app/routes/`, named with a dot-notation convention that encodes parent-child relationships directly in the filename. `_app.dashboard.tsx` is the `dashboard` route inside the `_app` layout wrapper. `_app.dashboard._index.tsx` is the index for that route. The convention is elegant. The cognitive overhead of holding forty files in that naming convention is real.
 

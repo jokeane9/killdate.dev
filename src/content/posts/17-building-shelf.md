@@ -7,7 +7,7 @@ draft: false
 tags: ["case-study", "pipeline", "shopify", "prompting"]
 ---
 
-*12 minute read*
+*10 minute read*
 
 ## What Shelf is
 
@@ -35,11 +35,13 @@ Shelf is the first app built end to end with this discipline. Everything in kill
 
 **Infrastructure:** ECS Fargate for the crawl tasks (on-demand, pay per run), RDS for Postgres, S3 for static assets, CloudFront, Route 53. GitHub Actions for CI/CD with OIDC auth to AWS — no long-lived keys in the repo.
 
+**Build orchestration:** Claude Code and Cursor, with a hard boundary between them. Claude Code holds the session context — CLAUDE.md, the roadmap, architectural decisions, deploy operations. Cursor executes against a scoped brief: Remix routes, React components, Python pipeline layers. The discipline is in keeping those jobs separate. Claude Code makes the call; Cursor implements against a constrained scope. Neither tool sees the whole system unsupervised.
+
 ---
 
 ## The prompting arc: V1 → V2 → V3
 
-This is where things got interesting. The pipeline took maybe six weeks to stabilise. The prompt took six months.
+This is where things got interesting. The pipeline stabilised. The prompt didn't — we rebuilt it twice.
 
 **V1** was naive in the way first prompts always are. We gave Claude the full delta and asked it to produce a briefing. It did — every time, regardless of signal quality. Quiet cycle? Long briefing. Nothing changed? Still long briefing. The model was completing the task it was given, which was "write a briefing," not "determine whether a briefing is warranted and calibrate its length to what actually happened."
 
@@ -69,15 +71,15 @@ Three things in particular:
 
 **Kill-dates on every N-1 fallback.** When V3 shipped, V2 code stayed in the codebase — but with a kill-date. Not "we'll clean this up eventually." An actual date, in the lock, tracked in ROADMAP.md. Without that mechanism, the codebase accumulates parallel implementations indefinitely and nobody has the authority to delete the old one.
 
-**CLAUDE.md as session state.** Every session starts with a context read. Claude Code reads the log, the roadmap, the known issues. It knows what was done last session without you re-briefing it. Over a six-month build this compounds dramatically. Sessions end where the previous one left off instead of burning the first twenty minutes re-establishing context.
+**CLAUDE.md as session state.** Every session starts with a context read. Claude Code reads the log, the roadmap, the known issues. It knows what was done last session without you re-briefing it. The compound effect is real. Sessions end where the previous one left off instead of burning the first twenty minutes re-establishing context.
 
 ---
 
 ## What we'd change
 
-The pipeline architecture held up. The prompt architecture didn't — we rebuilt it twice. In retrospect, V1 should have been a much smaller proof of concept: does the briefing produce value for one merchant on one real cycle? We validated the pipeline infrastructure for weeks before validating that question.
+The pipeline architecture held up. The prompt architecture didn't — we rebuilt it twice. In retrospect, V1 should have been a much smaller proof of concept: does the briefing produce value for one merchant on one real cycle? We validated the pipeline infrastructure thoroughly before we validated that question.
 
-The other thing: the embedding constraint (Polaris, admin chrome, session tokens) added friction we underestimated. Shopify's embedded app auth model is opinionated and its edge cases are poorly documented. We lost a week on a session token expiry bug that was specific to a Shopify app bridge version. The fix was three lines. Finding the right three lines was the week.
+The other thing: the embedding constraint (Polaris, admin chrome, session tokens) added friction we underestimated. Shopify's embedded app auth model is opinionated and its edge cases are poorly documented. A session token expiry bug specific to a Shopify app bridge version cost us real time. The fix was three lines. Finding the right three lines was not.
 
 Shelf is live on the Shopify App Store. The discipline that built it is in the kit.
 
