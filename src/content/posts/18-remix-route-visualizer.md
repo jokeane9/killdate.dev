@@ -79,14 +79,17 @@ The discipline this taught us: don't wait for the tool that would work for anyon
 
 ---
 
-## What we might build
+## vizstack
 
-The prototype works for Shelf. Making it work for any Remix app is straightforward; making the ecosystem layer generalisable is the harder problem.
+We shipped it as [vizstack](https://github.com/jokeane9/vizstack) — an open-source CLI that runs against any Remix or Next.js App Router codebase and produces a single self-contained HTML file.
 
-A general version would look like this: GitHub URL as input → GitHub API tree fetch → automatic route tree. An optional config file for the ecosystem edges — the part that can't be reliably auto-detected. Deploy as a static web app, no backend, everything running in the browser against the GitHub API.
+```bash
+node parse.js ./your-app viz.html
+open viz.html
+```
 
-The more interesting version is writable. Right now the map is read-only. A writable map lets you click a route and annotate it, flag a loader as suspicious, mark an edge as deprecated. The map becomes a shared annotation layer over the codebase — a way for two people to hold the same mental model and keep it current as the app changes.
+No install, no server, no dependencies. The output works on Epic Stack (23 routes, 3 tables), Inbox Zero (253 routes, 49 tables, 4 AI providers), or anything in between. The trigger detection — webhooks, scheduled crons, polling endpoints — works zero-config from URL patterns.
 
-We're planning to open-source the v3 prototype. The core insight — that Remix's file-based conventions make the route tree almost entirely automatable — generalises to any file-based router: Next.js App Router, SvelteKit, Nuxt. The ecosystem layer doesn't generalise as cleanly, but the route layer does.
+The one known limitation: Prisma gives you full table schemas with field types and relations. Raw SQL drivers (pg, mysql2) collapse to a single DB node. If your app uses Prisma, the database column is detailed. If it doesn't, it's a box.
 
-If you're building a Remix app and want to check your mental model, the HTML prototype is a start.
+The core insight generalises to any file-based router. The route tree is almost entirely automatable from filename conventions alone. The ecosystem edges — which routes call which tables, which call AI — require either Prisma's schema or a static analysis pass. That's the part we'd build next.
