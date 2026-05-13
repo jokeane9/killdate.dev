@@ -282,6 +282,73 @@ header {
   color: #c9d1d9;
   line-height: 1.7;
 }
+
+/* ── Tabs ── */
+.tabs {
+  display: flex;
+  gap: 2px;
+  margin-left: 24px;
+}
+.tab {
+  font-size: 11px;
+  padding: 3px 12px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  color: #6e7681;
+  background: transparent;
+  font-family: inherit;
+  transition: all 0.1s;
+}
+.tab:hover { color: #c9d1d9; border-color: #30363d; }
+.tab.active { color: #e6edf3; background: #161b22; border-color: #30363d; }
+
+/* ── Shopify surface panel ── */
+.shopify-panel {
+  display: none;
+  flex: 1;
+  overflow-y: auto;
+  padding: 28px 32px;
+  gap: 32px;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+.shopify-panel.visible { display: flex; }
+
+.sp-section {
+  width: 340px;
+}
+.sp-section-title {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #6e7681;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #21262d;
+}
+.sp-direction {
+  font-size: 11px;
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.sp-inbound  { background: #1a0800; color: #e3b341; border: 1px solid #3d1800; }
+.sp-outbound { background: #091832; color: #79c0ff; border: 1px solid #1a3060; }
+
+.sp-item {
+  padding: 10px 12px;
+  background: #161b22;
+  border: 1px solid #21262d;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+.sp-item-name  { font-size: 12px; color: #e6edf3; font-weight: 500; margin-bottom: 3px; }
+.sp-item-desc  { font-size: 11px; color: #6e7681; line-height: 1.5; }
+.sp-item-meta  { font-size: 10px; color: #8b949e; margin-top: 4px; font-style: italic; }
 </style>
 </head>
 <body>
@@ -289,6 +356,10 @@ header {
 <header>
   <span class="logo">⬡ Ecosystem</span>
   <span class="project">shelf — cross-layer dependency map</span>
+  <div class="tabs">
+    <button class="tab active" id="tab-diagram" onclick="switchTab('diagram')">Dependency map</button>
+    <button class="tab" id="tab-shopify" onclick="switchTab('shopify')">Shopify surface</button>
+  </div>
   <div class="legend">
     <div class="leg"><div class="leg-line read"></div> reads</div>
     <div class="leg"><div class="leg-line write"></div> writes</div>
@@ -298,9 +369,102 @@ header {
   </div>
 </header>
 
-<div style="display:flex;flex:1;overflow:hidden">
+<div style="display:flex;flex:1;overflow:hidden" id="main-wrap">
 
-<div class="ecosystem-wrap">
+<!-- SHOPIFY SURFACE PANEL -->
+<div class="shopify-panel" id="shopify-panel">
+
+  <div class="sp-section">
+    <div class="sp-section-title">Webhooks — Shopify pushes to us</div>
+    <div class="sp-direction sp-inbound">📨 inbound — Shopify initiates</div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">app/uninstalled</div>
+      <div class="sp-item-desc">Merchant removes the app from their store. We delete their merchant row and all dependent data (products, competitors, briefings) via cascade.</div>
+      <div class="sp-item-meta">Handler: webhooks.tsx → deleteMerchantAndSchedules()</div>
+    </div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">shop/redact</div>
+      <div class="sp-item-desc">GDPR: Shopify asks us to permanently delete all data for a shop. Same as uninstall — full merchant + dependents deletion.</div>
+      <div class="sp-item-meta">Handler: webhooks.tsx → deleteMerchantAndSchedules()</div>
+    </div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">customers/data_request</div>
+      <div class="sp-item-desc">GDPR: A customer asked Shopify what data an app holds on them. We respond that we store no customer PII — only aggregate order counts.</div>
+      <div class="sp-item-meta">Handler: webhooks.tsx → returns 200 + note</div>
+    </div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">customers/redact</div>
+      <div class="sp-item-desc">GDPR: Delete all data for a specific customer. We have no customer-level data to delete — acknowledged with 200.</div>
+      <div class="sp-item-meta">Handler: webhooks.tsx → returns 200</div>
+    </div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">app_subscriptions/update</div>
+      <div class="sp-item-desc">A billing subscription changed — activated, cancelled, or frozen. We update the merchant's plan and paywall status accordingly.</div>
+      <div class="sp-item-meta">Handler: webhooks.tsx → updateMerchantPlan() + updatePaywallStatus()</div>
+    </div>
+  </div>
+
+  <div class="sp-section">
+    <div class="sp-section-title">GraphQL — we pull from Shopify</div>
+    <div class="sp-direction sp-outbound">→ outbound — we initiate</div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">products.list</div>
+      <div class="sp-item-desc">Fetch the merchant's full product catalogue so they can pick which SKUs to track during onboarding.</div>
+      <div class="sp-item-meta">Called by: /app/onboarding/* · scope: read_products</div>
+    </div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">SignalS1Orders — realized prices</div>
+      <div class="sp-item-desc">Orders from last 30 days. Calculates the average realized unit price per product after discounts are applied.</div>
+      <div class="sp-item-meta">Called by: afterAuth → syncMerchantShopifySignals() · scope: read_orders</div>
+    </div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">SignalS2Orders — discount depth</div>
+      <div class="sp-item-desc">Orders from last 30 days. Calculates what % of order value is discounted and whether discounting is structural or promotional.</div>
+      <div class="sp-item-meta">Called by: afterAuth → syncMerchantShopifySignals() · scope: read_orders</div>
+    </div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">SignalS3Orders — refund rate</div>
+      <div class="sp-item-desc">Orders from last 30 days. Counts how many had refunds — a proxy for product-market fit and quality issues.</div>
+      <div class="sp-item-meta">Called by: afterAuth → syncMerchantShopifySignals() · scope: read_orders</div>
+    </div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">SignalS5Orders — UTM channel split</div>
+      <div class="sp-item-desc">Orders from last 30 days. Breaks down where orders came from: paid social, organic, email, direct.</div>
+      <div class="sp-item-meta">Called by: afterAuth → syncMerchantShopifySignals() · scope: read_orders</div>
+    </div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">SignalS6Orders — new vs returning</div>
+      <div class="sp-item-desc">Orders from last 30 days. Ratio of first-time buyers to returning customers.</div>
+      <div class="sp-item-meta">Called by: afterAuth → syncMerchantShopifySignals() · scope: read_orders</div>
+    </div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">HeroOrders — hero product inference</div>
+      <div class="sp-item-desc">Orders from last 30 days. Identifies the highest-revenue product among the merchant's confirmed matched SKUs.</div>
+      <div class="sp-item-meta">Called by: Phase 6 (post-onboarding) · scope: read_orders</div>
+    </div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">Billing API — create + verify charge</div>
+      <div class="sp-item-desc">Creates a recurring charge when a merchant upgrades. Verifies the charge status when Shopify redirects back after the merchant approves or declines.</div>
+      <div class="sp-item-meta">Called by: /app/billing + /app/billing/callback</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="ecosystem-wrap" id="diagram-wrap">
 <div class="ecosystem" id="ecosystem">
   <svg id="svg-lines"></svg>
 
@@ -367,6 +531,7 @@ header {
     <div class="node" id="n-anthropic"><div class="node-label">Anthropic API</div><div class="node-sub">claude-3-5-sonnet</div></div>
     <div class="node" id="n-playwright"><div class="node-label">Playwright / web</div><div class="node-sub">headless crawl</div></div>
   </div>
+</div>
 </div>
 </div>
 
@@ -1243,6 +1408,16 @@ wrap.addEventListener('scroll', () => drawEdges(hoveredId));
 
 window.addEventListener('load',   () => setTimeout(() => drawEdges(null), 50));
 window.addEventListener('resize', () => drawEdges(null));
+
+// ── Tab switching ──────────────────────────────────────────────
+function switchTab(tab) {
+  const isDiagram = tab === 'diagram';
+  document.getElementById('tab-diagram').classList.toggle('active', isDiagram);
+  document.getElementById('tab-shopify').classList.toggle('active', !isDiagram);
+  document.getElementById('diagram-wrap').style.display = isDiagram ? '' : 'none';
+  document.getElementById('info-panel').style.display   = isDiagram ? '' : 'none';
+  document.getElementById('shopify-panel').classList.toggle('visible', !isDiagram);
+}
 </script>
 </body>
 </html>
