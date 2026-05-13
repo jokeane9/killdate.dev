@@ -273,6 +273,15 @@ header {
   color: #8b949e;
 }
 .chip strong { color: #c9d1d9; }
+
+/* Description block */
+.ip-description {
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid #21262d;
+  font-size: 12px;
+  color: #c9d1d9;
+  line-height: 1.7;
+}
 </style>
 </head>
 <body>
@@ -374,6 +383,7 @@ header {
 const NODE_DATA = {
   'n-app': {
     layer: 'routes', label: '/app', tag: 'Route',
+    description: 'The main merchant dashboard. Loads everything a merchant needs to see: their tracked products, competitor list, and the latest AI-generated briefing. The Refresh button here kicks off a new crawl.',
     file: 'app/routes/app._index.tsx',
     auth: true, badges: ['L','A','UI'],
     timing: { type: 'user', label: '⚡ user', detail: 'Merchant navigates to dashboard. Loader runs server-side on every page load.' },
@@ -389,6 +399,7 @@ const NODE_DATA = {
   },
   'n-onboarding': {
     layer: 'routes', label: '/app/onboarding/*', tag: 'Route group',
+    description: '6-step setup wizard for new merchants. Covers vertical selection, product pinning, competitor URL entry, and triggers the first crawl. Each step is a separate route.',
     file: 'app/routes/app.onboarding.*.tsx (6 files)',
     auth: true, badges: ['L','A','UI'],
     timing: { type: 'user', label: '⚡ user', detail: 'Step-by-step wizard driven by merchant clicks. Each step submit is an action POST.' },
@@ -402,6 +413,7 @@ const NODE_DATA = {
   },
   'n-billing': {
     layer: 'routes', label: '/app/billing', tag: 'Route',
+    description: 'Plan selection screen. Shows available plans and handles upgrades — creates a charge through Shopify\'s hosted payment UI, then waits for the callback to confirm.',
     file: 'app/routes/app.billing.tsx',
     auth: true, badges: ['L','A','UI'],
     timing: { type: 'user', label: '⚡ user', detail: 'Merchant clicks plan or upgrade CTA. Action creates Shopify billing charge then redirects to Shopify hosted confirmation.' },
@@ -415,6 +427,7 @@ const NODE_DATA = {
   },
   'n-sidekick': {
     layer: 'routes', label: '/api/sidekick', tag: 'Resource route',
+    description: 'Data endpoint for Shopify Sidekick. When a merchant asks Sidekick a question about their market, this route serves the relevant briefing data back to the Sidekick iframe.',
     file: 'app/routes/api.sidekick.tsx',
     auth: false, authNote: 'Manual — validates Shopify session token from Authorization header',
     badges: ['L'],
@@ -429,6 +442,7 @@ const NODE_DATA = {
   },
   'n-crawl-status': {
     layer: 'routes', label: '/api/crawl-status', tag: 'Resource route',
+    description: 'Polled every ~2 seconds while a crawl is running. Powers the progress indicator on the onboarding pending screen — stops polling once the job completes.',
     file: 'app/routes/api.crawl-status.tsx',
     auth: false, badges: ['L'],
     timing: { type: 'polled', label: '↺ polled ~2s', detail: 'useFetcher() fires every ~2s while a crawl is in-flight. Onboarding pending screen only — stops on completion.' },
@@ -442,6 +456,7 @@ const NODE_DATA = {
   },
   'n-webhooks': {
     layer: 'routes', label: '/webhooks', tag: 'Resource route',
+    description: 'Receives events pushed inbound from Shopify — uninstalls, subscription changes, GDPR redact requests. Verifies the HMAC signature on every request before acting. No UI, just a POST handler.',
     file: 'app/routes/webhooks.tsx',
     auth: false, authNote: 'HMAC signature verified in action before processing',
     badges: ['A'],
@@ -453,6 +468,7 @@ const NODE_DATA = {
   },
   'n-settings': {
     layer: 'routes', label: '/app/settings/*', tag: 'Route group',
+    description: 'Three settings screens for managing the merchant\'s config: tracked products, competitor URLs, and account preferences. Saving changes can trigger a fresh crawl.',
     file: 'app/routes/app.settings.*.tsx (3 files)',
     auth: true, badges: ['L','A','UI'],
     timing: { type: 'user', label: '⚡ user', detail: 'Merchant navigates to settings. Three sub-routes: main config, add-products (manage tracked SKUs), match-competitor (re-match competitor URLs).' },
@@ -466,6 +482,7 @@ const NODE_DATA = {
   },
   'n-billing-callback': {
     layer: 'routes', label: '/app/billing/callback', tag: 'Route',
+    description: 'Where Shopify redirects the merchant after they approve or decline a plan upgrade. Validates the charge status and updates the merchant\'s plan in the database.',
     file: 'app/routes/app.billing.callback.tsx',
     auth: false, authNote: 'No layout auth — Shopify redirects here after charge confirmation',
     badges: ['L'],
@@ -479,6 +496,7 @@ const NODE_DATA = {
   },
   'n-sidekick-subs': {
     layer: 'routes', label: '/api/sidekick/*', tag: 'Route group',
+    description: 'Three scoped data endpoints Sidekick calls depending on what the merchant asked: market overview, peer profiles, or product comparisons. Each delegates to the same shared loader.',
     file: 'app/routes/api.sidekick.{market-overview,peer-profiles,product-comparisons}.tsx',
     auth: false, authNote: 'Delegates to api.sidekick loader — same session token validation',
     badges: ['L'],
@@ -494,6 +512,7 @@ const NODE_DATA = {
   },
   'n-auth': {
     layer: 'routes', label: '/auth/*', tag: 'Route group',
+    description: 'OAuth entry point. Handles the Shopify app install flow — exchanges the OAuth code for an access token and creates or updates the merchant record. Everything else depends on this succeeding.',
     file: 'app/routes/auth.*.tsx',
     auth: false, badges: ['L','A'],
     timing: { type: 'user', label: '⚡ OAuth redirect', detail: 'Triggered by merchant installing the app or session expiry. Shopify redirects browser here to kick off OAuth.' },
@@ -506,6 +525,7 @@ const NODE_DATA = {
   // UI Components
   'n-briefing-card': {
     layer: 'ui', label: 'BriefingCard', tag: 'Component',
+    description: 'Renders one AI-generated card from the briefing. Each card covers a single market signal — a price change, inventory move, promo launch, or competitive shift.',
     file: 'app/components/dashboard/BriefingCard.tsx',
     renderedBy: ['/app'],
     props: [
@@ -516,6 +536,7 @@ const NODE_DATA = {
   },
   'n-briefing-section': {
     layer: 'ui', label: 'BriefingSection', tag: 'Component',
+    description: 'The main dashboard feed. Loops through all cards in the briefing and renders one BriefingCard per item — the top-level container for everything the AI produced.',
     file: 'app/components/dashboard/BriefingSection.tsx',
     renderedBy: ['/app'],
     props: [
@@ -526,6 +547,7 @@ const NODE_DATA = {
   },
   'n-market-read': {
     layer: 'ui', label: 'MarketReadSection', tag: 'Component',
+    description: 'One-line market summary at the top of the dashboard. Shows the cycle label and the AI\'s high-level read on what happened this crawl cycle.',
     file: 'app/components/dashboard/MarketReadSection.tsx',
     renderedBy: ['/app'],
     props: [
@@ -535,6 +557,7 @@ const NODE_DATA = {
   },
   'n-state-bar': {
     layer: 'ui', label: 'StateIndicatorBar', tag: 'Component',
+    description: 'Shows when data was last refreshed and whether a crawl is currently running. Houses the Refresh button and drives the polling of /api/crawl-status while a job is in-flight.',
     file: 'app/components/dashboard/StateIndicatorBar.tsx',
     renderedBy: ['/app'],
     props: [
@@ -547,6 +570,7 @@ const NODE_DATA = {
   // Lib / Models
   'n-lib-session': {
     layer: 'lib', label: 'session.server', tag: 'Server lib',
+    description: 'The auth gate. requireUser() is the one call every protected loader makes — if there\'s no valid Shopify session it redirects to /auth. All protected routes depend on this.',
     file: 'app/lib/session.server.ts',
     exports: ['requireUser()', 'getUser()', 'getShopifySession()'],
     usedBy: ['/app', '/app/onboarding/*', '/app/billing', '/api/sidekick'],
@@ -554,6 +578,7 @@ const NODE_DATA = {
   },
   'n-lib-db': {
     layer: 'lib', label: 'db.server', tag: 'Server lib',
+    description: 'The Postgres connection pool. Every route that reads or writes data goes through here. Single shared pool across all loaders — no direct pg imports anywhere else.',
     file: 'app/lib/db.server.ts',
     exports: ['pool', 'query()'],
     usedBy: ['/app', '/app/onboarding/*', '/app/billing', '/api/sidekick', '/api/crawl-status', '/webhooks'],
@@ -561,6 +586,7 @@ const NODE_DATA = {
   },
   'n-lib-boss': {
     layer: 'lib', label: 'boss.server', tag: 'Server lib',
+    description: 'The job queue client. Routes call enqueueJob() to kick off a crawl; the Python pipeline running on ECS picks it up on the other end. pg-boss handles retries and dead-letter automatically.',
     file: 'app/lib/boss.server.ts',
     exports: ['getBoss()', 'enqueueJob()'],
     usedBy: ['/app', '/app/onboarding/*', '/api/crawl-status'],
@@ -568,6 +594,7 @@ const NODE_DATA = {
   },
   'n-lib-types': {
     layer: 'lib', label: 'types.ts', tag: 'Types',
+    description: 'Shared TypeScript interfaces for the whole app. Merchant, Product, Competitor, Briefing, Plan — every route and component imports from here. If the DB schema changes, these update first.',
     file: 'app/lib/types.ts',
     exports: ['Merchant', 'Product', 'Competitor', 'Briefing', 'BriefingCard', 'Plan', 'JobStatus'],
     usedBy: ['all route files', 'all component files'],
@@ -575,6 +602,7 @@ const NODE_DATA = {
   },
   'n-lib-billing': {
     layer: 'lib', label: 'shopify-billing.server', tag: 'Server lib',
+    description: 'Shopify billing logic. Knows the plan names, prices, and feature gates. Wraps the Billing API calls so the billing route stays clean.',
     file: 'app/lib/shopify-billing.server.ts',
     exports: ['createCharge()', 'getCharge()', 'PLANS'],
     usedBy: ['/app/billing'],
@@ -584,6 +612,7 @@ const NODE_DATA = {
   // Database
   'n-merchants': {
     layer: 'db', label: 'merchants', tag: 'Table',
+    description: 'One row per installed merchant. Stores their Shopify domain, access token, current plan, prompt version, and onboarding state. The most-read table in the app — touched by nearly every route.',
     columns: [
       { name: 'id',                   type: 'uuid' },
       { name: 'shopify_domain',        type: 'text' },
@@ -597,6 +626,7 @@ const NODE_DATA = {
   },
   'n-products': {
     layer: 'db', label: 'products', tag: 'Table',
+    description: 'The SKUs a merchant chose to track. Populated during onboarding when they pick products from their Shopify catalogue. Editable later in settings.',
     columns: [
       { name: 'id',           type: 'uuid' },
       { name: 'merchant_id',  type: 'uuid FK' },
@@ -609,6 +639,7 @@ const NODE_DATA = {
   },
   'n-competitors': {
     layer: 'db', label: 'competitors', tag: 'Table',
+    description: 'Competitor URLs entered by the merchant, plus the enriched data Playwright pulled from their homepages — tech stack signals, promo banners, inventory badges. Written by the crawl pipeline, read by the dashboard.',
     columns: [
       { name: 'id',              type: 'uuid' },
       { name: 'merchant_id',     type: 'uuid FK' },
@@ -622,6 +653,7 @@ const NODE_DATA = {
   },
   'n-briefings': {
     layer: 'db', label: 'briefings', tag: 'Table',
+    description: 'The AI output. Each row is one crawl cycle\'s briefing JSON — the cards, cycle label, and insights the dashboard renders. Written by the crawl pipeline, read by /app and Sidekick.',
     columns: [
       { name: 'id',           type: 'uuid' },
       { name: 'merchant_id',  type: 'uuid FK' },
@@ -634,6 +666,7 @@ const NODE_DATA = {
   },
   'n-jobs': {
     layer: 'db', label: 'crawl_jobs', tag: 'Table (pg-boss)',
+    description: 'The job queue. Routes write a row here to request a crawl; the Python pipeline on ECS dequeues it when it starts. pg-boss owns this table — handles retries and dead-letter queuing.',
     columns: [
       { name: 'id',          type: 'uuid' },
       { name: 'name',        type: 'text' },
@@ -648,6 +681,7 @@ const NODE_DATA = {
   // AI
   'n-crawl-py': {
     layer: 'ai', label: 'Crawl pipeline', tag: 'Process',
+    description: 'The Python process that runs on AWS ECS Fargate. Dequeues a job, fetches competitor pages with Playwright, enriches the data across 5 layers, calls Claude, and writes the briefing back to Postgres.',
     file: 'crawl/main.py',
     runtime: 'Python 3.11 · AWS ECS Fargate',
     layers: ['Layer 0: URL fetch', 'Layer 1: HTML parse', 'Layer 2: Playwright extras', 'Layer 3: data assembly', 'Layer 4: LLM briefing'],
@@ -664,6 +698,7 @@ const NODE_DATA = {
   },
   'n-layer4': {
     layer: 'ai', label: 'Layer 4 prompt', tag: 'System prompt',
+    description: 'The system prompt that turns raw crawl data into actionable briefing cards. The only place in the whole system where intelligence decisions are made — everything else is plumbing.',
     file: 'crawl/system_prompt.txt',
     version: 'v3.0.2',
     model: 'claude-3-5-sonnet-20241022',
@@ -682,6 +717,7 @@ const NODE_DATA = {
   },
   'n-model': {
     layer: 'ai', label: 'claude-3-5-sonnet', tag: 'Model',
+    description: 'The model that writes the briefing. Receives structured competitor and product data, returns structured JSON cards the dashboard renders. Never called by routes — only the Python pipeline touches it.',
     modelId: 'claude-3-5-sonnet-20241022',
     provider: 'Anthropic',
     contextWindow: '200k tokens',
@@ -691,6 +727,7 @@ const NODE_DATA = {
   },
   'n-schema': {
     layer: 'ai', label: 'Briefing schema', tag: 'Output contract',
+    description: 'The JSON contract between the AI and the dashboard. Defines exactly what fields a briefing can contain. Changing it requires updating both the prompt and the dashboard renderer.',
     file: 'crawl/schemas/briefing_v3.py',
     version: 'v3',
     fields: [
@@ -705,6 +742,7 @@ const NODE_DATA = {
   // External
   'n-shopify-admin': {
     layer: 'ext', label: 'Shopify Admin API', tag: 'External API',
+    description: 'Used during onboarding to fetch the merchant\'s product catalogue from Shopify so they can pick which SKUs to track.',
     protocol: 'GraphQL',
     auth: 'Access token (from OAuth)',
     direction: 'Outbound',
@@ -714,6 +752,7 @@ const NODE_DATA = {
   },
   'n-shopify-billing': {
     layer: 'ext', label: 'Shopify Billing API', tag: 'External API',
+    description: 'Handles plan upgrades. Shelf creates a charge here; Shopify hosts the actual payment UI. The merchant approves or declines on Shopify\'s side, then gets redirected back.',
     protocol: 'REST',
     auth: 'Access token',
     direction: 'Outbound',
@@ -723,6 +762,7 @@ const NODE_DATA = {
   },
   'n-shopify-oauth': {
     layer: 'ext', label: 'Shopify OAuth', tag: 'External API',
+    description: 'The app install handshake. Shopify redirects a merchant here when they install Shelf; in return Shelf gets an access token that every subsequent API call uses.',
     protocol: 'OAuth 2.0',
     auth: 'Client ID + Secret',
     direction: 'Outbound',
@@ -732,6 +772,7 @@ const NODE_DATA = {
   },
   'n-shopify-hooks': {
     layer: 'ext', label: 'Shopify Webhooks', tag: 'External (inbound)',
+    description: 'Shopify pushes events to Shelf — direction is reversed from most external APIs. Uninstalls, billing subscription changes, and GDPR redact requests all arrive this way.',
     protocol: 'HTTPS POST',
     auth: 'HMAC-SHA256 verified',
     direction: 'Inbound → /webhooks',
@@ -740,6 +781,7 @@ const NODE_DATA = {
   },
   'n-anthropic': {
     layer: 'ext', label: 'Anthropic API', tag: 'External API',
+    description: 'The AI backbone. The Python crawl pipeline calls this to get briefing cards back from Claude. Never touched by routes — fully isolated inside the ECS task.',
     protocol: 'REST',
     auth: 'API key (ANTHROPIC_API_KEY)',
     direction: 'Outbound',
@@ -749,6 +791,7 @@ const NODE_DATA = {
   },
   'n-playwright': {
     layer: 'ext', label: 'Playwright / web', tag: 'External (headless)',
+    description: 'Headless browser that crawls competitor homepages. Detects tech stacks, reads promotional banners, and spots inventory signals — the raw data that Layer 4 reasons over.',
     protocol: 'HTTP/HTTPS via headless browser',
     auth: 'None — public web crawl',
     direction: 'Outbound',
@@ -1150,6 +1193,9 @@ function showInfo(id) {
   document.getElementById('info-empty').style.display = 'none';
   const content = document.getElementById('info-content');
   content.style.display = 'block';
+  const descHTML = d.description
+    ? `<div class="ip-description">${d.description}</div>`
+    : '';
   content.innerHTML = `
     <div class="ip-node-header">
       <div class="ip-layer-tag ${tagClass}">${d.tag || LAYER_LABEL[d.layer]}</div>
@@ -1157,6 +1203,7 @@ function showInfo(id) {
       ${d.file ? `<div class="ip-file">${d.file}</div>` : ''}
       ${badgeHTML ? `<div class="ip-badges">${badgeHTML}</div>` : ''}
     </div>
+    ${descHTML}
     ${body}
   `;
 }
