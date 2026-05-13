@@ -359,6 +359,7 @@ header {
   <div class="tabs">
     <button class="tab active" id="tab-diagram" onclick="switchTab('diagram')">Dependency map</button>
     <button class="tab" id="tab-shopify" onclick="switchTab('shopify')">Shopify surface</button>
+    <button class="tab" id="tab-aws" onclick="switchTab('aws')">AWS infra</button>
   </div>
   <div class="legend">
     <div class="leg"><div class="leg-line read"></div> reads</div>
@@ -459,6 +460,148 @@ header {
       <div class="sp-item-name">Billing API — create + verify charge</div>
       <div class="sp-item-desc">Creates a recurring charge when a merchant upgrades. Verifies the charge status when Shopify redirects back after the merchant approves or declines.</div>
       <div class="sp-item-meta">Called by: /app/billing + /app/billing/callback</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- AWS INFRA PANEL -->
+<div class="shopify-panel" id="aws-panel">
+
+  <div class="sp-section">
+    <div class="sp-section-title">Traffic & Compute</div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">ALB — shelf-alb</div>
+      <div class="sp-item-desc">Public HTTPS entry point. Terminates TLS, routes all traffic to the Remix container on port 3000. HTTP → 301 HTTPS redirect on port 80.</div>
+      <div class="sp-item-meta">Domain: app.shelfplugin.com · Target group: shelf-remix-tg · Cert: ACM wildcard *.shelfplugin.com</div>
+      <div class="sp-item-meta">→ hits: ECS shelf-remix-service (all routes)</div>
+    </div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">ECS Fargate — shelf-remix-service</div>
+      <div class="sp-item-desc">Long-running service that serves the Remix app. Always on — handles every merchant request, webhook, and OAuth flow. Pulls image from ECR on deploy.</div>
+      <div class="sp-item-meta">Task def: shelf-remix-task · Image: ECR shelf-remix · SG: shelf-remix-sg</div>
+      <div class="sp-item-meta">→ serves: /app, /webhooks, /auth/*, /api/*, /app/billing, /app/settings/*</div>
+      <div class="sp-item-meta">→ reads secrets from: Secrets Manager (DATABASE_URL, SHOPIFY_API_SECRET)</div>
+      <div class="sp-item-meta">→ logs to: CloudWatch /ecs/shelf-remix</div>
+    </div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">ECS Fargate — shelf-crawl-task</div>
+      <div class="sp-item-desc">On-demand task, not a service. Spun up per crawl job via ECS.RunTask() — runs the Python pipeline, writes the briefing, then exits. Cold start ~30s.</div>
+      <div class="sp-item-meta">Task def: shelf-crawl-task · Image: ECR shelf-crawl · SG: shelf-crawl-sg (no inbound)</div>
+      <div class="sp-item-meta">→ triggered by: pg-boss job dequeue via boss.server</div>
+      <div class="sp-item-meta">→ reads secrets from: Secrets Manager (DATABASE_URL, ANTHROPIC_API_KEY, LANGFUSE_*)</div>
+      <div class="sp-item-meta">→ writes to: RDS briefings + competitors tables</div>
+      <div class="sp-item-meta">→ logs to: CloudWatch /ecs/shelf-crawl</div>
+    </div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">ECS Fargate — shelf-schema-runner</div>
+      <div class="sp-item-desc">One-shot migration task. Runs db/schema.sql on deploy when schema changes are needed, then exits. Quiet the rest of the time.</div>
+      <div class="sp-item-meta">→ logs to: CloudWatch /ecs/shelf-schema-runner</div>
+    </div>
+  </div>
+
+  <div class="sp-section">
+    <div class="sp-section-title">Data & Storage</div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">RDS PostgreSQL — shelf-db</div>
+      <div class="sp-item-desc">The only persistent store. Holds all 5 app tables plus pg-boss job queue. Private subnet — no public access. Both ECS tasks connect via DATABASE_URL from Secrets Manager.</div>
+      <div class="sp-item-meta">Engine: PostgreSQL 15 · Instance: db.t4g.micro · Endpoint: shelf-db.c0f8siq66jr4.us-east-1.rds.amazonaws.com</div>
+      <div class="sp-item-meta">→ tables: merchants, products, competitors, briefings, crawl_jobs (pg-boss)</div>
+      <div class="sp-item-meta">→ read by: shelf-remix-service (all loaders), shelf-crawl-task (pipeline)</div>
+      <div class="sp-item-meta">→ written by: shelf-remix-service (actions), shelf-crawl-task (briefings + competitor enrichment)</div>
+    </div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">ECR — shelf-remix + shelf-crawl</div>
+      <div class="sp-item-desc">Docker image registry. GitHub Actions builds and pushes both images on every main branch deploy. ECS pulls the latest image tag when launching tasks.</div>
+      <div class="sp-item-meta">shelf-remix: 426018613230.dkr.ecr.us-east-1.amazonaws.com/shelf-remix</div>
+      <div class="sp-item-meta">shelf-crawl: 426018613230.dkr.ecr.us-east-1.amazonaws.com/shelf-crawl</div>
+      <div class="sp-item-meta">→ pushed by: GitHub Actions (shelf-github-deploy role)</div>
+      <div class="sp-item-meta">→ pulled by: ECS task launch (shelf-ecs-execution-role)</div>
+    </div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">S3 + CloudFront — marketing site</div>
+      <div class="sp-item-desc">Static site hosting for shelfplugin.com. Separate from the app — different repo, different deploy role. CloudFront sits in front for HTTPS + caching.</div>
+      <div class="sp-item-meta">Bucket: shelfplugin-site · CF distribution: E325D94Y9QQSAU</div>
+      <div class="sp-item-meta">→ deployed by: jokeane9/shelf-site repo (shelf-site-deploy role)</div>
+    </div>
+  </div>
+
+  <div class="sp-section">
+    <div class="sp-section-title">Security & Config</div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">Secrets Manager</div>
+      <div class="sp-item-desc">Runtime secret injection. ECS tasks declare secrets in their task definition — the execution role fetches them at container start and injects as env vars. Nothing hardcoded in images.</div>
+      <div class="sp-item-meta">shelf/DATABASE_URL → both ECS tasks</div>
+      <div class="sp-item-meta">shelf/SHOPIFY_API_SECRET → shelf-remix-task only</div>
+      <div class="sp-item-meta">shelf/ANTHROPIC_API_KEY → shelf-crawl-task only</div>
+      <div class="sp-item-meta">shelf/LANGFUSE_* (3 keys) → shelf-crawl-task only</div>
+    </div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">IAM Roles</div>
+      <div class="sp-item-desc">Four roles, each scoped to minimum permissions. Execution role fetches secrets + pulls ECR. Task role can trigger crawl ECS tasks. Deploy role can push images and update services.</div>
+      <div class="sp-item-meta">shelf-ecs-execution-role → ECR pull + Secrets Manager get (scoped to shelf/*)</div>
+      <div class="sp-item-meta">shelf-ecs-task-role → ECS RunTask on shelf-crawl-task + iam:PassRole</div>
+      <div class="sp-item-meta">shelf-github-deploy → ECR push + ECS deploy + iam:PassRole (OIDC, main branch only)</div>
+      <div class="sp-item-meta">shelf-site-deploy → S3 sync + CloudFront invalidation only</div>
+    </div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">Security Groups — traffic rules</div>
+      <div class="sp-item-desc">Four SGs forming a layered perimeter. Internet hits ALB only. ALB → Remix only. Remix + Crawl → RDS only. Crawl has no inbound — outbound-only for web crawling.</div>
+      <div class="sp-item-meta">shelf-alb-sg → TCP 443/80 from 0.0.0.0/0</div>
+      <div class="sp-item-meta">shelf-remix-sg → TCP 3000 from shelf-alb-sg only</div>
+      <div class="sp-item-meta">shelf-crawl-sg → no inbound (outbound: Anthropic API, competitor URLs, RDS)</div>
+      <div class="sp-item-meta">shelf-rds-sg → TCP 5432 from shelf-remix-sg + shelf-crawl-sg only</div>
+    </div>
+  </div>
+
+  <div class="sp-section">
+    <div class="sp-section-title">Observability</div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">CloudWatch Logs</div>
+      <div class="sp-item-desc">Three log groups — one per ECS task. The Remix log is your production debugging surface: auth flows, webhook handler output, loader errors. Crawl log shows pipeline progress and Layer 4 output.</div>
+      <div class="sp-item-meta">/ecs/shelf-remix → [afterAuth], [webhook], loader errors, route logs</div>
+      <div class="sp-item-meta">/ecs/shelf-crawl → Layer 0–4 pipeline, Langfuse traces, crawl failures</div>
+      <div class="sp-item-meta">/ecs/shelf-schema-runner → migration output only</div>
+    </div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">Langfuse — Layer 4 traces</div>
+      <div class="sp-item-desc">Captures every Claude API call from the crawl pipeline: full prompt + response, token counts, latency, merchant ID, model version. The dataset for evaluating prompt quality over time.</div>
+      <div class="sp-item-meta">Injected via: LANGFUSE_PUBLIC_KEY + LANGFUSE_SECRET_KEY + LANGFUSE_BASE_URL (Secrets Manager)</div>
+      <div class="sp-item-meta">→ called by: shelf-crawl-task at Layer 4 only</div>
+    </div>
+  </div>
+
+  <div class="sp-section">
+    <div class="sp-section-title">Deploy Pipeline</div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">GitHub Actions → ECR → ECS</div>
+      <div class="sp-item-desc">Push to main triggers the deploy workflow. Builds both Docker images, pushes to ECR, then updates the ECS service to pull the new image. Zero-downtime rolling deploy via ECS service update.</div>
+      <div class="sp-item-meta">1. git push main → GitHub Actions fires</div>
+      <div class="sp-item-meta">2. docker build shelf-remix + shelf-crawl</div>
+      <div class="sp-item-meta">3. ECR push (shelf-github-deploy OIDC role)</div>
+      <div class="sp-item-meta">4. ECS service update → shelf-remix-service pulls new image</div>
+      <div class="sp-item-meta">5. shelf-crawl-task picks up new image on next ECS.RunTask() call</div>
+    </div>
+
+    <div class="sp-item">
+      <div class="sp-item-name">DNS & TLS — Route 53 + ACM</div>
+      <div class="sp-item-desc">Route 53 hosts the shelfplugin.com zone. ACM wildcard cert covers both root and all subdomains. ALB does TLS termination — containers only see plain HTTP on port 3000.</div>
+      <div class="sp-item-meta">app.shelfplugin.com → CNAME → shelf-alb DNS</div>
+      <div class="sp-item-meta">shelfplugin.com → ALIAS → CloudFront (marketing site)</div>
+      <div class="sp-item-meta">Cert: ACM *.shelfplugin.com (us-east-1, auto-renews)</div>
     </div>
   </div>
 
@@ -1412,11 +1555,12 @@ window.addEventListener('resize', () => drawEdges(null));
 
 // ── Tab switching ──────────────────────────────────────────────
 function switchTab(tab) {
-  const isDiagram = tab === 'diagram';
-  document.getElementById('tab-diagram').classList.toggle('active', isDiagram);
-  document.getElementById('tab-shopify').classList.toggle('active', !isDiagram);
-  document.getElementById('diagram-view').style.display  = isDiagram ? 'flex' : 'none';
-  document.getElementById('shopify-panel').classList.toggle('visible', !isDiagram);
+  document.getElementById('tab-diagram').classList.toggle('active', tab === 'diagram');
+  document.getElementById('tab-shopify').classList.toggle('active', tab === 'shopify');
+  document.getElementById('tab-aws').classList.toggle('active',     tab === 'aws');
+  document.getElementById('diagram-view').style.display = tab === 'diagram' ? 'flex' : 'none';
+  document.getElementById('shopify-panel').classList.toggle('visible', tab === 'shopify');
+  document.getElementById('aws-panel').classList.toggle('visible',     tab === 'aws');
 }
 </script>
 </body>
