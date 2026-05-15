@@ -75,3 +75,21 @@ open viz.html
 No install, no server, no dependencies. Works on Epic Stack (23 routes, 3 tables) or Inbox Zero (253 routes, 49 tables, 4 AI providers). Trigger detection — webhooks, scheduled crons, polling endpoints — works zero-config from URL patterns.
 
 One known limitation: Prisma gives full table schemas. Raw SQL drivers collapse to a single DB node.
+
+---
+
+## What we added: click-to-pin and a chat panel
+
+Two things that changed how we actually use it day-to-day.
+
+**Click-to-pin.** Hovering was too ephemeral — move your mouse and everything clears. Now clicking a node locks it. Blue ring, edges stay highlighted, info panel stays open. Hover still works for previewing other nodes; mousing away snaps back to the pin. Click background to release.
+
+**Architecture-aware chat.** The ecosystem map already has all the data — every node, every edge, every file path — as JavaScript in the page. We wired that directly into a Claude system prompt and added a chat panel. Pin a node, switch to the Chat tab, ask a question. Claude already knows the full graph before you type anything.
+
+> *"What breaks first if the crawl pipeline silently fails?"*
+
+It answers by reasoning through `crawl_jobs` → `briefings` → `StateIndicatorBar` polling — because it knows those connections from the map itself. Not from docs. Not from code reading. From the graph.
+
+The plumbing: a small AWS Lambda proxies requests to the Anthropic API (CORS blocks direct browser calls). The system prompt is built dynamically from `NODE_DATA` and `EDGES` at call time, with the pinned node's connections injected as focused context.
+
+The chat is personal — the architecture map is the shareable part.
