@@ -354,74 +354,6 @@ header {
 .sp-item-desc  { font-size: 11px; color: #6e7681; line-height: 1.5; }
 .sp-item-meta  { font-size: 10px; color: #8b949e; margin-top: 4px; font-style: italic; }
 
-/* ── Panel tab bar ── */
-.panel-tab-bar { display: flex; border-bottom: 1px solid #21262d; flex-shrink: 0; }
-.panel-tab {
-  flex: 1; font-size: 11px; padding: 8px 0;
-  background: transparent; border: none; border-bottom: 2px solid transparent;
-  cursor: pointer; color: #6e7681; font-family: inherit; margin-bottom: -1px;
-  transition: all 0.1s;
-}
-.panel-tab:hover { color: #c9d1d9; }
-.panel-tab.active { color: #e6edf3; border-bottom-color: #58a6ff; }
-
-/* ── Chat pane ── */
-#chat-pane { flex: 1; flex-direction: column; overflow: hidden; }
-.chat-context-bar {
-  padding: 7px 12px; background: #161b22; border-bottom: 1px solid #21262d;
-  font-size: 10px; color: #6e7681; flex-shrink: 0;
-}
-.chat-context-bar span { color: #58a6ff; }
-#chat-messages {
-  flex: 1; overflow-y: auto; padding: 12px;
-  display: flex; flex-direction: column; gap: 10px;
-}
-.chat-msg { font-size: 12px; line-height: 1.6; }
-.chat-msg.user {
-  background: #161b22; border: 1px solid #21262d; border-radius: 8px;
-  padding: 8px 10px; color: #e6edf3; align-self: flex-end; max-width: 92%;
-}
-.chat-msg.assistant { color: #c9d1d9; padding: 2px 0; }
-.chat-msg.assistant code {
-  background: #161b22; border: 1px solid #21262d; border-radius: 3px;
-  padding: 1px 5px; font-size: 11px; color: #79c0ff;
-}
-.chat-msg.thinking { color: #6e7681; font-style: italic; font-size: 11px; }
-#chat-input-area {
-  border-top: 1px solid #21262d; padding: 10px;
-  display: flex; flex-direction: column; gap: 6px;
-  flex-shrink: 0; background: #0d1117;
-}
-#chat-input {
-  background: #161b22; border: 1px solid #21262d; border-radius: 6px;
-  color: #c9d1d9; font-family: inherit; font-size: 12px;
-  padding: 8px 10px; resize: none; height: 60px;
-  outline: none; width: 100%; transition: border-color 0.1s;
-}
-#chat-input:focus { border-color: #30363d; }
-.chat-send-row { display: flex; justify-content: space-between; align-items: center; }
-#chat-send-btn {
-  background: #1f6feb; border: none; border-radius: 5px;
-  color: #fff; cursor: pointer; font-family: inherit;
-  font-size: 11px; font-weight: 600; padding: 5px 14px; transition: background 0.1s;
-}
-#chat-send-btn:hover { background: #388bfd; }
-#chat-send-btn:disabled { background: #21262d; color: #6e7681; cursor: default; }
-.chat-hint { font-size: 10px; color: #6e7681; }
-#chat-setup { padding: 20px 16px; display: flex; flex-direction: column; gap: 12px; }
-#chat-setup p { font-size: 12px; color: #8b949e; line-height: 1.6; }
-#api-key-input {
-  background: #161b22; border: 1px solid #21262d; border-radius: 6px;
-  color: #c9d1d9; font-family: inherit; font-size: 12px;
-  padding: 8px 10px; outline: none; width: 100%;
-}
-#api-key-input:focus { border-color: #30363d; }
-#api-key-save {
-  background: #1f6feb; border: none; border-radius: 5px; color: #fff;
-  cursor: pointer; font-family: inherit; font-size: 11px;
-  font-weight: 600; padding: 6px 14px; align-self: flex-start;
-}
-.chat-key-hint { font-size: 10px; color: #6e7681; }
 </style>
 </head>
 <body>
@@ -753,38 +685,9 @@ header {
 
 <!-- RIGHT PANEL -->
 <div class="info-panel" id="info-panel">
-  <div class="panel-tab-bar">
-    <button class="panel-tab active" id="ptab-inspector" onclick="switchPanelTab('inspector')">Inspector</button>
-    <button class="panel-tab" id="ptab-chat" onclick="switchPanelTab('chat')">✦ Chat</button>
-  </div>
   <div id="inspector-pane">
     <div class="info-empty" id="info-empty">← Hover any node<br>to inspect it</div>
     <div id="info-content" style="display:none"></div>
-  </div>
-  <div id="chat-locked" style="display:none;padding:24px 16px;color:#6e7681;font-size:12px;line-height:1.8;">
-    <div style="font-size:16px;margin-bottom:10px;">🔒</div>
-    <div style="color:#c9d1d9;font-weight:600;margin-bottom:8px;">Personal tool</div>
-    This chat is a private debugging aid — not a public service. The architecture map is here as a reference piece.<br><br>
-    <a href="/" style="color:#58a6ff;text-decoration:none;font-size:11px;">← killdate.dev</a>
-  </div>
-  <div id="chat-pane" style="display:none">
-    <div id="chat-setup">
-      <p>Enter your Anthropic API key. Stored only in your browser's localStorage — never sent anywhere except the Anthropic API.</p>
-      <input type="password" id="api-key-input" placeholder="sk-ant-api03-…">
-      <div class="chat-key-hint">Stored in localStorage · never leaves your browser</div>
-      <button id="api-key-save" onclick="saveApiKey()">Save key</button>
-    </div>
-    <div id="chat-ready" style="display:none;flex:1;flex-direction:column;overflow:hidden;">
-      <div class="chat-context-bar" id="chat-context-bar">No node pinned — ask anything</div>
-      <div id="chat-messages"></div>
-      <div id="chat-input-area">
-        <textarea id="chat-input" placeholder="Ask about this node, trace a bug, check data flow…" onkeydown="handleChatKey(event)"></textarea>
-        <div class="chat-send-row">
-          <span class="chat-hint">⌘↵ to send</span>
-          <button id="chat-send-btn" onclick="sendChat()">Send</button>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
 </div>
@@ -1674,7 +1577,6 @@ document.querySelectorAll('.node').forEach(node => {
       pinnedId = node.id;
       node.classList.add('pinned');
     }
-    updateContextBar();
   });
 });
 
@@ -1684,7 +1586,6 @@ wrap.addEventListener('click', () => {
     document.getElementById(pinnedId)?.classList.remove('pinned');
     pinnedId = null;
     if (!hoveredId) clearFocus();
-    updateContextBar();
   }
 });
 
@@ -1693,152 +1594,6 @@ wrap.addEventListener('scroll', () => drawEdges(hoveredId ?? pinnedId));
 window.addEventListener('load',   () => setTimeout(() => drawEdges(null), 50));
 window.addEventListener('resize', () => drawEdges(null));
 
-// ── Chat ──────────────────────────────────────────────────────
-let chatHistory = [];
-let chatLoading = false;
-
-function switchPanelTab(tab) {
-  const isChat = tab === 'chat';
-  document.getElementById('ptab-inspector').classList.toggle('active', !isChat);
-  document.getElementById('ptab-chat').classList.toggle('active', isChat);
-  document.getElementById('inspector-pane').style.display = isChat ? 'none' : 'block';
-  document.getElementById('chat-locked').style.display = isChat ? 'block' : 'none';
-  document.getElementById('chat-pane').style.display = 'none';
-}
-
-function initChat() {
-  const key = localStorage.getItem('anthropic_key');
-  document.getElementById('chat-setup').style.display  = key ? 'none' : 'flex';
-  const ready = document.getElementById('chat-ready');
-  ready.style.display = key ? 'flex' : 'none';
-  updateContextBar();
-}
-
-function saveApiKey() {
-  const key = document.getElementById('api-key-input').value.trim();
-  if (!key) return;
-  localStorage.setItem('anthropic_key', key);
-  initChat();
-}
-
-function updateContextBar() {
-  const bar = document.getElementById('chat-context-bar');
-  if (!bar) return;
-  if (pinnedId && NODE_DATA[pinnedId]) {
-    bar.innerHTML = `Context: <span>${NODE_DATA[pinnedId].label}</span> pinned`;
-  } else {
-    bar.textContent = 'No node pinned — ask anything';
-  }
-}
-
-function buildSystemPrompt() {
-  const nodeLines = Object.entries(NODE_DATA).map(([id, d]) => {
-    const conns = EDGES.filter(e => e.from === id || e.to === id).map(e => {
-      const other = e.from === id ? e.to : e.from;
-      const dir   = e.from === id ? '→' : '←';
-      const label = NODE_DATA[other]?.label || other;
-      return `${dir} ${label} (${e.type}${e.label ? ': ' + e.label : ''})`;
-    });
-    return `[${d.layer}] ${d.label} (${id})${d.file ? ' — ' + d.file : ''}` +
-      (d.description ? `\n  ${d.description}` : '') +
-      (conns.length   ? `\n  Connections: ${conns.join(' · ')}` : '');
-  }).join('\n\n');
-
-  let pinnedCtx = '';
-  if (pinnedId && NODE_DATA[pinnedId]) {
-    const d = NODE_DATA[pinnedId];
-    const conns = EDGES.filter(e => e.from === pinnedId || e.to === pinnedId).map(e => {
-      const other = e.from === pinnedId ? e.to : e.from;
-      const dir   = e.from === pinnedId ? 'outbound' : 'inbound';
-      return `  - ${dir} ${e.type} → ${NODE_DATA[other]?.label || other}${e.label ? ' (' + e.label + ')' : ''}`;
-    });
-    pinnedCtx = `\n\nUSER IS INSPECTING: ${d.label} (${pinnedId})\nLayer: ${d.layer}` +
-      (d.file        ? `\nFile: ${d.file}`               : '') +
-      (d.description ? `\nDescription: ${d.description}` : '') +
-      (conns.length  ? `\nConnections:\n${conns.join('\n')}` : '');
-  }
-
-  return `You are an expert on the Shelf Shopify app — an AI-powered competitive intelligence tool for Shopify merchants. You know the full architecture from the dependency map below. Help the user trace bugs, understand data flows, and debug issues. Be concise. Reference node names in backticks (e.g. \`crawl pipeline\`, \`briefings\`, \`boss.server\`). When tracing a bug, walk through layers step by step.
-
-FULL ARCHITECTURE:
-${nodeLines}${pinnedCtx}`;
-}
-
-function renderMessages() {
-  const el = document.getElementById('chat-messages');
-  if (!el) return;
-  el.innerHTML = chatHistory.map(m => {
-    const cls = m.role === 'user' ? 'user' : 'assistant';
-    const html = m.content
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      .replace(/`([^`]+)`/g, '<code>$1</code>')
-      .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-      .replace(/\n/g, '<br>');
-    return `<div class="chat-msg ${cls}">${html}</div>`;
-  }).join('');
-  el.scrollTop = el.scrollHeight;
-}
-
-async function sendChat() {
-  if (chatLoading) return;
-  const input = document.getElementById('chat-input');
-  const text  = input.value.trim();
-  if (!text) return;
-  const key = localStorage.getItem('anthropic_key');
-  if (!key) { initChat(); return; }
-
-  input.value = '';
-  chatHistory.push({ role: 'user', content: text });
-  renderMessages();
-
-  chatLoading = true;
-  document.getElementById('chat-send-btn').disabled = true;
-
-  const msgs = document.getElementById('chat-messages');
-  const thinkEl = document.createElement('div');
-  thinkEl.className = 'chat-msg thinking';
-  thinkEl.textContent = 'thinking…';
-  msgs.appendChild(thinkEl);
-  msgs.scrollTop = msgs.scrollHeight;
-
-  try {
-    await new Promise((resolve) => {
-      const xhr = new XMLHttpRequest();
-      xhr.open('POST', 'https://xxek4iipk1.execute-api.us-east-1.amazonaws.com/chat');
-      xhr.setRequestHeader('content-type', 'application/json');
-      xhr.setRequestHeader('x-proxy-secret', '17305e5357ff0dba76f448c51387d6a11be45c969d5d2a4f');
-      xhr.onload = () => {
-        thinkEl.remove();
-        try {
-          const data = JSON.parse(xhr.responseText);
-          if (xhr.status !== 200) {
-            chatHistory.push({ role: 'assistant', content: `Error ${xhr.status}: ${data?.error?.message || xhr.responseText}` });
-          } else {
-            chatHistory.push({ role: 'assistant', content: data.content?.[0]?.text || '(empty response)' });
-          }
-        } catch(e) { chatHistory.push({ role: 'assistant', content: 'Parse error: ' + e.message }); }
-        resolve();
-      };
-      xhr.onerror = () => { thinkEl.remove(); chatHistory.push({ role: 'assistant', content: 'Network error' }); resolve(); };
-      xhr.send(JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 1024, system: buildSystemPrompt(), messages: chatHistory }));
-    });
-  } catch (e) {
-    thinkEl.remove();
-    chatHistory.push({ role: 'assistant', content: `Network error: ${e.message}` });
-  }
-
-  renderMessages();
-  chatLoading = false;
-  document.getElementById('chat-send-btn').disabled = false;
-  document.getElementById('chat-input').focus();
-}
-
-function handleChatKey(e) {
-  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
-    e.preventDefault();
-    sendChat();
-  }
-}
 
 // ── Tab switching ──────────────────────────────────────────────
 function switchTab(tab) {

@@ -1,3 +1,0 @@
-name = "killdate-anthropic-proxy"
-main = "src/index.js"
-compatibility_date = "2025-01-01"
