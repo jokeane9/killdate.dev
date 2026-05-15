@@ -761,6 +761,12 @@ header {
     <div class="info-empty" id="info-empty">← Hover any node<br>to inspect it</div>
     <div id="info-content" style="display:none"></div>
   </div>
+  <div id="chat-locked" style="display:none;padding:24px 16px;color:#6e7681;font-size:12px;line-height:1.8;">
+    <div style="font-size:16px;margin-bottom:10px;">🔒</div>
+    <div style="color:#c9d1d9;font-weight:600;margin-bottom:8px;">Personal tool</div>
+    This chat is a private debugging aid — not a public service. The architecture map is here as a reference piece.<br><br>
+    <a href="/" style="color:#58a6ff;text-decoration:none;font-size:11px;">← killdate.dev</a>
+  </div>
   <div id="chat-pane" style="display:none">
     <div id="chat-setup">
       <p>Enter your Anthropic API key. Stored only in your browser's localStorage — never sent anywhere except the Anthropic API.</p>
@@ -1696,9 +1702,8 @@ function switchPanelTab(tab) {
   document.getElementById('ptab-inspector').classList.toggle('active', !isChat);
   document.getElementById('ptab-chat').classList.toggle('active', isChat);
   document.getElementById('inspector-pane').style.display = isChat ? 'none' : 'block';
-  const chatPane = document.getElementById('chat-pane');
-  chatPane.style.display = isChat ? 'flex' : 'none';
-  if (isChat) initChat();
+  document.getElementById('chat-locked').style.display = isChat ? 'block' : 'none';
+  document.getElementById('chat-pane').style.display = 'none';
 }
 
 function initChat() {
@@ -1801,6 +1806,7 @@ async function sendChat() {
       const xhr = new XMLHttpRequest();
       xhr.open('POST', 'https://xxek4iipk1.execute-api.us-east-1.amazonaws.com/chat');
       xhr.setRequestHeader('content-type', 'application/json');
+      xhr.setRequestHeader('x-proxy-secret', '17305e5357ff0dba76f448c51387d6a11be45c969d5d2a4f');
       xhr.onload = () => {
         thinkEl.remove();
         try {
