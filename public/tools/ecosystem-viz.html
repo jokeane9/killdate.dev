@@ -87,6 +87,7 @@ header {
 }
 .node:hover, .node.highlighted { border-color: #30363d; background: #161b22; }
 .node.dimmed { opacity: 0.2; }
+.node.pinned { border-color: #58a6ff !important; background: #161b22; box-shadow: 0 0 0 2px #58a6ff22; }
 
 .node .node-label { font-size: 12px; color: #e6edf3; font-weight: 500; margin-bottom: 3px; }
 .node .node-sub   { font-size: 10px; color: #6e7681; margin-bottom: 6px; line-height: 1.4; }
@@ -1525,30 +1526,64 @@ function clearInfo() {
 
 // ── Interaction ────────────────────────────────────────────────
 let hoveredId = null;
+let pinnedId  = null;
+
+function applyFocus(id) {
+  document.querySelectorAll('.node').forEach(n => {
+    const connected = n.id === id || EDGES.some(e =>
+      (e.from === id && e.to === n.id) || (e.to === id && e.from === n.id)
+    );
+    n.classList.toggle('dimmed', !connected);
+    n.classList.toggle('highlighted', n.id === id);
+  });
+  drawEdges(id);
+  showInfo(id);
+}
+
+function clearFocus() {
+  document.querySelectorAll('.node').forEach(n => n.classList.remove('dimmed', 'highlighted'));
+  drawEdges(null);
+  clearInfo();
+}
 
 document.querySelectorAll('.node').forEach(node => {
   node.addEventListener('mouseenter', () => {
     hoveredId = node.id;
-    document.querySelectorAll('.node').forEach(n => {
-      const connected = n.id === hoveredId || EDGES.some(e =>
-        (e.from === hoveredId && e.to === n.id) || (e.to === hoveredId && e.from === n.id)
-      );
-      n.classList.toggle('dimmed', !connected);
-      n.classList.toggle('highlighted', n.id === hoveredId);
-    });
-    drawEdges(hoveredId);
-    showInfo(hoveredId);
+    applyFocus(hoveredId);
   });
 
   node.addEventListener('mouseleave', () => {
     hoveredId = null;
-    document.querySelectorAll('.node').forEach(n => n.classList.remove('dimmed', 'highlighted'));
-    drawEdges(null);
-    clearInfo();
+    if (pinnedId) {
+      applyFocus(pinnedId);
+    } else {
+      clearFocus();
+    }
+  });
+
+  node.addEventListener('click', e => {
+    e.stopPropagation();
+    if (pinnedId === node.id) {
+      node.classList.remove('pinned');
+      pinnedId = null;
+    } else {
+      if (pinnedId) document.getElementById(pinnedId)?.classList.remove('pinned');
+      pinnedId = node.id;
+      node.classList.add('pinned');
+    }
   });
 });
 
-wrap.addEventListener('scroll', () => drawEdges(hoveredId));
+// click background to unpin
+wrap.addEventListener('click', () => {
+  if (pinnedId) {
+    document.getElementById(pinnedId)?.classList.remove('pinned');
+    pinnedId = null;
+    if (!hoveredId) clearFocus();
+  }
+});
+
+wrap.addEventListener('scroll', () => drawEdges(hoveredId ?? pinnedId));
 
 window.addEventListener('load',   () => setTimeout(() => drawEdges(null), 50));
 window.addEventListener('resize', () => drawEdges(null));
