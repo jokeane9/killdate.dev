@@ -1797,24 +1797,25 @@ async function sendChat() {
   msgs.scrollTop = msgs.scrollHeight;
 
   try {
-    const res = await fetch('https://xxek4iipk1.execute-api.us-east-1.amazonaws.com/chat', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 1024,
-        system: buildSystemPrompt(),
-        messages: chatHistory,
-      })
+    await new Promise((resolve) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'https://xxek4iipk1.execute-api.us-east-1.amazonaws.com/chat');
+      xhr.setRequestHeader('content-type', 'application/json');
+      xhr.onload = () => {
+        thinkEl.remove();
+        try {
+          const data = JSON.parse(xhr.responseText);
+          if (xhr.status !== 200) {
+            chatHistory.push({ role: 'assistant', content: `Error ${xhr.status}: ${data?.error?.message || xhr.responseText}` });
+          } else {
+            chatHistory.push({ role: 'assistant', content: data.content?.[0]?.text || '(empty response)' });
+          }
+        } catch(e) { chatHistory.push({ role: 'assistant', content: 'Parse error: ' + e.message }); }
+        resolve();
+      };
+      xhr.onerror = () => { thinkEl.remove(); chatHistory.push({ role: 'assistant', content: 'Network error' }); resolve(); };
+      xhr.send(JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 1024, system: buildSystemPrompt(), messages: chatHistory }));
     });
-    thinkEl.remove();
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      chatHistory.push({ role: 'assistant', content: `Error ${res.status}: ${err?.error?.message || 'API call failed. Check your key.'}` });
-    } else {
-      const data = await res.json();
-      chatHistory.push({ role: 'assistant', content: data.content?.[0]?.text || '(empty response)' });
-    }
   } catch (e) {
     thinkEl.remove();
     chatHistory.push({ role: 'assistant', content: `Network error: ${e.message}` });
