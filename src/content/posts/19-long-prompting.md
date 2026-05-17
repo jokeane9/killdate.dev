@@ -1,50 +1,78 @@
 ---
 title: "Prompts that run for hours"
-description: "Large context windows aren't for greenfield builds. They're for production systems where you need a second set of eyes across the whole thing — code reviews, bug traces, targeted refactors, throwaway prototypes."
+description: "Before committing to a feature, we load the full codebase into context and ask for 2–3 implementations: a code path, a UX approach, a tooling option. Read them in the morning, pick a direction. Cheaper than building the wrong thing."
 part: 6
 post: 19
 draft: false
-tags: ["prompting", "context-window", "claude-code", "production", "shelf"]
+tags: ["prompting", "context-window", "claude-code", "prototyping", "shelf"]
 ---
 
 *3 minute read*
 
-## Where large context actually earns its cost
+## The problem with committing early
 
-We're not using 250–300K context sessions to build new features. We're using them on Shelf — a live production system — for a specific set of tasks where seeing the whole thing at once is the point.
+New features on an established system are expensive to undo. You pick a direction, build it, realise it doesn't fit, rework it. The rework costs more than the original build because now you're fighting existing code that assumed the wrong approach.
 
-**Code review from an external perspective.** Before resubmitting to Shopify's app review, we loaded the entire Shelf codebase into context and asked Claude to act as a senior Shopify reviewer. Not "does this look clean" — specifically: check webhook compliance, scope alignment with the privacy policy, billing flow edge cases, CSP headers, uninstall handler correctness. The output surfaced a scope mismatch (`read_orders` declared in the toml but explicitly excluded in the privacy policy) that would have caused a rejection. A human reviewer would have caught it too, eventually. The full-context pass caught it in one session.
+The large context session is the step before committing. Load everything — the full codebase, the spec, the constraints, the adjacent surfaces that will be affected — and ask for the feature delivered two or three ways. Not a recommendation. Actual implementations of each approach, far enough along that you can compare them.
 
-**Bug tracing across layers.** When a production bug touches multiple layers — a crawl pipeline failure that surfaces as a blank dashboard section six requests later — reading the code file by file is slow and lossy. Loading the full request chain into context (Layer 0 fetch → Layer 3 signal prep → Layer 4 Claude call → Remix loader → component render) and asking "where does this break and why" produces a trace that correctly identifies the failure point faster than grep-and-read. We used this to diagnose a field rename (`competitor` → `competitor_name`) that passed Pydantic validation via alias but silently blanked a component because TypeScript read the old shape.
-
-**Targeted refactors with blast radius awareness.** When we killed the V2 prompt — 1,968 lines deleted across `signals.server.ts`, `v2_system_prompt.py`, `v2_response_schema.py`, and the dual-write block — we loaded the full codebase first and asked for a complete dead code audit. What references V2 anywhere? What will break? The session produced a precise deletion list with zero unintended side effects. This is a case where the large context isn't doing creative work — it's doing mechanical verification that's tedious and error-prone to do by hand.
-
-**Throwaway prototypes for decision-making.** Before committing to the Strangler Fig pattern for the V2→V3 migration, we ran a large-context session that implemented both approaches — in-place replacement and parallel operation with a feature flag — and compared them side by side. We didn't ship either implementation. We read them, picked the parallel approach, and started fresh. The session cost a few dollars and saved days of going down the wrong path.
+On Shelf we do this before any non-trivial feature decision. The session runs for hours. In the morning you have options.
 
 ---
 
-## What it's not good for
+## The three angles
 
-New features on an established system. If the task requires new screen real estate, a schema migration, or new data entering the pipeline — large context sessions produce drift. The model is reasoning across too much existing code to stay focused on a narrow new surface. That's a Cursor build with a tight runbook, not a long Claude Code session.
+The framing that works best isn't "show me different implementations." It's three distinct perspectives that genuinely produce different outputs:
+
+**Code path.** How does this land in the existing architecture? Which layers does it touch, what migrations does it require, what's the blast radius? This is the engineering assessment — technically correct, integrated, no UX opinion.
+
+**UX/UI path.** How does a merchant actually encounter this? What does the screen look like, what's the interaction model, what does the empty state say? This produces a different answer than the code path because the constraints are different. Sometimes the UX path reveals that the technically correct implementation produces a confusing user experience.
+
+**Tooling path.** Is there a third-party integration, a different pipeline architecture, or an existing pattern (Langflow flow, a library, a Shopify API we haven't used) that changes the approach entirely? This is the option you miss if you only think about building it yourself.
+
+Reading all three side by side tells you things none of them would tell you individually. The code path might be clean but the UX path reveals a missing state. The tooling path might eliminate two weeks of work. Or they converge — all three point to the same core approach — and now you know you're on solid ground before writing production code.
 
 ---
 
-## The pattern
+## What loads into the session
 
-Load the whole thing. Ask the question you'd ask a senior engineer who'd been on the project for a year. Get an answer that's grounded in the actual codebase, not a generalisation. Throw it away if it's wrong. Repeat.
+The reason this requires 250–300K context: you need the full picture for the comparison to be meaningful.
 
-The value isn't in the generated code. It's in the perspective — a complete, fresh read across a system that you've been too close to for months.
+A partial context produces partial implementations. If the session doesn't have the current schema, the prototype misses a constraint. If it doesn't have the relevant route files, the UX path assumes a navigation structure that doesn't exist. If it doesn't have the CLAUDE.md operating contract and the PRE-BUILD-LOCK, the implementations drift from the product definition.
+
+On Shelf a feature assessment session loads: the full codebase, `CLAUDE.md`, the relevant PM files (`ROADMAP.md`, `ARCHITECTURE.md`), the PRE-BUILD-LOCK for the feature, and the existing tests. That's the minimum for implementations that are actually comparable.
+
+---
+
+## What you do with the output
+
+You don't ship any of it. That's the point.
+
+You read each implementation as a decision document. What assumptions did each one make? Where do they diverge? Which trade-offs are you willing to accept? The session surfaces the choices. You make them.
+
+Then you brief the actual build — Cursor for UI-heavy work, Claude Code for cross-layer changes — with the chosen approach, the constraints that emerged from the comparison, and the things the other approaches revealed that the winning approach still needs to handle.
+
+The large context session is the research. The build is separate.
+
+---
+
+## Where we've used this on Shelf
+
+The V2→V3 prompt migration: ran a session with both Strangler Fig (parallel operation with a feature flag) and in-place replacement. Didn't ship either. Read them, picked parallel operation, briefed the actual build. The session took an evening. Getting it wrong would have taken weeks to undo.
+
+The billing redirect loop fix: three approaches to where the `host` param should live and how it should survive the OAuth round-trip. Each one had a different surface area in the route handlers. Session ran overnight. Morning: one approach was clearly cleaner, two were valid but verbose. Fixed in a single PR.
+
+The onboarding skip button: UX path revealed a state we hadn't specced — what happens if the merchant closes the tab mid-onboarding and comes back? None of us had thought about it. The code path had no answer. The UX path made it obvious.
 
 ---
 
 ## Learnings
 
-- Large context sessions earn their cost on production systems, not greenfield builds.
-- "Senior reviewer" framing (Shopify reviewer, senior engineer, security auditor) produces more useful output than open-ended questions.
-- Blast radius audits and dead code sweeps are the highest-ROI use — mechanical work that's tedious by hand and fast at 250K context.
-- Throwaway prototypes for decision-making are underrated. Spend $5 to not spend a week on the wrong approach.
-- Don't use this for new features. That's a different tool and a different process.
+- Large context sessions are a pre-commitment tool, not a production tool. Use them before building, not instead of building.
+- Three angles (code, UX/UI, tooling) produce genuinely different outputs because the constraints are different.
+- Full context is the minimum — partial context produces partial implementations that miss existing constraints.
+- You don't ship the output. You read it as a decision document and brief the real build from what you learned.
+- The session is cheap relative to building the wrong thing. A few dollars and a few hours vs. weeks of rework.
 
 ---
 
-*Shelf repo: [github.com/jokeane9/shelf](https://github.com/jokeane9/shelf). The V2 dead code audit: PR #226.*
+*Shelf repo: [github.com/jokeane9/shelf](https://github.com/jokeane9/shelf). PRE-BUILD-LOCK template: `project-management/PRE-BUILD-LOCK-TEMPLATE.md`.*
