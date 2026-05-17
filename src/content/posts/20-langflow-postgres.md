@@ -1,86 +1,88 @@
 ---
-title: "Langflow as customer research"
-description: "We opened Langflow to prototype agentic patterns. What we found instead was a map of how a marketing operator thinks — and it's almost exactly what Shelf automates."
+title: "Prototyping with Langflow and production data"
+description: "We used Langflow to sketch agentic patterns before hardcoding them in Python. We wired it to a local Postgres with production-level data. Here's what we learned and where we're still stuck."
 part: 6
 post: 20
 draft: false
-tags: ["langflow", "agentic", "customer-thinking", "pipeline", "shelf"]
+tags: ["langflow", "agentic", "postgres", "pipeline", "prototyping"]
 ---
 
-*4 minute read*
+*5 minute read*
 
-## What we were trying to do
+## The problem with committing too early
 
-We set up Langflow to prototype agentic patterns before committing them to Python. The idea: sketch a workflow visually, run it against real data, understand the shape before writing a layer.
+The Shelf crawl pipeline is four layers of Python. It works. But it took us longer than it should have to find the right shape — because we kept committing to code before we understood the pattern.
 
-We installed it, opened the template library, and stopped.
+A layer that should have been two became one. A function that should have been isolated got tangled. We'd build a thing, realise the data flow was wrong, refactor. Repeat.
 
----
-
-## The template library is a customer mind map
-
-Langflow ships with a set of built-in flow templates. Ours showed:
-
-- **Market Research** — researches companies, extracts key business data
-- **Price Deal Finder** — searches and compares prices across e-commerce platforms
-- **SEO Keyword Generator** — generates keywords based on pain points and customer profiles
-- **Instagram Copywriter** — creates posts with AI-generated content
-- **Twitter Thread Generator** — transforms inputs into threads, maintaining brand voice
-- **Blog Writer** — auto-generates posts from instructions and referenced articles
-- **Social Media Agent** — searches and analyses social media profiles
-
-Read them in sequence. That's not a random template library. That's the weekly workflow of a Shelf merchant's marketing operator — written out as discrete, automatable steps.
-
-They research what competitors are doing. They find the price moves and deals. They identify the content angle. They write the response — Instagram, blog, tweet. They monitor the conversation.
-
-That's the job. Those templates map it exactly.
+What we needed was a way to sketch the agentic pattern before hardcoding it.
 
 ---
 
-## Shelf is that sequence, automated
+## What Langflow actually is
 
-Look at the four-layer crawl pipeline:
+Langflow is a visual builder for LLM workflows. You drag nodes — prompts, parsers, memory stores, API calls, Python functions — and wire them together. You can run the flow immediately and see the output at each step.
 
-- **Layer 0–1** — HTTP fetch + parse: pricing, promotions, new products across competitor stores. This is Market Research + Price Deal Finder, running automatically.
-- **Layer 2–3** — Enrich + signal prep: what actually moved this cycle, ranked by significance. This is the SEO Keyword Generator's job — finding what's worth paying attention to out of everything that changed.
-- **Layer 4** — Claude briefing: a structured daily read on what the competitive set did and what it means. This is the input to the content creation step — the thing that tells you *what to write*, before you open the Instagram Copywriter.
+It's not production infrastructure. Think of it the way a designer thinks about Figma: you're not shipping the Figma file, you're using it to find out what you're actually building before you write a line of code.
 
-Shelf doesn't replace the last step. It automates the first three so the merchant arrives at the content creation moment with context instead of having to go find it.
-
-The pipeline architecture we spent months designing maps almost exactly to the Langflow template sequence. We didn't know that when we designed it. We designed it by watching what merchants were doing manually and asking what was automatable. Langflow just made the underlying pattern explicit.
+For agentic patterns specifically, the visual representation is useful in a way that's hard to replicate in code. When you see a five-node flow laid out, it becomes immediately obvious whether the data shapes match at each handoff, where memory needs to persist, and where parallel branches are possible.
 
 ---
 
-## Why this matters for building
+## The local Postgres integration
 
-When you see customer cognition mapped into workflow templates, you understand the product differently.
+Here's where it got interesting. Most Langflow tutorials use toy data. That works for exploring the tool. It doesn't tell you anything about whether your pattern will survive real data.
 
-The question isn't "what features should Shelf have?" The question is "which steps in this sequence are worth automating, and which require human judgment?" The research and signal-detection steps are clearly automatable — they're data-intensive, time-consuming, and the merchant adds no unique value doing them manually. The content creation step requires merchant voice, brand judgment, and creative decisions that can be assisted but not replaced.
+We wired our local Langflow instance to a local Postgres database running actual Shelf production data. Schema, crawler output, competitor records, pricing history — the real thing, running locally.
 
-That's the Shelf/Sidekick split. Shelf owns steps 1–3 (research, price intel, signal ranking). Sidekick owns step 4 (content creation, action). The boundary isn't arbitrary — it's where automatable pattern-matching ends and human judgment begins.
-
-Langflow made that boundary visible.
+What this gives you: you find out immediately when your prompt chokes on a competitor with 200 SKUs, or a merchant whose competitors have no pricing data, or a product name that's 180 characters long. Those edge cases are invisible in toy data. They're everywhere in production data.
 
 ---
 
-## Where we are now
+## What we prototyped
 
-We're running Langflow as a local server with the LangChain repo pulled down alongside it. The next phase: using these flows connected to local Postgres with real Shelf data — actual crawl outputs, real competitor records, real price histories — to prototype how the full agentic sequence could work end to end.
+We used Langflow to sketch three patterns before building them in Python:
 
-The specific question we're testing: can we model not just what competitors did, but what a merchant should *notice* about it based on their own catalog? That's the gap between Layer 3 (signal ranking) and Layer 4 (briefing). Right now Layer 4 knows the signals but not the merchant's priorities. Closing that gap is the next layer.
+**Signal ranking.** Given a list of competitor moves, what order should they appear in the briefing? We tried five different prompt approaches — recency-weighted, impact-weighted, confidence-weighted — against real data before committing to one. The winner wasn't the one we expected.
 
-We don't know if it works yet. Langflow is where we find out before writing a production layer.
+**Per-competitor summarisation.** One call per merchant with all competitors in context vs. one call per competitor. We ran both against real data. One call per merchant was more coherent but more expensive. We know the trade-off now because we measured it on real data, not hypothetically.
+
+**Fallback logic.** What should the prompt produce when there's nothing interesting to report? Figuring out the boundary conditions for "interesting" requires real data. A week where nothing happened is very different from a week where you have no data.
+
+In all three cases, Langflow let us try things in an afternoon that would have taken days to write, deploy, and test in Python.
+
+---
+
+## Our initial take
+
+The customers who will get the most from AI-augmented software are the ones where focused Python pipelines with specific ontologies meet very structured prompts.
+
+**Focused pipeline.** Not a general-purpose agent. A pipeline that does one thing well. Narrow scope, predictable behaviour, debuggable failures.
+
+**Specific ontology.** A defined vocabulary for the domain. On Shelf: `price_drop`, `new_sitewide_discount`, `new_product_launch` are real concepts with real definitions. The prompt uses those terms. The schema enforces them. The UI renders them. One vocabulary end-to-end.
+
+**Structured prompt.** Not "summarise this competitor data." A prompt with explicit sections, explicit output format, explicit rules for what to include and exclude.
+
+When all three are present, the AI output is reliable enough to put in front of paying customers.
+
+---
+
+## Where we're struggling
+
+**The gap between Langflow and production.** A Langflow flow that works doesn't automatically translate to clean Python. Error handling, retries, partial failures, logging, cost management — the prototype hides all of this. Every pattern we tested in Langflow required significant rework to productionise.
+
+**Ontology drift.** The vocabulary you define at the start drifts as you learn. On Shelf, `visible_discount` and `sitewide_discount` started as one concept and became two. Updating an ontology mid-flight, across pipeline, schema, prompt, and UI, is expensive.
 
 ---
 
 ## Learnings
 
-- The Langflow template library is a taxonomy of marketing operator workflows. Read it as customer research, not a feature catalogue.
-- Shelf's four-layer pipeline maps almost exactly to those workflow steps. We didn't design it that way — we discovered the pattern after the fact.
-- The Shelf/Sidekick boundary is where automatable pattern-matching ends and human judgment begins. Langflow made that boundary visible.
-- Use Langflow to understand customer cognition before building. The templates are a shortcut to the mental model.
-- We're still figuring out the gap between signal ranking and merchant-specific relevance. That's the next problem.
+- Langflow is a pattern-discovery tool, not production infrastructure. Use it that way.
+- Local Postgres with production data eliminates an entire class of surprises.
+- Focused pipeline + specific ontology + structured prompt is the combination that produces reliable AI output.
+- The gap between prototype and production is larger than it looks from inside Langflow.
+- We haven't cracked this. The value is accumulating slowly and we're figuring it out by doing.
 
 ---
 
-*Shelf pipeline: `crawl/` in [github.com/jokeane9/shelf](https://github.com/jokeane9/shelf). Langflow: [langflow.org](https://langflow.org).*
+*The Shelf pipeline is in `crawl/`. The ontology lives in `crawl/layer1_validation.py`. Repo: [github.com/jokeane9/shelf](https://github.com/jokeane9/shelf)*
