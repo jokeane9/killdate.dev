@@ -88,6 +88,26 @@ const CORE_QUESTIONS: Record<string, string[]> = {
     'How does the outlet chain / nested containment view work, and what does it make immediately visible about a Remix app\'s layout architecture?',
     'What can be auto-parsed from Remix file conventions, and what requires manual mapping or static analysis for the ecosystem cross-layer view?',
   ],
+  '19-long-prompting': [
+    'What are large context window sessions actually useful for on a production codebase — what jobs earn their cost?',
+    'How do you frame a 250K context session to get a senior engineer\'s perspective rather than a generic answer?',
+    'When should you not use large context sessions — what tasks belong to Cursor with a tight runbook instead?',
+  ],
+  '20-langflow-postgres': [
+    'What does the Langflow template library reveal about how a marketing operator thinks — and why does it map to a pipeline architecture?',
+    'Where is the boundary between automatable pattern-matching and human judgment in a marketing workflow, and how do you find it?',
+    'How do you use an agentic tool for customer research before writing a line of pipeline code?',
+  ],
+  '21-v2-to-v3-learnings': [
+    'What does a real LLM prompt eval stack look like — what tools, what checks, what process governs who can approve a prompt edit?',
+    'What did the V2 to V3 migration on Shelf actually find — what broke, what the fuzzer caught, and what passed all checks but was still wrong?',
+    'When does testing correctness stop being the right question and business value become the measurement that matters?',
+  ],
+  '22-vizstack-2': [
+    'What does embedding Claude in an architecture diagram change — how does a static tool become a reasoning tool?',
+    'Why did VizStack become an onboarding tool when it was built as a documentation tool — what was the unplanned use case?',
+    'What is the proxy friction problem and why is it the real adoption blocker for embedded Claude tooling?',
+  ],
 };
 
 export const GET: APIRoute = async () => {
