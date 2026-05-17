@@ -21,6 +21,8 @@ The thing we shipped was useful. The thing we found ourselves wanting was differ
 
 **Architecture-aware chat.** When you open the Chat tab, `NODE_DATA` and `EDGES` are serialised into a Claude system prompt. Claude receives the full graph before you type anything. Pin a node and its connections inject as focused context on top.
 
+[![VizStack architecture + chat — graph on left, Claude panel on right](/images/vizstack-chat-preview.png)](https://github.com/jokeane9/vizstack)
+
 The question that made us build this:
 
 > *"What breaks first if the crawl pipeline silently fails?"*
