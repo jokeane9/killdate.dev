@@ -2,6 +2,11 @@ import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 
 const CORE_QUESTIONS: Record<string, string[]> = {
+  '23-mcp-servers': [
+    'Which MCP servers are actually useful during a production SaaS build, and which are noise?',
+    'How do you wire MCP servers into Claude Code — what file, what format, what scope?',
+    'What changes about the debugging and deploy loop once Claude can query live infrastructure state directly?',
+  ],
   '00-what-is-agentic-orchestration': [
     'What is agentic orchestration precisely — not the buzzword, but the working definition a practitioner can act on?',
     'What three structural elements separate reliable agentic AI from unpredictable prompting?',

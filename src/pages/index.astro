@@ -13,7 +13,7 @@ const parts = [
   { num: 3, label: 'Testing' },
 ];
 
-const appendixParts = [4];
+const appendixParts: number[] = [];
 const appendixPosts = posts.filter(p => appendixParts.includes(p.data.part));
 ---
 <Base>
