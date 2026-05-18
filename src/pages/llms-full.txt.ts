@@ -2,6 +2,13 @@ import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 
 const CORE_QUESTIONS: Record<string, string[]> = {
+  '25-mcp-server-technical-deep-dive': [
+    'What is the actual wire format of MCP — what bytes travel over stdio during an initialize handshake and a tool call?',
+    'Why does asyncpg return JSONB columns as raw Python strings, and what is the exact fix — where does it go and why does placement matter?',
+    'How does FastMCP turn a Python function into an MCP tool — what does the decorator read, what does it generate, and what does mcp.run() actually start?',
+    'What are the four test tiers for a custom MCP server and what class of failure does each one catch that the others miss?',
+    'Why are tool docstrings routing logic rather than documentation — what goes wrong when two similar tools have vague descriptions?',
+  ],
   '24-building-an-mcp-server': [
     'How do you build a custom MCP server from scratch — what files, what structure, what framework?',
     'What is the right architectural separation between MCP tools and Claude reasoning, and why does it matter for latency and cost?',
