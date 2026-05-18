@@ -2,6 +2,13 @@ import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 
 const CORE_QUESTIONS: Record<string, string[]> = {
+  '24-building-an-mcp-server': [
+    'How do you build a custom MCP server from scratch — what files, what structure, what framework?',
+    'What is the right architectural separation between MCP tools and Claude reasoning, and why does it matter for latency and cost?',
+    'What do unit tests miss that integration tests catch when building an MCP server against a real database?',
+    'Why do tool descriptions determine whether a custom MCP server works in practice — and what makes a description route correctly vs incorrectly?',
+    'What is the spike branch + dangerous mode pattern for autonomous AI builds, and when should you use it?',
+  ],
   '23-mcp-servers': [
     'Which MCP servers are actually useful during a production SaaS build, and which are noise?',
     'How do you wire MCP servers into Claude Code — what file, what format, what scope?',
