@@ -3,7 +3,7 @@ title: "Building a production MCP server"
 description: "How we built a custom MCP server for Shelf in a single autonomous session — 7 tools, 43 tests, live competitive intelligence in Claude Code."
 part: 1
 post: 24
-draft: true
+draft: false
 tags: ["mcp", "tooling", "claude-code", "postgres", "shelf"]
 ---
 
