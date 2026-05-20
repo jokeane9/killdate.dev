@@ -22,7 +22,9 @@ const pageTitle = title === 'killdate.dev' ? title : `${title} — killdate.dev`
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonicalURL} />
   <meta property="og:site_name" content="killdate.dev" />
-  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content="https://killdate.dev/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://killdate.dev/og-image.png" />
   <meta name="twitter:title" content={pageTitle} />
   <meta name="twitter:description" content={description} />
   <slot name="head" />
