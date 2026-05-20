@@ -8,8 +8,21 @@ interface Props {
   post: number;
 }
 const { title, description, tags, part, post } = Astro.props;
+const canonicalURL = `https://killdate.dev${Astro.url.pathname}`;
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": title,
+  "description": description,
+  "url": canonicalURL,
+  "author": { "@type": "Organization", "name": "Prima Digital", "url": "https://killdate.dev/about" },
+  "publisher": { "@type": "Organization", "name": "Prima Digital", "url": "https://killdate.dev" }
+});
 ---
-<Base title={title} description={description}>
+<Base title={title} description={description} type="article">
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={jsonLd} />
+  </Fragment>
   <article>
     <a href="/" class="back">← back</a>
 
