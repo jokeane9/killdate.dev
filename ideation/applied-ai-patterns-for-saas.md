@@ -9,6 +9,37 @@ tags: ["applied-ai", "operator-software", "recommendation-dense-ui", "grounded-c
 
 *~40 minute read*
 
+## Executive summary
+
+Operator software (Linear, Ramp, Triple Whale, Shelf — anything where the user runs an ongoing operation) is not abstraction-building software (Claude.ai, Cursor, Figma — anything where the user produces an artifact). Most "applied AI" writing conflates them. The conflation is the costliest mistake in shipping AI features.
+
+**The map.** AI lives in software in six cells across two axes: who initiates (user / AI) × where it lives (separate / embedded / background). Each cell has its own trust contract, latency budget, UX vocabulary. Pick the cell first. The discipline follows.
+
+|                          | User-initiated                                    | AI-initiated                                          |
+|--------------------------|---------------------------------------------------|-------------------------------------------------------|
+| **Separate surface**     | Cell 1 — Chat-primary (Claude.ai, Cursor)         | **Cell 2 — Recommendation-dense (operator SaaS)**     |
+| **Embedded in host UI**  | Cell 3 — Inline assist (Copilot, Notion AI)       | Cell 4 — Notification agents (Reflex, Triple Whale)   |
+| **Background**           | Cell 5 — Configured automation (Zapier)           | Cell 6 — Autonomous agents (Devin, Operator)          |
+
+**The build pattern for operator SaaS** — data substrate + per-feature intelligence surfaces (cards, drafts, badges) + grounded chat (refine + reference, never primary). Every recommendation gets a **why-path** (clickable reasoning) and a **rejection capture** (single click + reason chip). Chat sees what's on screen, addresses entities by ID, receives state changes as structured mutations, retains memory across the UI session. Skip any one of these and chat is decoration.
+
+**The cognitive case.** Recognition beats recall. Chat-primary forces four tasks: hold the model of what's possible, formulate a query, evaluate the response, decide what to do. Recommendation-dense compresses to one: *do I want this thing?* For operators with a job, recognition wins every time.
+
+**The moat is the eval pipeline, not the model.** Golden datasets, red-room cases, rejection logs, LLM-as-judge rubrics — category-specific, accumulated over time, impossible to recreate from outside. Models commoditize on 12-month cycles. The eval substrate compounds. Your product gets *better* when the model gets better, not worse.
+
+**The trap is the chat-everywhere reflex.** Every SaaS shipping a chat sidebar in 2026 is applying a Cell 1 pattern to a Cell 2 product. The sidebar inherits Cell 1's cognitive mode (recall) and Cell 1's trust contract (you'll verify, right?) — but the user is a merchant with two minutes between customer calls. Mode mismatch, low usage, feature-removed.
+
+**The decision criterion, paste-able:**
+
+1. **Pick your cell.** If you can't pick one, you haven't designed the feature — you've described a wishlist.
+2. **Build for recognition, not recall.** Compose first. Reserve chat for refine + reference.
+3. **Ship per-feature intelligence with grounded chat underneath.** Each feature picks one of three postures: observation / exploration / action.
+4. **Treat evals as the moat.** Build rejection capture, red-room cases, judge rubrics from day one.
+5. **Evolve cells one at a time.** A half-built second cell drags the first cell down.
+6. **Don't bolt chat onto a SaaS that doesn't need it.** The chatbox is what you ship when you don't know what to build.
+
+---
+
 ## The chatbox is a cop-out
 
 Most SaaS teams shipping AI in 2026 are shipping a chat sidebar. They wire up an LLM, stick a textbox on the right edge of the screen, give it access to "your data," and call it AI. They write a launch post. They put it in the pricing tier. They ship nothing real.
