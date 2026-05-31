@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Visibility — Design Space Prototypes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    html, body { font-family: 'Inter', sans-serif; font-feature-settings: 'cv11', 'ss01'; }
+  </style>
+</head>
+<body class="bg-neutral-50 text-neutral-950 antialiased">
+  <div class="max-w-4xl mx-auto px-6 py-16">
+
+    <!-- Header -->
+    <header class="mb-12">
+      <div class="flex items-center gap-2.5 mb-8">
+        <div class="w-8 h-8 bg-neutral-900 text-white rounded-md flex items-center justify-center text-sm font-semibold">W</div>
+        <div class="text-sm font-semibold text-neutral-900">Wilder &amp; Co. · AI Visibility</div>
+      </div>
+      <h1 class="text-3xl font-semibold text-neutral-900 mb-3 tracking-tight">Design space prototypes</h1>
+      <p class="text-neutral-600 leading-relaxed max-w-2xl">
+        Three approaches to displaying product-by-product AI visibility on ChatGPT.
+        Same mock data (5 products × 16 queries across Awareness / Correct Info / Ability to Purchase),
+        same chrome (brand context, navigation, diagnostics sidebar), three genuinely different ways
+        of revealing the data. B&amp;W shadcn aesthetic throughout.
+      </p>
+    </header>
+
+    <!-- Approaches -->
+    <div class="space-y-4">
+
+      <!-- Approach A -->
+      <a href="approach-a-list.html" class="block bg-white border border-neutral-200 rounded-lg p-6 hover:border-neutral-300 transition-colors group">
+        <div class="flex items-start gap-6">
+          <!-- Mini preview -->
+          <div class="w-32 h-20 bg-neutral-50 border border-neutral-200 rounded-md flex-shrink-0 p-2 space-y-1">
+            <div class="flex items-center gap-1">
+              <div class="w-3 h-3 bg-neutral-200 rounded-sm"></div>
+              <div class="h-1.5 flex-1 bg-neutral-200 rounded-sm"></div>
+              <div class="w-4 h-1.5 bg-emerald-200 rounded-sm"></div>
+            </div>
+            <div class="flex items-center gap-1">
+              <div class="w-3 h-3 bg-neutral-200 rounded-sm"></div>
+              <div class="h-1.5 flex-1 bg-neutral-200 rounded-sm"></div>
+              <div class="w-4 h-1.5 bg-amber-200 rounded-sm"></div>
+            </div>
+            <div class="flex items-center gap-1">
+              <div class="w-3 h-3 bg-neutral-200 rounded-sm"></div>
+              <div class="h-1.5 flex-1 bg-neutral-200 rounded-sm"></div>
+              <div class="w-4 h-1.5 bg-rose-200 rounded-sm"></div>
+            </div>
+            <div class="flex items-center gap-1">
+              <div class="w-3 h-3 bg-neutral-200 rounded-sm"></div>
+              <div class="h-1.5 flex-1 bg-neutral-200 rounded-sm"></div>
+              <div class="w-4 h-1.5 bg-emerald-200 rounded-sm"></div>
+            </div>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-baseline gap-2 mb-1">
+              <div class="text-xs font-medium text-neutral-500 uppercase tracking-wide">Approach A</div>
+              <span class="text-xs text-neutral-400">·</span>
+              <div class="text-xs text-emerald-700 px-1.5 py-0.5 bg-emerald-50 border border-emerald-200 rounded">Recommended for v1</div>
+            </div>
+            <h2 class="text-lg font-semibold text-neutral-900 mb-2">The List</h2>
+            <p class="text-sm text-neutral-600 leading-relaxed mb-3">
+              Dense table, one product per row, everything visible on one screen.
+              Section scores as colored pills, sparkline trend, expand-in-place for per-query detail.
+              Scans fast, scales to many products, daily-use surface.
+            </p>
+            <div class="flex items-center gap-4 text-xs text-neutral-500">
+              <div>Sweet spot: <span class="text-neutral-700">10–500 products</span></div>
+              <div>Best for: <span class="text-neutral-700">daily ops, fast scanning</span></div>
+            </div>
+          </div>
+          <div class="text-neutral-400 group-hover:text-neutral-900 transition-colors">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </div>
+        </div>
+      </a>
+
+      <!-- Approach B -->
+      <a href="approach-b-cards.html" class="block bg-white border border-neutral-200 rounded-lg p-6 hover:border-neutral-300 transition-colors group">
+        <div class="flex items-start gap-6">
+          <div class="w-32 h-20 bg-neutral-50 border border-neutral-200 rounded-md flex-shrink-0 p-2 grid grid-cols-2 gap-1.5">
+            <div class="bg-white border border-neutral-200 rounded p-1 space-y-0.5">
+              <div class="h-1.5 bg-neutral-200 rounded-sm w-2/3"></div>
+              <div class="flex gap-0.5"><div class="flex-1 h-0.5 bg-emerald-300"></div><div class="flex-1 h-0.5 bg-emerald-300"></div><div class="flex-1 h-0.5 bg-emerald-300"></div></div>
+              <div class="flex gap-0.5"><div class="flex-1 h-0.5 bg-emerald-300"></div><div class="flex-1 h-0.5 bg-emerald-300"></div><div class="flex-1 h-0.5 bg-emerald-300"></div></div>
+            </div>
+            <div class="bg-white border border-rose-200 rounded p-1 space-y-0.5">
+              <div class="h-1.5 bg-neutral-200 rounded-sm w-2/3"></div>
+              <div class="flex gap-0.5"><div class="flex-1 h-0.5 bg-amber-300"></div><div class="flex-1 h-0.5 bg-amber-300"></div><div class="flex-1 h-0.5 bg-rose-300"></div></div>
+              <div class="flex gap-0.5"><div class="flex-1 h-0.5 bg-rose-300"></div><div class="flex-1 h-0.5 bg-rose-300"></div><div class="flex-1 h-0.5 bg-rose-300"></div></div>
+            </div>
+            <div class="bg-white border border-neutral-200 rounded p-1 space-y-0.5">
+              <div class="h-1.5 bg-neutral-200 rounded-sm w-2/3"></div>
+              <div class="flex gap-0.5"><div class="flex-1 h-0.5 bg-emerald-300"></div><div class="flex-1 h-0.5 bg-amber-300"></div><div class="flex-1 h-0.5 bg-emerald-300"></div></div>
+              <div class="flex gap-0.5"><div class="flex-1 h-0.5 bg-emerald-300"></div><div class="flex-1 h-0.5 bg-emerald-300"></div><div class="flex-1 h-0.5 bg-amber-300"></div></div>
+            </div>
+            <div class="bg-white border border-neutral-200 rounded p-1 space-y-0.5">
+              <div class="h-1.5 bg-neutral-200 rounded-sm w-2/3"></div>
+              <div class="flex gap-0.5"><div class="flex-1 h-0.5 bg-amber-300"></div><div class="flex-1 h-0.5 bg-amber-300"></div><div class="flex-1 h-0.5 bg-amber-300"></div></div>
+              <div class="flex gap-0.5"><div class="flex-1 h-0.5 bg-amber-300"></div><div class="flex-1 h-0.5 bg-rose-300"></div><div class="flex-1 h-0.5 bg-amber-300"></div></div>
+            </div>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-baseline gap-2 mb-1">
+              <div class="text-xs font-medium text-neutral-500 uppercase tracking-wide">Approach B</div>
+              <span class="text-xs text-neutral-400">·</span>
+              <div class="text-xs text-neutral-700 px-1.5 py-0.5 bg-neutral-100 border border-neutral-200 rounded">Marketing-friendly</div>
+            </div>
+            <h2 class="text-lg font-semibold text-neutral-900 mb-2">The Cards</h2>
+            <p class="text-sm text-neutral-600 leading-relaxed mb-3">
+              Grid of generous cards, one per product. Each card carries product identity
+              with image, headline health score, and three segment-bar progress indicators
+              showing query-level texture. Product-as-subject thinking.
+            </p>
+            <div class="flex items-center gap-4 text-xs text-neutral-500">
+              <div>Sweet spot: <span class="text-neutral-700">5–30 products</span></div>
+              <div>Best for: <span class="text-neutral-700">first impression, stakeholder share</span></div>
+            </div>
+          </div>
+          <div class="text-neutral-400 group-hover:text-neutral-900 transition-colors">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </div>
+        </div>
+      </a>
+
+      <!-- Approach C -->
+      <a href="approach-c-grid.html" class="block bg-white border border-neutral-200 rounded-lg p-6 hover:border-neutral-300 transition-colors group">
+        <div class="flex items-start gap-6">
+          <div class="w-32 h-20 bg-neutral-50 border border-neutral-200 rounded-md flex-shrink-0 p-2">
+            <div class="grid grid-cols-9 gap-0.5 h-full">
+              <!-- Row 1 -->
+              <div class="bg-emerald-300 rounded-sm"></div><div class="bg-emerald-300 rounded-sm"></div><div class="bg-emerald-300 rounded-sm"></div><div class="bg-emerald-300 rounded-sm"></div><div class="bg-emerald-300 rounded-sm"></div><div class="bg-amber-300 rounded-sm"></div><div class="bg-emerald-300 rounded-sm"></div><div class="bg-emerald-300 rounded-sm"></div><div class="bg-emerald-300 rounded-sm"></div>
+              <!-- Row 2 -->
+              <div class="bg-emerald-300 rounded-sm"></div><div class="bg-amber-300 rounded-sm"></div><div class="bg-emerald-300 rounded-sm"></div><div class="bg-emerald-300 rounded-sm"></div><div class="bg-amber-300 rounded-sm"></div><div class="bg-rose-300 rounded-sm"></div><div class="bg-amber-300 rounded-sm"></div><div class="bg-rose-300 rounded-sm"></div><div class="bg-emerald-300 rounded-sm"></div>
+              <!-- Row 3 — failure band visible -->
+              <div class="bg-amber-300 rounded-sm"></div><div class="bg-rose-300 rounded-sm"></div><div class="bg-emerald-300 rounded-sm"></div><div class="bg-emerald-300 rounded-sm"></div><div class="bg-emerald-300 rounded-sm"></div><div class="bg-rose-300 rounded-sm"></div><div class="bg-rose-300 rounded-sm"></div><div class="bg-rose-300 rounded-sm"></div><div class="bg-rose-300 rounded-sm"></div>
+              <!-- Row 4 — strong band -->
+              <div class="bg-emerald-300 rounded-sm"></div><div class="bg-emerald-300 rounded-sm"></div><div class="bg-emerald-300 rounded-sm"></div><div class="bg-emerald-300 rounded-sm"></div><div class="bg-emerald-300 rounded-sm"></div><div class="bg-emerald-300 rounded-sm"></div><div class="bg-emerald-300 rounded-sm"></div><div class="bg-emerald-300 rounded-sm"></div><div class="bg-emerald-300 rounded-sm"></div>
+            </div>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-baseline gap-2 mb-1">
+              <div class="text-xs font-medium text-neutral-500 uppercase tracking-wide">Approach C</div>
+              <span class="text-xs text-neutral-400">·</span>
+              <div class="text-xs text-neutral-700 px-1.5 py-0.5 bg-neutral-100 border border-neutral-200 rounded">Power-user toggle</div>
+            </div>
+            <h2 class="text-lg font-semibold text-neutral-900 mb-2">The Grid</h2>
+            <p class="text-sm text-neutral-600 leading-relaxed mb-3">
+              2D heatmap, products × queries. Patterns visible at a glance — vertical bands reveal
+              systemic query failures, horizontal bands reveal product-specific failures.
+              Diagnostic killer feature, surfaces what no other view can.
+            </p>
+            <div class="flex items-center gap-4 text-xs text-neutral-500">
+              <div>Sweet spot: <span class="text-neutral-700">5–50 products</span></div>
+              <div>Best for: <span class="text-neutral-700">pattern recognition, diagnostic work</span></div>
+            </div>
+          </div>
+          <div class="text-neutral-400 group-hover:text-neutral-900 transition-colors">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </div>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- Footer notes -->
+    <footer class="mt-12 pt-8 border-t border-neutral-200 text-xs text-neutral-500 space-y-2">
+      <div>
+        Built static — Tailwind via CDN, Inter from Google Fonts, inline SVG icons.
+        No build step, opens in any browser.
+      </div>
+      <div>
+        Mock data is identical across all three approaches. The same Cotton Tee
+        failure pattern shows up differently in each view — observe how.
+      </div>
+      <div class="pt-2">
+        Reference aesthetic: <a href="https://ui.shadcn.com" target="_blank" class="text-neutral-700 underline hover:text-neutral-900">ui.shadcn.com</a>
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>
