@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products — Before / After · AI SEO Analytics</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    html, body { font-family: 'Inter', sans-serif; font-feature-settings: 'cv11', 'ss01'; }
+    .scrollbar-thin::-webkit-scrollbar { width: 6px; }
+    .scrollbar-thin::-webkit-scrollbar-thumb { background: #d4d4d4; border-radius: 3px; }
+    .sparkline { display: inline-block; }
+  </style>
+</head>
+<body class="bg-white text-neutral-950 antialiased">
+<div class="flex h-screen overflow-hidden">
+
+  <!-- LEFT NAV -->
+  <nav class="w-56 border-r border-neutral-200 flex flex-col bg-neutral-50/50 flex-shrink-0">
+    <!-- Workspace -->
+    <div class="px-4 py-5 border-b border-neutral-200">
+      <div class="flex items-center gap-2">
+        <div class="w-7 h-7 bg-neutral-900 text-white rounded-md flex items-center justify-center text-sm font-semibold select-none">V</div>
+        <div>
+          <div class="text-sm font-semibold text-neutral-900">Vacation Inc.</div>
+          <div class="text-xs text-neutral-500">Workspace</div>
+        </div>
+      </div>
+    </div>
+    <!-- Nav items -->
+    <div class="flex-1 px-2 py-3 space-y-0.5">
+      <a href="#" class="flex items-center gap-2.5 px-2.5 py-1.5 text-sm text-neutral-700 hover:bg-neutral-100 rounded-md">
+        <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        Brand Health
+      </a>
+      <a href="#" class="flex items-center gap-2.5 px-2.5 py-1.5 text-sm font-medium text-neutral-900 bg-neutral-100 rounded-md">
+        <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+          <path d="M20 7L12 3 4 7v10l8 4 8-4V7z"/>
+          <polyline points="4 7 12 11 20 7"/>
+          <line x1="12" y1="11" x2="12" y2="21"/>
+        </svg>
+        Products
+      </a>
+      <a href="gate2-categories-c-coverage-map.html" class="flex items-center gap-2.5 px-2.5 py-1.5 text-sm text-neutral-700 hover:bg-neutral-100 rounded-md">
+        <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+          <rect x="3" y="3" width="7" height="7"/>
+          <rect x="14" y="3" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/>
+          <rect x="3" y="14" width="7" height="7"/>
+        </svg>
+        Category Pages
+      </a>
+      <a href="#" class="flex items-center gap-2.5 px-2.5 py-1.5 text-sm text-neutral-700 hover:bg-neutral-100 rounded-md">
+        <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+          <polyline points="9 11 12 14 22 4"/>
+          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+        </svg>
+        Citations Builder
+      </a>
+      <a href="#" class="flex items-center gap-2.5 px-2.5 py-1.5 text-sm text-neutral-700 hover:bg-neutral-100 rounded-md">
+        <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        Diagnostics
+        <span class="ml-auto text-[10px] px-1.5 py-0.5 bg-rose-50 text-rose-700 border border-rose-200 rounded font-medium">4</span>
+      </a>
+    </div>
+    <!-- Settings -->
+    <div class="px-2 py-3 border-t border-neutral-200">
+      <a href="#" class="flex items-center gap-2.5 px-2.5 py-1.5 text-sm text-neutral-700 hover:bg-neutral-100 rounded-md">
+        <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+        Settings
+      </a>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+
+    <!-- Page header -->
+    <header class="border-b border-neutral-200 bg-white flex-shrink-0 px-6 py-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-base font-semibold text-neutral-900">Products</h1>
+            <span class="text-neutral-400">/</span>
+            <span class="text-sm text-neutral-500">Gate 2 signals</span>
+          </div>
+          <p class="text-xs text-neutral-400 mt-0.5">4 products tracked · last run 2h ago</p>
+        </div>
+        <div class="flex items-center gap-5">
+          <!-- Catalogue Health KPI -->
+          <div class="text-right">
+            <div class="text-[10px] text-neutral-400 uppercase tracking-wide font-medium">Catalogue Health</div>
+            <div class="flex items-baseline gap-1">
+              <span class="text-lg font-semibold text-neutral-900">66</span>
+              <span class="text-xs font-medium text-rose-600 flex items-center gap-0.5">
+                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
+                4
+              </span>
+            </div>
+          </div>
+          <!-- Separator -->
+          <div class="w-px h-8 bg-neutral-200"></div>
+          <!-- Pass Rate KPI -->
+          <div class="text-right">
+            <div class="text-[10px] text-neutral-400 uppercase tracking-wide font-medium">Pass Rate</div>
+            <div class="flex items-baseline gap-1">
+              <span class="text-lg font-semibold text-neutral-900">50%</span>
+              <span class="text-xs text-neutral-400">2 of 4</span>
+            </div>
+          </div>
+          <!-- Separator -->
+          <div class="w-px h-8 bg-neutral-200"></div>
+          <!-- Sparkline -->
+          <div>
+            <div class="text-[10px] text-neutral-400 uppercase tracking-wide font-medium mb-1">8-week trend</div>
+            <svg width="64" height="20" viewBox="0 0 64 20">
+              <polyline points="0,6 9,8 18,7 27,10 36,9 45,12 54,14 64,16" fill="none" stroke="#f43f5e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="64" cy="16" r="2" fill="#f43f5e"/>
+            </svg>
+          </div>
+          <!-- Separator -->
+          <div class="w-px h-8 bg-neutral-200"></div>
+          <!-- Avatar -->
+          <div class="w-8 h-8 bg-neutral-800 text-white rounded-full flex items-center justify-center text-xs font-semibold select-none">JK</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Card grid -->
+    <div class="flex-1 overflow-auto scrollbar-thin bg-neutral-50/30 p-5">
+      <div class="grid grid-cols-2 gap-4 max-w-[900px]">
+
+        <!-- Card 1: Moisturizing Gel Cream (84 ↑3) -->
+        <div class="bg-white border border-neutral-200 rounded-lg overflow-hidden hover:border-neutral-300 transition-colors">
+          <!-- Card header -->
+          <div class="px-4 pt-4 pb-3 border-b border-neutral-100">
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex items-start gap-2.5">
+                <div class="w-8 h-8 bg-emerald-100 text-emerald-700 rounded-md flex items-center justify-center text-sm font-semibold flex-shrink-0">M</div>
+                <div>
+                  <div class="text-sm font-medium text-neutral-900 leading-tight">Moisturizing Gel Cream</div>
+                  <div class="text-[10px] text-neutral-400 mt-0.5">vacation.com/products/moisturizing-gel-cream</div>
+                </div>
+              </div>
+              <div class="flex items-baseline gap-1 flex-shrink-0">
+                <span class="text-lg font-semibold text-neutral-900">84</span>
+                <span class="text-xs font-medium text-emerald-600">↑3</span>
+              </div>
+            </div>
+          </div>
+          <!-- Card body -->
+          <div class="px-4 py-3 space-y-3">
+            <!-- NOW zone -->
+            <div class="border-l-2 border-neutral-300 pl-3 bg-neutral-50 rounded-r py-2 pr-2">
+              <div class="text-[10px] font-semibold text-neutral-500 uppercase tracking-wide mb-1">Now</div>
+              <p class="text-xs text-neutral-700 italic leading-relaxed">"Lightweight, non-greasy daily moisturizer with hyaluronic acid, niacinamide, and ceramides. Fragrance-free, 1.7 fl oz."</p>
+              <p class="text-[10px] text-neutral-400 mt-1.5">5 attributes · answers 6 of 8 questions</p>
+            </div>
+            <!-- GENERATED zone -->
+            <div class="border-l-2 border-emerald-300 pl-3 bg-emerald-50/20 rounded-r py-2 pr-2">
+              <div class="text-[10px] font-semibold text-emerald-700 uppercase tracking-wide mb-1">Generated</div>
+              <p class="text-xs text-neutral-800 leading-relaxed">Lightweight gel moisturizer with 2% hyaluronic acid, 5% niacinamide, and ceramides. Fragrance-free, oil-free, 1.7 fl oz. Suitable for oily and combination skin.</p>
+              <p class="text-[10px] text-neutral-400 mt-1.5">6 attributes · answers 7 of 8 questions</p>
+            </div>
+          </div>
+          <!-- Schema strip -->
+          <div class="px-4 pb-3 flex items-center gap-2">
+            <span class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full">✓ Product</span>
+            <span class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 bg-rose-50 text-rose-700 border border-rose-200 rounded-full">❌ FAQ</span>
+            <span class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full">✓ Reviews</span>
+          </div>
+          <!-- Footer -->
+          <div class="px-4 pb-4">
+            <button class="w-full text-xs font-medium px-3 py-2 border border-neutral-300 text-neutral-700 rounded-md hover:bg-neutral-50 transition-colors">Review &amp; push 1 fix →</button>
+          </div>
+        </div>
+
+        <!-- Card 2: Plump + Juicy Cleanser (61 ↓4) -->
+        <div class="bg-white border border-neutral-200 rounded-lg overflow-hidden hover:border-neutral-300 transition-colors">
+          <!-- Card header -->
+          <div class="px-4 pt-4 pb-3 border-b border-neutral-100">
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex items-start gap-2.5">
+                <div class="w-8 h-8 bg-amber-100 text-amber-700 rounded-md flex items-center justify-center text-sm font-semibold flex-shrink-0">P</div>
+                <div>
+                  <div class="text-sm font-medium text-neutral-900 leading-tight">Plump + Juicy Cleanser</div>
+                  <div class="text-[10px] text-neutral-400 mt-0.5">vacation.com/products/plump-juicy-cleanser</div>
+                </div>
+              </div>
+              <div class="flex items-baseline gap-1 flex-shrink-0">
+                <span class="text-lg font-semibold text-neutral-900">61</span>
+                <span class="text-xs font-medium text-rose-600">↓4</span>
+              </div>
+            </div>
+          </div>
+          <!-- Card body -->
+          <div class="px-4 py-3 space-y-3">
+            <!-- NOW zone -->
+            <div class="border-l-2 border-neutral-300 pl-3 bg-neutral-50 rounded-r py-2 pr-2">
+              <div class="text-[10px] font-semibold text-neutral-500 uppercase tracking-wide mb-1">Now</div>
+              <p class="text-xs text-neutral-700 italic leading-relaxed">"Get that plump, juicy glow with our bestselling cleanser. Perfect for morning and evening routines."</p>
+              <p class="text-[10px] text-neutral-400 mt-1.5">0 attributes · marketing copy</p>
+            </div>
+            <!-- GENERATED zone -->
+            <div class="border-l-2 border-emerald-300 pl-3 bg-emerald-50/20 rounded-r py-2 pr-2">
+              <div class="text-[10px] font-semibold text-emerald-700 uppercase tracking-wide mb-1">Generated</div>
+              <p class="text-xs text-neutral-800 leading-relaxed">Gentle gel cleanser with hyaluronic acid, vitamin B5, and chamomile extract. pH-balanced, 4 fl oz, suitable for all skin types. Dermatologist-tested.</p>
+              <p class="text-[10px] text-neutral-400 mt-1.5">5 attributes · answers 5 of 8 questions</p>
+            </div>
+          </div>
+          <!-- Schema strip -->
+          <div class="px-4 pb-3 flex items-center gap-2">
+            <span class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 bg-rose-50 text-rose-700 border border-rose-200 rounded-full">❌ Product</span>
+            <span class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 bg-rose-50 text-rose-700 border border-rose-200 rounded-full">❌ FAQ</span>
+            <span class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 bg-rose-50 text-rose-700 border border-rose-200 rounded-full">❌ Reviews</span>
+          </div>
+          <!-- Footer -->
+          <div class="px-4 pb-4">
+            <button class="w-full text-xs font-medium px-3 py-2 bg-neutral-900 text-white rounded-md hover:bg-neutral-800 transition-colors">Review &amp; push 4 fixes →</button>
+          </div>
+        </div>
+
+        <!-- Card 3: DreamBeam SPF 40 (91 ↑2) -->
+        <div class="bg-white border border-neutral-200 rounded-lg overflow-hidden hover:border-neutral-300 transition-colors">
+          <!-- Card header -->
+          <div class="px-4 pt-4 pb-3 border-b border-neutral-100">
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex items-start gap-2.5">
+                <div class="w-8 h-8 bg-emerald-100 text-emerald-700 rounded-md flex items-center justify-center text-sm font-semibold flex-shrink-0">D</div>
+                <div>
+                  <div class="text-sm font-medium text-neutral-900 leading-tight">DreamBeam SPF 40</div>
+                  <div class="text-[10px] text-neutral-400 mt-0.5">vacation.com/products/dreambeam-spf-40</div>
+                </div>
+              </div>
+              <div class="flex items-baseline gap-1 flex-shrink-0">
+                <span class="text-lg font-semibold text-neutral-900">91</span>
+                <span class="text-xs font-medium text-emerald-600">↑2</span>
+              </div>
+            </div>
+          </div>
+          <!-- Card body -->
+          <div class="px-4 py-3 space-y-3">
+            <!-- NOW zone -->
+            <div class="border-l-2 border-neutral-300 pl-3 bg-neutral-50 rounded-r py-2 pr-2">
+              <div class="text-[10px] font-semibold text-neutral-500 uppercase tracking-wide mb-1">Now</div>
+              <p class="text-xs text-neutral-700 italic leading-relaxed">"Mineral SPF 40 with 18% zinc oxide, niacinamide, and antioxidants. Water-resistant 80 min, 1.7 fl oz. Reef-safe, fragrance-free."</p>
+              <p class="text-[10px] text-neutral-400 mt-1.5">7 attributes · answers 8 of 8 questions</p>
+            </div>
+            <!-- GENERATED zone -->
+            <div class="border-l-2 border-emerald-300 pl-3 bg-emerald-50/20 rounded-r py-2 pr-2">
+              <div class="text-[10px] font-semibold text-emerald-700 uppercase tracking-wide mb-1">Generated</div>
+              <p class="text-xs text-neutral-800 leading-relaxed">Mineral SPF 40 sunscreen with 18% zinc oxide, niacinamide, and vitamin E antioxidants. Water-resistant 80 min, 1.7 fl oz. Reef-safe formula, fragrance-free.</p>
+              <p class="text-[10px] text-neutral-400 mt-1.5">7 attributes · answers 8 of 8 questions</p>
+            </div>
+          </div>
+          <!-- Schema strip -->
+          <div class="px-4 pb-3 flex items-center gap-2">
+            <span class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full">✓ Product</span>
+            <span class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full">✓ FAQ</span>
+            <span class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full">✓ Reviews</span>
+          </div>
+          <!-- Footer -->
+          <div class="px-4 pb-4">
+            <button class="w-full text-xs font-medium px-3 py-2 border border-neutral-300 text-neutral-700 rounded-md hover:bg-neutral-50 transition-colors">Re-verify →</button>
+          </div>
+        </div>
+
+        <!-- Card 4: Classic Whip SPF 30 (28 ↓6) — SELECTED -->
+        <div class="bg-white border-2 border-neutral-900 rounded-lg overflow-hidden ring-4 ring-neutral-900/5 relative">
+          <!-- Selected badge -->
+          <span class="absolute top-3 right-3 bg-neutral-900 text-white text-[10px] font-medium px-2 py-0.5 rounded z-10">Selected</span>
+          <!-- Card header -->
+          <div class="px-4 pt-4 pb-3 border-b border-neutral-100">
+            <div class="flex items-start justify-between gap-3 pr-14">
+              <div class="flex items-start gap-2.5">
+                <div class="w-8 h-8 bg-rose-100 text-rose-700 rounded-md flex items-center justify-center text-sm font-semibold flex-shrink-0">C</div>
+                <div>
+                  <div class="text-sm font-medium text-neutral-900 leading-tight">Classic Whip SPF 30</div>
+                  <div class="text-[10px] text-neutral-400 mt-0.5">vacation.com/products/classic-whip-spf-30</div>
+                  <span class="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 bg-amber-50 text-amber-700 border border-amber-200 rounded-full mt-1 font-medium">⚠ JS-rendered</span>
+                </div>
+              </div>
+              <div class="flex items-baseline gap-1 flex-shrink-0">
+                <span class="text-lg font-semibold text-neutral-900">28</span>
+                <span class="text-xs font-medium text-rose-600">↓6</span>
+              </div>
+            </div>
+          </div>
+          <!-- Card body -->
+          <div class="px-4 py-3 space-y-3">
+            <!-- NOW zone -->
+            <div class="border-l-2 border-neutral-300 pl-3 bg-neutral-50 rounded-r py-2 pr-2">
+              <div class="text-[10px] font-semibold text-neutral-500 uppercase tracking-wide mb-1">Now</div>
+              <p class="text-xs text-neutral-700 italic leading-relaxed">"Life's a beach and SPF makes it better. Our whipped sunscreen goes on smooth, blends in fast, and keeps you protected all day."</p>
+              <p class="text-[10px] text-neutral-400 mt-1.5">0 attributes · marketing copy</p>
+            </div>
+            <!-- GENERATED zone -->
+            <div class="border-l-2 border-emerald-300 pl-3 bg-emerald-50/20 rounded-r py-2 pr-2">
+              <div class="text-[10px] font-semibold text-emerald-700 uppercase tracking-wide mb-1">Generated</div>
+              <p class="text-xs text-neutral-800 leading-relaxed">SPF 30 whipped sunscreen, reef-safe zinc oxide, fragrance-free, water-resistant 80 min, 5 fl oz. Lightweight mousse texture for face and body.</p>
+              <p class="text-[10px] text-neutral-400 mt-1.5">6 attributes · answers 4 of 8 questions</p>
+            </div>
+          </div>
+          <!-- Schema strip -->
+          <div class="px-4 pb-3 flex items-center gap-2">
+            <span class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 bg-rose-50 text-rose-700 border border-rose-200 rounded-full">❌ Product</span>
+            <span class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 bg-rose-50 text-rose-700 border border-rose-200 rounded-full">❌ FAQ</span>
+            <span class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 bg-rose-50 text-rose-700 border border-rose-200 rounded-full">❌ Reviews</span>
+          </div>
+          <!-- Footer -->
+          <div class="px-4 pb-4">
+            <button class="w-full text-xs font-medium px-3 py-2 bg-neutral-900 text-white rounded-md hover:bg-neutral-800 transition-colors">Review &amp; push 3 fixes →</button>
+          </div>
+        </div>
+
+      </div><!-- /grid -->
+    </div><!-- /main scroll area -->
+  </div><!-- /main -->
+
+  <!-- RIGHT SIDEBAR -->
+  <aside class="w-[26rem] border-l border-neutral-200 bg-neutral-50/30 flex flex-col overflow-hidden flex-shrink-0">
+
+    <!-- Sidebar header -->
+    <div class="flex-shrink-0 border-b border-neutral-200 bg-white px-4 py-4">
+      <div class="flex items-center justify-between mb-2.5">
+        <div class="text-xs text-neutral-500">
+          Products / <span class="font-medium text-neutral-900">Classic Whip SPF 30</span>
+        </div>
+        <span class="text-[10px] font-medium text-neutral-500 bg-neutral-100 border border-neutral-200 px-2 py-0.5 rounded-full">1 of 4</span>
+      </div>
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 bg-rose-50 text-rose-700 border border-rose-200 rounded-md">Score 28</span>
+        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 bg-amber-50 text-amber-700 border border-amber-200 rounded-md font-medium">⚠ JS-rendered</span>
+        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 bg-rose-50 text-rose-700 border border-rose-200 rounded-md font-medium">↓ 6</span>
+      </div>
+    </div>
+
+    <!-- Scrollable sidebar body -->
+    <div class="flex-1 overflow-auto scrollbar-thin">
+
+      <!-- Section: Before — what the LLM says now -->
+      <div class="px-4 py-4 border-b border-neutral-200">
+        <div class="flex items-center gap-1.5 mb-3">
+          <svg class="w-3.5 h-3.5 text-neutral-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <span class="text-xs font-semibold text-neutral-900">Before — what the LLM says now</span>
+        </div>
+        <div class="bg-neutral-50 border border-neutral-200 rounded-md p-3">
+          <div class="flex items-center gap-1.5 mb-2">
+            <svg class="w-3 h-3 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <span class="text-[10px] text-neutral-500 font-medium">ChatGPT · queried today</span>
+          </div>
+          <p class="text-xs text-neutral-700 italic leading-relaxed">"Vacation Inc. is known for sunscreen products, but I don't have reliable details about the Classic Whip SPF 30 — I can't confirm the specific SPF level, ingredients, or whether it's reef-safe. I'd recommend checking their website directly."</p>
+        </div>
+      </div>
+
+      <!-- Section: Current description -->
+      <div class="px-4 py-4 border-b border-neutral-200">
+        <div class="flex items-center gap-1.5 mb-1.5">
+          <span class="text-[10px] font-semibold text-neutral-500 uppercase tracking-wide">Now — what your page says</span>
+        </div>
+        <div class="border-l-2 border-amber-400 pl-3 bg-amber-50/30 rounded-r py-2.5 pr-3">
+          <p class="text-xs text-neutral-700 italic leading-relaxed">"Life's a beach and SPF makes it better. Our whipped sunscreen goes on smooth, blends in fast, and keeps you protected all day long."</p>
+          <p class="text-[10px] text-neutral-400 mt-2">0 attributes · marketing copy · invisible to AI crawlers (JS-rendered)</p>
+        </div>
+      </div>
+
+      <!-- Section: Generated description -->
+      <div class="px-4 py-4 border-b border-neutral-200">
+        <div class="flex items-center justify-between mb-1.5">
+          <span class="text-[10px] font-semibold text-neutral-500 uppercase tracking-wide">Generated — edit before pushing</span>
+          <svg class="w-3.5 h-3.5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+          </svg>
+        </div>
+        <div class="border-l-2 border-emerald-400 pl-3 bg-emerald-50/20 rounded-r py-2 pr-2 mb-2">
+          <textarea
+            class="w-full text-xs text-neutral-800 leading-relaxed bg-transparent resize-none focus:outline-none"
+            rows="4"
+          >SPF 30 whipped sunscreen with reef-safe zinc oxide, fragrance-free formula, water-resistant up to 80 minutes. Lightweight mousse texture, 5 fl oz. Suitable for face and body.</textarea>
+        </div>
+        <p class="text-[10px] text-neutral-400">6 attributes · answers 4 of 8 questions</p>
+      </div>
+
+      <!-- Section: Schema -->
+      <div class="px-4 py-4 border-b border-neutral-200">
+        <span class="text-[10px] font-semibold text-neutral-500 uppercase tracking-wide block mb-3">Schema</span>
+        <!-- Product schema -->
+        <div class="bg-neutral-900 rounded-md p-3 mb-2 overflow-x-auto scrollbar-thin">
+          <pre class="text-[10px] font-mono text-neutral-300 leading-relaxed whitespace-pre">{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Classic Whip SPF 30",
+  "description": "SPF 30 whipped sunscreen with reef-safe zinc oxide, fragrance-free formula, water-resistant up to 80 minutes.",
+  "brand": { "@type": "Brand", "name": "Vacation Inc." },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock"
+  },
+  "additionalProperty": [
+    { "@type": "PropertyValue", "name": "SPF", "value": "30" },
+    { "@type": "PropertyValue", "name": "Size", "value": "5 fl oz" },
+    { "@type": "PropertyValue", "name": "Reef-safe", "value": "true" }
+  ]
+}</pre>
+        </div>
+        <!-- FAQPage schema -->
+        <div class="bg-neutral-900 rounded-md p-3 overflow-x-auto scrollbar-thin">
+          <pre class="text-[10px] font-mono text-neutral-300 leading-relaxed whitespace-pre">{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is Classic Whip SPF 30 reef-safe?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Classic Whip SPF 30 uses reef-safe zinc oxide."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long is it water-resistant?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Water-resistant up to 80 minutes."
+      }
+    }
+  ]
+}</pre>
+        </div>
+      </div>
+
+      <!-- Section: Push to Shopify -->
+      <div class="px-4 py-4 border-b border-neutral-200 space-y-2">
+        <span class="text-[10px] font-semibold text-neutral-500 uppercase tracking-wide block mb-3">Push to Shopify</span>
+        <button class="w-full text-xs font-medium px-3 py-2 bg-neutral-900 text-white rounded-md hover:bg-neutral-800 transition-colors text-left">
+          Push description via Admin API
+        </button>
+        <button class="w-full text-xs font-medium px-3 py-2 border border-neutral-300 text-neutral-700 rounded-md hover:bg-neutral-50 transition-colors text-left">
+          Copy Product schema
+        </button>
+        <button class="w-full text-xs font-medium px-3 py-2 border border-neutral-300 text-neutral-700 rounded-md hover:bg-neutral-50 transition-colors text-left">
+          Copy FAQPage schema
+        </button>
+      </div>
+
+      <!-- Section: After — verification pending -->
+      <div class="px-4 py-4 opacity-40">
+        <span class="text-[10px] font-semibold text-neutral-500 uppercase tracking-wide block mb-3">After — verification pending</span>
+        <div class="border-2 border-dashed border-neutral-300 rounded-md px-4 py-5 text-center">
+          <p class="text-xs text-neutral-500">Will appear here after 24h verification run</p>
+        </div>
+      </div>
+
+    </div><!-- /scrollable -->
+
+    <!-- Pinned chat input -->
+    <div class="flex-shrink-0 border-t border-neutral-200 bg-white px-4 py-3">
+      <div class="flex items-center gap-1.5 mb-2.5">
+        <svg class="w-3 h-3 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+        <span class="text-[10px] text-neutral-400 font-medium">Scoped to Classic Whip SPF 30</span>
+      </div>
+      <div class="flex items-center gap-2 bg-neutral-50 border border-neutral-200 rounded-md px-3 py-2 mb-2.5">
+        <input
+          type="text"
+          placeholder="Ask about this product..."
+          class="flex-1 text-xs bg-transparent text-neutral-800 placeholder-neutral-400 focus:outline-none"
+        />
+        <button class="flex-shrink-0">
+          <svg class="w-3.5 h-3.5 text-neutral-400 hover:text-neutral-600 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+            <line x1="22" y1="2" x2="11" y2="13"/>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+        </button>
+      </div>
+      <!-- Chips -->
+      <div class="flex flex-wrap gap-1.5">
+        <button class="text-[10px] px-2 py-1 bg-neutral-100 hover:bg-neutral-200 text-neutral-600 rounded-md border border-neutral-200 transition-colors whitespace-nowrap">Show me the failed queries</button>
+        <button class="text-[10px] px-2 py-1 bg-neutral-100 hover:bg-neutral-200 text-neutral-600 rounded-md border border-neutral-200 transition-colors whitespace-nowrap">What's my competitor doing differently?</button>
+        <button class="text-[10px] px-2 py-1 bg-neutral-100 hover:bg-neutral-200 text-neutral-600 rounded-md border border-neutral-200 transition-colors whitespace-nowrap">Rewrite for sensitive skin angle</button>
+      </div>
+    </div>
+
+  </aside>
+
+</div>
+</body>
+</html>
