@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Citations Builder — Progress</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>* { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-white text-gray-900 min-h-screen">
+
+<nav class="border-b border-gray-100 px-6 py-3 flex items-center justify-between">
+  <span class="text-sm font-medium text-gray-900">AiSEO Analytics</span>
+  <div class="flex gap-6 text-xs text-gray-400">
+    <a href="screen1-a-metrics-first.html" class="hover:text-gray-900">Brand Health</a>
+    <a href="approach-b-cards.html" class="hover:text-gray-900">Products</a>
+    <a href="screen3-a-ranked-table.html" class="hover:text-gray-900">Category Rank</a>
+    <span class="text-gray-900 font-medium">Citations Builder</span>
+  </div>
+</nav>
+
+<div class="max-w-3xl mx-auto px-6 py-10">
+
+  <div class="mb-8">
+    <p class="text-xs text-gray-400 uppercase tracking-wider mb-1">Approach C — Progress View</p>
+    <h1 class="text-lg font-semibold text-gray-900">Citations Builder</h1>
+  </div>
+
+  <!-- Score + progress -->
+  <div class="border border-gray-200 rounded-lg px-6 py-6 mb-8">
+    <div class="flex items-end justify-between mb-4">
+      <div>
+        <p class="text-xs text-gray-400 mb-1">Citation Score</p>
+        <div class="flex items-baseline gap-2">
+          <span class="text-4xl font-semibold text-gray-900">38</span>
+          <span class="text-sm text-gray-400">/ 100</span>
+        </div>
+      </div>
+      <div class="text-right">
+        <p class="text-xs text-gray-400 mb-1">Target</p>
+        <span class="text-2xl font-semibold text-gray-400">61</span>
+      </div>
+    </div>
+    <div class="w-full bg-gray-100 rounded-full h-2 mb-3">
+      <div class="bg-gray-900 h-2 rounded-full transition-all duration-500" style="width: 38%"></div>
+    </div>
+    <div class="flex items-center justify-between">
+      <p class="text-xs text-gray-400">Complete 12 improvements to reach target</p>
+      <p class="text-xs text-gray-400">+23pts available</p>
+    </div>
+  </div>
+
+  <!-- Improvement checklist -->
+  <div class="border border-gray-200 rounded-lg divide-y divide-gray-50 overflow-hidden">
+
+    <!-- Completed item -->
+    <div class="px-5 py-4 flex items-start gap-4 bg-gray-50">
+      <button class="mt-0.5 flex-shrink-0">
+        <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+      </button>
+      <div class="flex-1">
+        <p class="text-sm text-gray-400 line-through">Product titles optimised for AI queries</p>
+        <p class="text-xs text-gray-400 mt-0.5">Completed 2 days ago</p>
+      </div>
+      <span class="text-xs text-gray-400">+2pts</span>
+    </div>
+
+    <!-- Item 1 -->
+    <div class="px-5 py-4 flex items-start gap-4 hover:bg-gray-50 cursor-pointer" onclick="toggleItem('i1')">
+      <button class="mt-0.5 flex-shrink-0">
+        <svg class="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 20 20" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="8"/></svg>
+      </button>
+      <div class="flex-1">
+        <div class="flex items-center gap-2">
+          <p class="text-sm font-medium text-gray-900">Bing Merchant Center not connected</p>
+          <span class="text-xs bg-gray-900 text-white px-1.5 py-0.5 rounded">+8pts</span>
+        </div>
+        <p class="text-xs text-gray-500 mt-0.5">Invisible in ChatGPT Shopping</p>
+        <div id="i1" class="hidden mt-3">
+          <a href="#" class="inline-block text-xs font-medium text-gray-900 underline underline-offset-2">Connect Bing Merchant Center →</a>
+        </div>
+      </div>
+      <span class="text-xs text-gray-400">To do</span>
+    </div>
+
+    <!-- Item 2 -->
+    <div class="px-5 py-4 flex items-start gap-4 hover:bg-gray-50 cursor-pointer" onclick="toggleItem('i2')">
+      <button class="mt-0.5 flex-shrink-0">
+        <svg class="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 20 20" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="8"/></svg>
+      </button>
+      <div class="flex-1">
+        <div class="flex items-center gap-2">
+          <p class="text-sm font-medium text-gray-900">4 products have thin descriptions</p>
+          <span class="text-xs bg-gray-900 text-white px-1.5 py-0.5 rounded">+6pts</span>
+        </div>
+        <p class="text-xs text-gray-500 mt-0.5">Under 80 words — ChatGPT skips these</p>
+        <div id="i2" class="hidden mt-3">
+          <button onclick="event.stopPropagation(); toggleWrite('w2')" class="text-xs font-medium text-gray-900 underline underline-offset-2">Write for me</button>
+          <div id="w2" class="hidden mt-3 border border-gray-200 rounded-lg overflow-hidden">
+            <div class="px-4 py-3 bg-gray-50 border-b border-gray-100">
+              <p class="text-xs font-medium text-gray-600">AI-generated · Hydrating Gel Cleanser</p>
+            </div>
+            <div class="px-4 py-4">
+              <p class="text-sm text-gray-700 leading-relaxed">A lightweight gel cleanser for sensitive and combination skin. Removes makeup and impurities without stripping the moisture barrier. Sulphate-free, fragrance-free, suitable for morning and evening use.</p>
+            </div>
+            <div class="px-4 py-3 border-t border-gray-100 flex items-center gap-3">
+              <button class="text-xs font-medium bg-gray-900 text-white px-3 py-1.5 rounded">Push to store</button>
+              <button class="text-xs text-gray-500">Copy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="text-xs text-gray-400">To do</span>
+    </div>
+
+    <!-- Item 3 -->
+    <div class="px-5 py-4 flex items-start gap-4 hover:bg-gray-50 cursor-pointer" onclick="toggleItem('i3')">
+      <button class="mt-0.5 flex-shrink-0">
+        <svg class="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 20 20" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="8"/></svg>
+      </button>
+      <div class="flex-1">
+        <div class="flex items-center gap-2">
+          <p class="text-sm font-medium text-gray-900">schema.org markup missing on 6 pages</p>
+          <span class="text-xs bg-gray-900 text-white px-1.5 py-0.5 rounded">+5pts</span>
+        </div>
+        <p class="text-xs text-gray-500 mt-0.5">AI can't parse key product attributes</p>
+        <div id="i3" class="hidden mt-3">
+          <a href="#" class="text-xs font-medium text-gray-900 underline underline-offset-2">Fix now →</a>
+        </div>
+      </div>
+      <span class="text-xs text-gray-400">To do</span>
+    </div>
+
+    <!-- Item 4 -->
+    <div class="px-5 py-4 flex items-start gap-4 hover:bg-gray-50 cursor-pointer" onclick="toggleItem('i4')">
+      <button class="mt-0.5 flex-shrink-0">
+        <svg class="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 20 20" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="8"/></svg>
+      </button>
+      <div class="flex-1">
+        <div class="flex items-center gap-2">
+          <p class="text-sm font-medium text-gray-900">6 products missing FAQ section</p>
+          <span class="text-xs bg-gray-800 text-white px-1.5 py-0.5 rounded">+4pts</span>
+        </div>
+        <p class="text-xs text-gray-500 mt-0.5">Q&A content answers validation queries directly</p>
+        <div id="i4" class="hidden mt-3">
+          <button class="text-xs font-medium text-gray-900 underline underline-offset-2">Write for me</button>
+        </div>
+      </div>
+      <span class="text-xs text-gray-400">To do</span>
+    </div>
+
+    <!-- Item 5 -->
+    <div class="px-5 py-4 flex items-start gap-4 hover:bg-gray-50 cursor-pointer" onclick="toggleItem('i5')">
+      <button class="mt-0.5 flex-shrink-0">
+        <svg class="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 20 20" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="8"/></svg>
+      </button>
+      <div class="flex-1">
+        <div class="flex items-center gap-2">
+          <p class="text-sm font-medium text-gray-900">Google Merchant Center feed outdated</p>
+          <span class="text-xs bg-gray-800 text-white px-1.5 py-0.5 rounded">+3pts</span>
+        </div>
+        <p class="text-xs text-gray-500 mt-0.5">Last synced 14 days ago — prices may be stale</p>
+        <div id="i5" class="hidden mt-3">
+          <a href="#" class="text-xs font-medium text-gray-900 underline underline-offset-2">Fix now →</a>
+        </div>
+      </div>
+      <span class="text-xs text-gray-400">To do</span>
+    </div>
+
+    <!-- Item 6 -->
+    <div class="px-5 py-4 flex items-start gap-4 hover:bg-gray-50 cursor-pointer" onclick="toggleItem('i6')">
+      <button class="mt-0.5 flex-shrink-0">
+        <svg class="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 20 20" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="8"/></svg>
+      </button>
+      <div class="flex-1">
+        <div class="flex items-center gap-2">
+          <p class="text-sm font-medium text-gray-900">3 products lack comparison copy</p>
+          <span class="text-xs bg-gray-700 text-white px-1.5 py-0.5 rounded">+2pts</span>
+        </div>
+        <p class="text-xs text-gray-500 mt-0.5">No "how this compares" content — missing comparison queries</p>
+        <div id="i6" class="hidden mt-3">
+          <button class="text-xs font-medium text-gray-900 underline underline-offset-2">Write for me</button>
+        </div>
+      </div>
+      <span class="text-xs text-gray-400">To do</span>
+    </div>
+
+    <!-- Item 7 -->
+    <div class="px-5 py-4 flex items-start gap-4 hover:bg-gray-50 cursor-pointer" onclick="toggleItem('i7')">
+      <button class="mt-0.5 flex-shrink-0">
+        <svg class="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 20 20" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="8"/></svg>
+      </button>
+      <div class="flex-1">
+        <div class="flex items-center gap-2">
+          <p class="text-sm font-medium text-gray-900">Not listed on r/SkincareAddiction wiki</p>
+          <span class="text-xs bg-gray-600 text-white px-1.5 py-0.5 rounded">+2pts</span>
+        </div>
+        <p class="text-xs text-gray-500 mt-0.5">High-authority source frequently cited by ChatGPT</p>
+        <div id="i7" class="hidden mt-3">
+          <a href="#" class="text-xs font-medium text-gray-900 underline underline-offset-2">Fix now →</a>
+        </div>
+      </div>
+      <span class="text-xs text-gray-400">To do</span>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function toggleItem(id) {
+  document.getElementById(id).classList.toggle('hidden');
+}
+function toggleWrite(id) {
+  document.getElementById(id).classList.toggle('hidden');
+}
+</script>
+</body>
+</html>

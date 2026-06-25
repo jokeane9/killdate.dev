@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Category Pages — Coverage Map · AI SEO Analytics</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    html, body { font-family: 'Inter', sans-serif; font-feature-settings: 'cv11', 'ss01'; }
+    .scrollbar-thin::-webkit-scrollbar { width: 6px; }
+    .scrollbar-thin::-webkit-scrollbar-thumb { background: #d4d4d4; border-radius: 3px; }
+    .dot-green { width: 8px; height: 8px; border-radius: 50%; background-color: rgb(16 185 129 / 0.8); display: inline-block; flex-shrink: 0; }
+    .dot-amber { width: 8px; height: 8px; border-radius: 50%; background-color: rgb(245 158 11 / 0.8); display: inline-block; flex-shrink: 0; }
+    .dot-red { width: 8px; height: 8px; border-radius: 50%; background-color: rgb(244 63 94 / 0.7); display: inline-block; flex-shrink: 0; }
+    .dot-empty { width: 8px; height: 8px; border-radius: 50%; background-color: rgb(229 231 235); display: inline-block; flex-shrink: 0; }
+  </style>
+</head>
+<body class="bg-white text-neutral-900">
+
+<div class="flex h-screen overflow-hidden">
+
+  <!-- ─── Left nav ─── -->
+  <nav class="w-56 border-r border-neutral-200 flex flex-col bg-neutral-50/50 flex-shrink-0">
+
+    <!-- Workspace -->
+    <div class="px-3 pt-4 pb-3 border-b border-neutral-200">
+      <div class="flex items-center gap-2.5 px-2 py-1.5 rounded-md hover:bg-neutral-100 cursor-pointer">
+        <div class="w-6 h-6 rounded bg-neutral-900 text-white text-[11px] font-semibold flex items-center justify-center flex-shrink-0">V</div>
+        <div class="min-w-0">
+          <div class="text-xs font-semibold text-neutral-900 truncate">Vacation Inc.</div>
+          <div class="text-[10px] text-neutral-500 truncate">Workspace</div>
+        </div>
+        <svg class="w-3 h-3 text-neutral-400 flex-shrink-0 ml-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+    </div>
+
+    <!-- Nav items -->
+    <div class="flex-1 px-2 py-3 space-y-0.5">
+
+      <!-- Brand Health -->
+      <a href="#" class="flex items-center gap-2.5 px-2 py-1.5 rounded-md text-neutral-500 hover:bg-neutral-100 hover:text-neutral-700 transition-colors group">
+        <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        <span class="text-xs">Brand Health</span>
+      </a>
+
+      <!-- Products -->
+      <a href="gate2-products-c-before-after.html" class="flex items-center gap-2.5 px-2 py-1.5 rounded-md text-neutral-500 hover:bg-neutral-100 hover:text-neutral-700 transition-colors group">
+        <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+          <path d="M20 7L12 3 4 7v10l8 4 8-4V7z"/>
+          <polyline points="4 7 12 11 20 7"/>
+          <line x1="12" y1="11" x2="12" y2="21"/>
+        </svg>
+        <span class="text-xs">Products</span>
+      </a>
+
+      <!-- Category Pages — ACTIVE -->
+      <a href="#" class="flex items-center gap-2.5 px-2 py-1.5 rounded-md bg-neutral-100 text-neutral-900 font-medium">
+        <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+          <rect x="3" y="3" width="7" height="7"/>
+          <rect x="14" y="3" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/>
+          <rect x="3" y="14" width="7" height="7"/>
+        </svg>
+        <span class="text-xs">Category Pages</span>
+      </a>
+
+      <!-- Citations Builder -->
+      <a href="#" class="flex items-center gap-2.5 px-2 py-1.5 rounded-md text-neutral-500 hover:bg-neutral-100 hover:text-neutral-700 transition-colors group">
+        <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+          <polyline points="9 11 12 14 22 4"/>
+          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+        </svg>
+        <span class="text-xs">Citations Builder</span>
+      </a>
+
+      <!-- Diagnostics + badge -->
+      <a href="#" class="flex items-center gap-2.5 px-2 py-1.5 rounded-md text-neutral-500 hover:bg-neutral-100 hover:text-neutral-700 transition-colors group">
+        <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <span class="text-xs">Diagnostics</span>
+        <span class="ml-auto text-[10px] font-semibold bg-rose-500 text-white rounded-full px-1.5 py-0.5 leading-none">4</span>
+      </a>
+    </div>
+
+    <!-- Settings bottom -->
+    <div class="px-2 pb-3 border-t border-neutral-200 pt-2">
+      <a href="#" class="flex items-center gap-2.5 px-2 py-1.5 rounded-md text-neutral-500 hover:bg-neutral-100 hover:text-neutral-700 transition-colors group">
+        <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+        <span class="text-xs">Settings</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ─── Main content ─── -->
+  <div class="flex flex-col flex-1 min-w-0">
+
+    <!-- Header -->
+    <header class="border-b bg-white flex-shrink-0 px-6 py-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="flex items-center gap-2 mb-0.5">
+            <h1 class="text-sm font-semibold text-neutral-900">Category Pages</h1>
+            <span class="text-sm text-neutral-400">/</span>
+            <span class="text-sm text-neutral-500">Gate 2 signals</span>
+          </div>
+          <p class="text-xs text-neutral-400">4 collections tracked · last run 2h ago</p>
+        </div>
+
+        <!-- Right KPIs -->
+        <div class="flex items-center gap-5">
+          <!-- Catalogue Coverage -->
+          <div class="text-right">
+            <div class="flex items-center justify-end gap-1.5">
+              <span class="text-lg font-semibold text-neutral-900">51</span>
+              <span class="text-xs font-medium text-rose-500 flex items-center gap-0.5">
+                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5M5 12l7 7 7-7"/></svg>
+                3
+              </span>
+            </div>
+            <div class="text-[10px] text-neutral-400 uppercase tracking-wide">Catalogue Coverage</div>
+          </div>
+
+          <!-- Divider -->
+          <div class="w-px h-8 bg-neutral-200"></div>
+
+          <!-- Empty Collections -->
+          <div class="text-right">
+            <div class="flex items-center justify-end gap-1.5">
+              <span class="text-lg font-semibold text-neutral-900">1</span>
+              <span class="text-[10px] font-semibold bg-amber-100 text-amber-700 rounded px-1 py-0.5">gap</span>
+            </div>
+            <div class="text-[10px] text-neutral-400 uppercase tracking-wide">Empty Collections</div>
+          </div>
+
+          <!-- Divider -->
+          <div class="w-px h-8 bg-neutral-200"></div>
+
+          <!-- Sparkline (8-week declining) -->
+          <div class="flex flex-col items-end gap-1">
+            <svg width="72" height="24" viewBox="0 0 72 24" fill="none">
+              <!-- Declining sparkline -->
+              <polyline points="0,4 9,6 18,8 27,10 36,12 45,16 54,18 63,20 72,22"
+                stroke="#f43f5e" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- Fill -->
+              <polygon points="0,4 9,6 18,8 27,10 36,12 45,16 54,18 63,20 72,22 72,24 0,24"
+                fill="rgb(244 63 94 / 0.06)"/>
+            </svg>
+            <div class="text-[10px] text-neutral-400">8wk trend</div>
+          </div>
+
+          <!-- Divider -->
+          <div class="w-px h-8 bg-neutral-200"></div>
+
+          <!-- Avatar -->
+          <div class="w-7 h-7 rounded-full bg-neutral-900 text-white text-[11px] font-semibold flex items-center justify-center cursor-pointer" title="JK">JK</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Card area -->
+    <div class="flex-1 overflow-auto bg-neutral-50/30">
+      <div class="p-6">
+
+        <!-- View header -->
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-3">
+            <h2 class="text-sm font-semibold text-neutral-900">Coverage Map</h2>
+            <div class="flex items-center gap-3 text-xs text-neutral-500">
+              <span class="flex items-center gap-1"><span class="dot-green"></span> AI-ready</span>
+              <span class="flex items-center gap-1"><span class="dot-amber"></span> Partial</span>
+              <span class="flex items-center gap-1"><span class="dot-red"></span> Not visible</span>
+              <span class="flex items-center gap-1"><span class="dot-empty"></span> No content</span>
+            </div>
+          </div>
+          <button class="text-xs text-neutral-500 border border-neutral-200 rounded-md px-3 py-1.5 hover:bg-white transition-colors flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M3 6h18M7 12h10M11 18h2"/></svg>
+            Filter
+          </button>
+        </div>
+
+        <!-- Card grid -->
+        <div class="grid grid-cols-2 gap-4">
+
+          <!-- ─── Card 1: Moisturizers (SELECTED) ─── -->
+          <div class="relative bg-white rounded-xl border-2 border-neutral-900 ring-4 ring-neutral-900/5 p-4">
+            <!-- Selected badge -->
+            <div class="absolute top-3 right-3 text-[10px] font-semibold bg-neutral-900 text-white rounded-full px-2 py-0.5">Selected</div>
+
+            <!-- Card header -->
+            <div class="mb-3 pr-16">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-sm font-semibold text-neutral-900">Moisturizers</span>
+              </div>
+              <!-- Status chips -->
+              <div class="flex flex-wrap gap-1.5 mb-2">
+                <span class="bg-rose-50 text-rose-700 border border-rose-200 text-[10px] px-1.5 py-0.5 rounded-full">&#10060; No description</span>
+                <span class="bg-rose-50 text-rose-700 border border-rose-200 text-[10px] px-1.5 py-0.5 rounded-full">&#10060; No schema</span>
+              </div>
+            </div>
+
+            <!-- Products label + score -->
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs text-neutral-500 font-medium">Products (47)</span>
+              <div class="flex items-center gap-1">
+                <span class="text-sm font-semibold text-rose-600">19</span>
+                <span class="text-xs text-rose-500 flex items-center">
+                  <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5M5 12l7 7 7-7"/></svg>2
+                </span>
+              </div>
+            </div>
+
+            <!-- Dot grid -->
+            <div class="flex flex-wrap gap-1 p-2.5 bg-neutral-50 rounded-lg border border-neutral-100 mb-2.5">
+              <!-- 18 red dots -->
+              <div class="dot-red"></div><div class="dot-red"></div><div class="dot-red"></div><div class="dot-red"></div><div class="dot-red"></div>
+              <div class="dot-red"></div><div class="dot-red"></div><div class="dot-red"></div><div class="dot-red"></div><div class="dot-red"></div>
+              <div class="dot-red"></div><div class="dot-red"></div><div class="dot-red"></div><div class="dot-red"></div><div class="dot-red"></div>
+              <div class="dot-red"></div><div class="dot-red"></div><div class="dot-red"></div>
+              <!-- 20 amber dots -->
+              <div class="dot-amber"></div><div class="dot-amber"></div><div class="dot-amber"></div><div class="dot-amber"></div><div class="dot-amber"></div>
+              <div class="dot-amber"></div><div class="dot-amber"></div><div class="dot-amber"></div><div class="dot-amber"></div><div class="dot-amber"></div>
+              <div class="dot-amber"></div><div class="dot-amber"></div><div class="dot-amber"></div><div class="dot-amber"></div><div class="dot-amber"></div>
+              <div class="dot-amber"></div><div class="dot-amber"></div><div class="dot-amber"></div><div class="dot-amber"></div><div class="dot-amber"></div>
+              <!-- 9 green dots -->
+              <div class="dot-green"></div><div class="dot-green"></div><div class="dot-green"></div><div class="dot-green"></div><div class="dot-green"></div>
+              <div class="dot-green"></div><div class="dot-green"></div><div class="dot-green"></div><div class="dot-green"></div>
+            </div>
+
+            <!-- Summary -->
+            <p class="text-xs text-neutral-500 mb-3">
+              <span class="text-rose-600 font-medium">18 not visible</span> · <span class="text-amber-600 font-medium">20 partial</span> · <span class="text-emerald-600 font-medium">9 AI-ready</span>
+            </p>
+
+            <!-- Footer -->
+            <div class="flex items-center justify-between pt-2 border-t border-neutral-100">
+              <div class="flex items-center gap-2">
+                <button class="text-[11px] font-medium bg-neutral-900 text-white rounded-md px-2.5 py-1.5 hover:bg-neutral-800 transition-colors">Fix collection</button>
+                <a href="gate2-products-c-before-after.html" class="text-[11px] font-medium border border-neutral-200 rounded-md px-2.5 py-1.5 hover:bg-neutral-50 transition-colors text-neutral-700">View products →</a>
+              </div>
+              <span class="text-[10px] text-neutral-400">2h ago</span>
+            </div>
+          </div>
+
+          <!-- ─── Card 2: SPF / Sun Care ─── -->
+          <div class="relative bg-white rounded-xl border border-neutral-200 p-4 hover:border-neutral-300 transition-colors cursor-pointer">
+
+            <!-- Card header -->
+            <div class="mb-3">
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-sm font-semibold text-neutral-900">SPF / Sun Care</span>
+                <div class="flex items-center gap-1">
+                  <span class="text-sm font-semibold text-amber-600">44</span>
+                  <span class="text-xs text-emerald-500 flex items-center">
+                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7-7 7 7"/></svg>1
+                  </span>
+                </div>
+              </div>
+              <!-- Status chips -->
+              <div class="flex flex-wrap gap-1.5">
+                <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] px-1.5 py-0.5 rounded-full">&#10003; Description</span>
+                <span class="bg-rose-50 text-rose-700 border border-rose-200 text-[10px] px-1.5 py-0.5 rounded-full">&#10060; No schema</span>
+              </div>
+            </div>
+
+            <!-- Products label -->
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs text-neutral-500 font-medium">Products (22)</span>
+            </div>
+
+            <!-- Dot grid -->
+            <div class="flex flex-wrap gap-1 p-2.5 bg-neutral-50 rounded-lg border border-neutral-100 mb-2.5">
+              <!-- 4 red dots -->
+              <div class="dot-red"></div><div class="dot-red"></div><div class="dot-red"></div><div class="dot-red"></div>
+              <!-- 10 amber dots -->
+              <div class="dot-amber"></div><div class="dot-amber"></div><div class="dot-amber"></div><div class="dot-amber"></div><div class="dot-amber"></div>
+              <div class="dot-amber"></div><div class="dot-amber"></div><div class="dot-amber"></div><div class="dot-amber"></div><div class="dot-amber"></div>
+              <!-- 8 green dots -->
+              <div class="dot-green"></div><div class="dot-green"></div><div class="dot-green"></div><div class="dot-green"></div>
+              <div class="dot-green"></div><div class="dot-green"></div><div class="dot-green"></div><div class="dot-green"></div>
+            </div>
+
+            <!-- Summary -->
+            <p class="text-xs text-neutral-500 mb-3">
+              <span class="text-rose-600 font-medium">4 not visible</span> · <span class="text-amber-600 font-medium">10 partial</span> · <span class="text-emerald-600 font-medium">8 AI-ready</span>
+            </p>
+
+            <!-- Footer -->
+            <div class="flex items-center justify-between pt-2 border-t border-neutral-100">
+              <div class="flex items-center gap-2">
+                <button class="text-[11px] font-medium bg-neutral-900 text-white rounded-md px-2.5 py-1.5 hover:bg-neutral-800 transition-colors">Fix collection</button>
+                <a href="gate2-products-c-before-after.html" class="text-[11px] font-medium border border-neutral-200 rounded-md px-2.5 py-1.5 hover:bg-neutral-50 transition-colors text-neutral-700">View products →</a>
+              </div>
+              <span class="text-[10px] text-neutral-400">2h ago</span>
+            </div>
+          </div>
+
+          <!-- ─── Card 3: Cleansers ─── -->
+          <div class="relative bg-white rounded-xl border border-neutral-200 p-4 hover:border-neutral-300 transition-colors cursor-pointer">
+
+            <!-- Card header -->
+            <div class="mb-3">
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-sm font-semibold text-neutral-900">Cleansers</span>
+                <div class="flex items-center gap-1">
+                  <span class="text-sm font-semibold text-emerald-600">71</span>
+                  <span class="text-xs text-emerald-500 flex items-center">
+                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7-7 7 7"/></svg>5
+                  </span>
+                </div>
+              </div>
+              <!-- Status chips — both emerald -->
+              <div class="flex flex-wrap gap-1.5">
+                <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] px-1.5 py-0.5 rounded-full">&#10003; Description</span>
+                <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] px-1.5 py-0.5 rounded-full">&#10003; Schema</span>
+              </div>
+            </div>
+
+            <!-- Products label -->
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs text-neutral-500 font-medium">Products (18)</span>
+            </div>
+
+            <!-- Dot grid -->
+            <div class="flex flex-wrap gap-1 p-2.5 bg-neutral-50 rounded-lg border border-neutral-100 mb-2.5">
+              <!-- 1 red dot -->
+              <div class="dot-red"></div>
+              <!-- 3 amber dots -->
+              <div class="dot-amber"></div><div class="dot-amber"></div><div class="dot-amber"></div>
+              <!-- 14 green dots -->
+              <div class="dot-green"></div><div class="dot-green"></div><div class="dot-green"></div><div class="dot-green"></div><div class="dot-green"></div>
+              <div class="dot-green"></div><div class="dot-green"></div><div class="dot-green"></div><div class="dot-green"></div><div class="dot-green"></div>
+              <div class="dot-green"></div><div class="dot-green"></div><div class="dot-green"></div><div class="dot-green"></div>
+            </div>
+
+            <!-- Summary -->
+            <p class="text-xs text-neutral-500 mb-3">
+              <span class="text-rose-600 font-medium">1 not visible</span> · <span class="text-amber-600 font-medium">3 partial</span> · <span class="text-emerald-600 font-medium">14 AI-ready</span>
+            </p>
+
+            <!-- Footer -->
+            <div class="flex items-center justify-between pt-2 border-t border-neutral-100">
+              <div class="flex items-center gap-2">
+                <button class="text-[11px] font-medium border border-neutral-200 rounded-md px-2.5 py-1.5 hover:bg-neutral-50 transition-colors text-neutral-700">Re-verify</button>
+                <a href="gate2-products-c-before-after.html" class="text-[11px] font-medium border border-neutral-200 rounded-md px-2.5 py-1.5 hover:bg-neutral-50 transition-colors text-neutral-700">View products →</a>
+              </div>
+              <span class="text-[10px] text-neutral-400">2h ago</span>
+            </div>
+          </div>
+
+          <!-- ─── Card 4: Lip (Gap — dashed) ─── -->
+          <div class="relative bg-neutral-50 rounded-xl border border-dashed border-neutral-300 p-4 cursor-pointer hover:bg-white transition-colors">
+
+            <!-- Card header -->
+            <div class="mb-3">
+              <div class="flex items-center justify-between mb-1">
+                <div class="flex items-center gap-2">
+                  <span class="text-sm font-semibold text-neutral-700">Lip</span>
+                  <span class="text-[10px] font-semibold bg-neutral-200 text-neutral-600 rounded-full px-1.5 py-0.5">Gap</span>
+                </div>
+                <span class="text-sm font-semibold text-neutral-400">—</span>
+              </div>
+              <!-- Status chips — both rose -->
+              <div class="flex flex-wrap gap-1.5">
+                <span class="bg-rose-50 text-rose-700 border border-rose-200 text-[10px] px-1.5 py-0.5 rounded-full">&#10060; No description</span>
+                <span class="bg-rose-50 text-rose-700 border border-rose-200 text-[10px] px-1.5 py-0.5 rounded-full">&#10060; No schema</span>
+              </div>
+            </div>
+
+            <!-- Products label -->
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs text-neutral-500 font-medium">Products (12)</span>
+            </div>
+
+            <!-- Dot grid — all empty -->
+            <div class="flex flex-wrap gap-1 p-2.5 bg-white rounded-lg border border-neutral-200 border-dashed mb-2.5">
+              <div class="dot-empty"></div><div class="dot-empty"></div><div class="dot-empty"></div><div class="dot-empty"></div>
+              <div class="dot-empty"></div><div class="dot-empty"></div><div class="dot-empty"></div><div class="dot-empty"></div>
+              <div class="dot-empty"></div><div class="dot-empty"></div><div class="dot-empty"></div><div class="dot-empty"></div>
+            </div>
+
+            <!-- Summary -->
+            <p class="text-xs text-neutral-400 mb-3">0 AI-ready · collection has no content</p>
+
+            <!-- Footer — full width CTA -->
+            <div class="pt-2 border-t border-neutral-200 border-dashed">
+              <button class="w-full text-[11px] font-medium bg-neutral-900 text-white rounded-md px-2.5 py-1.5 hover:bg-neutral-800 transition-colors">Generate collection page</button>
+              <div class="text-right mt-1.5">
+                <span class="text-[10px] text-neutral-400">2h ago</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Right sidebar: Moisturizers detail ─── -->
+  <aside class="w-[26rem] border-l border-neutral-200 flex flex-col bg-white flex-shrink-0">
+
+    <!-- Sidebar header -->
+    <div class="flex-shrink-0 border-b bg-white px-4 py-4">
+      <div class="flex items-center justify-between mb-2">
+        <div class="text-xs text-neutral-400">
+          Category Pages
+          <span class="text-neutral-300 mx-1">/</span>
+          <span class="text-neutral-700 font-medium">Moisturizers</span>
+        </div>
+        <span class="text-[10px] text-neutral-500 bg-neutral-100 rounded-full px-2 py-0.5 font-medium">1 of 4</span>
+      </div>
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="inline-flex items-center gap-1 text-[11px] font-semibold bg-rose-50 text-rose-700 border border-rose-200 rounded-full px-2 py-0.5">Score 19</span>
+        <span class="inline-flex items-center gap-1 text-[11px] text-neutral-600 bg-neutral-100 rounded-full px-2 py-0.5">47 products</span>
+        <span class="inline-flex items-center gap-1 text-[11px] font-medium text-rose-600">
+          <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5M5 12l7 7 7-7"/></svg>
+          2
+        </span>
+      </div>
+    </div>
+
+    <!-- Scrollable content -->
+    <div class="flex-1 overflow-auto scrollbar-thin">
+
+      <!-- Section: Before -->
+      <div class="px-4 py-4 border-b border-neutral-100">
+        <div class="flex items-center gap-2 mb-2.5">
+          <div class="w-1.5 h-1.5 rounded-full bg-rose-400"></div>
+          <h3 class="text-xs font-semibold text-neutral-700 uppercase tracking-wider">Before — what the LLM says now</h3>
+        </div>
+        <div class="bg-neutral-50 border border-neutral-200 rounded-md p-3">
+          <div class="flex items-center gap-2 mb-2">
+            <div class="w-4 h-4 rounded bg-neutral-200 flex items-center justify-center">
+              <svg class="w-2.5 h-2.5 text-neutral-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2 2"/></svg>
+            </div>
+            <span class="text-[11px] text-neutral-500 font-medium">ChatGPT · queried today</span>
+          </div>
+          <p class="text-xs text-neutral-600 italic leading-relaxed">"I wasn't able to find specific moisturizer recommendations from this brand's collection page. The page appears to be a standard product grid without editorial content."</p>
+        </div>
+      </div>
+
+      <!-- Section: Gap analysis -->
+      <div class="px-4 py-4 border-b border-neutral-100">
+        <div class="flex items-center gap-2 mb-2.5">
+          <div class="w-1.5 h-1.5 rounded-full bg-amber-400"></div>
+          <h3 class="text-xs font-semibold text-neutral-700 uppercase tracking-wider">Gap analysis</h3>
+        </div>
+        <p class="text-xs text-neutral-600 leading-relaxed mb-3">Your /collections/moisturizers page has no description and no schema. When ChatGPT searches for your brand's moisturizers, it finds an empty product grid and moves on to a competitor's blog post or CeraVe's collection page.</p>
+        <div class="space-y-2">
+          <div class="flex items-start gap-2.5">
+            <div class="w-4 h-4 rounded-full border border-neutral-300 bg-white flex items-center justify-center flex-shrink-0 mt-0.5">
+              <div class="w-1.5 h-1.5 rounded-full bg-rose-400"></div>
+            </div>
+            <div>
+              <p class="text-[11px] font-medium text-neutral-800">No collection description</p>
+              <p class="text-[10px] text-neutral-400">Shopify default empty grid</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <div class="w-4 h-4 rounded-full border border-neutral-300 bg-white flex items-center justify-center flex-shrink-0 mt-0.5">
+              <div class="w-1.5 h-1.5 rounded-full bg-rose-400"></div>
+            </div>
+            <div>
+              <p class="text-[11px] font-medium text-neutral-800">No ItemList schema</p>
+              <p class="text-[10px] text-neutral-400">Products not structured for AI parsing</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: Generated content -->
+      <div class="px-4 py-4 border-b border-neutral-100">
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <div class="w-1.5 h-1.5 rounded-full bg-blue-400"></div>
+            <h3 class="text-xs font-semibold text-neutral-700 uppercase tracking-wider">Generated content</h3>
+          </div>
+          <span class="text-[10px] font-semibold bg-blue-50 text-blue-700 border border-blue-200 rounded-full px-2 py-0.5">3 ready</span>
+        </div>
+
+        <!-- Collection description -->
+        <div class="mb-3">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-[11px] font-medium text-neutral-700">Collection description</span>
+            <button class="text-[10px] text-neutral-400 hover:text-neutral-600">Edit</button>
+          </div>
+          <div contenteditable="true"
+               class="text-xs text-neutral-700 leading-relaxed border border-neutral-200 rounded-md p-3 bg-white focus:outline-none focus:ring-2 focus:ring-neutral-900/10 focus:border-neutral-400 cursor-text">
+            Moisturizers for every skin type — from lightweight gel formulas to rich barrier creams. Featuring clinically-studied actives including hyaluronic acid, ceramides, and niacinamide. Fragrance-free options available. Dermatologist-tested, suitable for sensitive skin.
+          </div>
+          <p class="text-[10px] text-neutral-400 mt-1.5">150 words · answers 3 category-level questions</p>
+        </div>
+
+        <!-- ItemList JSON-LD -->
+        <div class="mb-3">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-[11px] font-medium text-neutral-700">ItemList schema (JSON-LD)</span>
+            <button class="text-[10px] text-neutral-400 hover:text-neutral-600">Copy</button>
+          </div>
+          <div class="bg-neutral-900 rounded-md p-3 overflow-x-auto">
+            <pre class="text-[10px] font-mono text-neutral-300 leading-relaxed whitespace-pre">{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Moisturizers",
+  "description": "Moisturizers for every skin type",
+  "url": "/collections/moisturizers",
+  "numberOfItems": 47,
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Daily Barrier Cream",
+      "url": "/products/daily-barrier-cream"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Hydrating Gel Serum",
+      "url": "/products/hydrating-gel-serum"
+    }
+  ]
+}</pre>
+          </div>
+        </div>
+
+        <!-- FAQPage JSON-LD -->
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-[11px] font-medium text-neutral-700">Category FAQPage schema</span>
+            <button class="text-[10px] text-neutral-400 hover:text-neutral-600">Copy</button>
+          </div>
+          <div class="bg-neutral-900 rounded-md p-3 overflow-x-auto">
+            <pre class="text-[10px] font-mono text-neutral-300 leading-relaxed whitespace-pre">{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What moisturizers are best for sensitive skin?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Our fragrance-free barrier creams with ceramides and niacinamide are dermatologist-tested and suitable for sensitive skin types."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you have oil-free moisturizers?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — our lightweight gel formulas are oil-free and ideal for combination to oily skin types."
+      }
+    }
+  ]
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: Push to Shopify -->
+      <div class="px-4 py-4 border-b border-neutral-100">
+        <div class="flex items-center gap-2 mb-3">
+          <div class="w-1.5 h-1.5 rounded-full bg-neutral-400"></div>
+          <h3 class="text-xs font-semibold text-neutral-700 uppercase tracking-wider">Push to Shopify</h3>
+        </div>
+        <div class="space-y-2">
+          <button class="w-full flex items-center justify-center gap-2 text-[11px] font-medium bg-neutral-900 text-white rounded-md px-3 py-2 hover:bg-neutral-800 transition-colors">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+            Push collection description via Admin API
+          </button>
+          <button class="w-full flex items-center justify-center gap-2 text-[11px] font-medium border border-neutral-200 text-neutral-700 rounded-md px-3 py-2 hover:bg-neutral-50 transition-colors">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copy ItemList schema
+          </button>
+          <button class="w-full flex items-center justify-center gap-2 text-[11px] font-medium border border-neutral-200 text-neutral-700 rounded-md px-3 py-2 hover:bg-neutral-50 transition-colors">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copy FAQ schema
+          </button>
+        </div>
+      </div>
+
+      <!-- Section: After — verification pending -->
+      <div class="px-4 py-4 opacity-40">
+        <div class="flex items-center gap-2 mb-2.5">
+          <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
+          <h3 class="text-xs font-semibold text-neutral-700 uppercase tracking-wider">After — verification pending</h3>
+        </div>
+        <div class="border-2 border-dashed border-neutral-300 rounded-md p-6 flex items-center justify-center">
+          <div class="text-center">
+            <svg class="w-6 h-6 text-neutral-300 mx-auto mb-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2 2"/></svg>
+            <p class="text-[11px] text-neutral-500">Will appear here after 24h verification run</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Pinned chat -->
+    <div class="border-t border-neutral-200 bg-white px-4 py-3 flex-shrink-0">
+      <div class="flex items-center gap-1.5 mb-2">
+        <svg class="w-3 h-3 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span class="text-[10px] text-neutral-400 font-medium">Scoped to Moisturizers collection</span>
+      </div>
+
+      <!-- Input -->
+      <div class="flex items-center gap-2 border border-neutral-200 rounded-lg px-3 py-2 bg-white hover:border-neutral-300 transition-colors mb-2">
+        <input type="text" placeholder="Ask about this collection..." class="flex-1 text-xs text-neutral-700 placeholder-neutral-400 bg-transparent outline-none" />
+        <button class="w-5 h-5 rounded bg-neutral-900 text-white flex items-center justify-center flex-shrink-0 hover:bg-neutral-800 transition-colors">
+          <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+      <!-- Chips -->
+      <div class="flex flex-wrap gap-1.5">
+        <button class="text-[10px] text-neutral-600 border border-neutral-200 rounded-full px-2 py-1 hover:bg-neutral-50 hover:border-neutral-300 transition-colors">What queries hit this collection?</button>
+        <button class="text-[10px] text-neutral-600 border border-neutral-200 rounded-full px-2 py-1 hover:bg-neutral-50 hover:border-neutral-300 transition-colors">Show me what CeraVe's collection page says</button>
+        <button class="text-[10px] text-neutral-600 border border-neutral-200 rounded-full px-2 py-1 hover:bg-neutral-50 hover:border-neutral-300 transition-colors">Write a shorter version</button>
+      </div>
+    </div>
+
+  </aside>
+
+</div>
+
+</body>
+</html>

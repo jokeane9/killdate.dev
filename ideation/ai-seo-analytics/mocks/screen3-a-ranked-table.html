@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Category Rank — Ranked Table</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>* { font-family: 'Inter', sans-serif; } .brand-row { border-left: 2px solid #111; background: #fafafa; }</style>
+</head>
+<body class="bg-white text-gray-900 min-h-screen">
+
+<nav class="border-b border-gray-100 px-6 py-3 flex items-center justify-between">
+  <span class="text-sm font-medium text-gray-900">AiSEO Analytics</span>
+  <div class="flex gap-6 text-xs text-gray-400">
+    <a href="screen1-a-metrics-first.html" class="hover:text-gray-900">Brand Health</a>
+    <a href="approach-b-cards.html" class="hover:text-gray-900">Products</a>
+    <span class="text-gray-900 font-medium">Category Rank</span>
+    <a href="screen4-a-flat-list.html" class="hover:text-gray-900">Citations Builder</a>
+  </div>
+</nav>
+
+<div class="max-w-3xl mx-auto px-6 py-10">
+
+  <div class="mb-6">
+    <p class="text-xs text-gray-400 uppercase tracking-wider mb-1">Approach A — Ranked Table</p>
+    <h1 class="text-lg font-semibold text-gray-900">Category Rank</h1>
+    <p class="text-sm text-gray-400 mt-1">Who shows up in ChatGPT for your categories</p>
+  </div>
+
+  <!-- Tabs -->
+  <div class="flex gap-1 mb-6 border-b border-gray-200">
+    <button id="tab-cat" onclick="showTab('cat')" class="px-4 py-2.5 text-sm font-medium text-gray-900 border-b-2 border-gray-900 -mb-px">Category Search</button>
+    <button id="tab-brand" onclick="showTab('brand')" class="px-4 py-2.5 text-sm text-gray-400 hover:text-gray-700 border-b-2 border-transparent -mb-px">Your Brand</button>
+  </div>
+
+  <!-- Category Search panel -->
+  <div id="panel-cat">
+    <!-- Category selector -->
+    <div class="flex items-center gap-3 mb-5">
+      <label class="text-xs text-gray-500">Category</label>
+      <select class="text-sm border border-gray-200 rounded px-3 py-1.5 text-gray-700 bg-white focus:outline-none focus:ring-1 focus:ring-gray-300">
+        <option>Moisturizer</option>
+        <option>Lip</option>
+        <option>Cleanser</option>
+        <option>Foundation</option>
+      </select>
+      <span class="text-xs text-gray-400">20 prompts run this week</span>
+    </div>
+
+    <div class="border border-gray-200 rounded-lg overflow-hidden">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-gray-100 bg-gray-50">
+            <th class="text-left px-5 py-3 text-xs font-medium text-gray-400 w-8">#</th>
+            <th class="text-left px-4 py-3 text-xs font-medium text-gray-400">Brand</th>
+            <th class="text-center px-4 py-3 text-xs font-medium text-gray-400">Appearances</th>
+            <th class="text-center px-4 py-3 text-xs font-medium text-gray-400">Avg Position</th>
+            <th class="text-center px-4 py-3 text-xs font-medium text-gray-400">vs last week</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-50">
+          <tr>
+            <td class="px-5 py-3.5 text-xs text-gray-400">1</td>
+            <td class="px-4 py-3.5 font-medium text-gray-800">CeraVe</td>
+            <td class="px-4 py-3.5 text-center text-gray-600">18 / 20</td>
+            <td class="px-4 py-3.5 text-center text-gray-600">1.4</td>
+            <td class="px-4 py-3.5 text-center text-gray-300 text-xs">—</td>
+          </tr>
+          <tr>
+            <td class="px-5 py-3.5 text-xs text-gray-400">2</td>
+            <td class="px-4 py-3.5 font-medium text-gray-800">La Roche-Posay</td>
+            <td class="px-4 py-3.5 text-center text-gray-600">14 / 20</td>
+            <td class="px-4 py-3.5 text-center text-gray-600">2.1</td>
+            <td class="px-4 py-3.5 text-center text-xs text-red-400">↓ 1</td>
+          </tr>
+          <tr>
+            <td class="px-5 py-3.5 text-xs text-gray-400">3</td>
+            <td class="px-4 py-3.5 font-medium text-gray-800">Neutrogena</td>
+            <td class="px-4 py-3.5 text-center text-gray-600">8 / 20</td>
+            <td class="px-4 py-3.5 text-center text-gray-600">3.2</td>
+            <td class="px-4 py-3.5 text-center text-gray-300 text-xs">—</td>
+          </tr>
+          <tr class="brand-row">
+            <td class="px-5 py-3.5 text-xs text-gray-500">4</td>
+            <td class="px-4 py-3.5 font-semibold text-gray-900">Your Brand</td>
+            <td class="px-4 py-3.5 text-center font-medium text-gray-900">6 / 20</td>
+            <td class="px-4 py-3.5 text-center font-medium text-gray-900">4.8</td>
+            <td class="px-4 py-3.5 text-center text-xs text-green-600">↑ 2</td>
+          </tr>
+          <tr>
+            <td class="px-5 py-3.5 text-xs text-gray-400">5</td>
+            <td class="px-4 py-3.5 font-medium text-gray-800">Cetaphil</td>
+            <td class="px-4 py-3.5 text-center text-gray-600">4 / 20</td>
+            <td class="px-4 py-3.5 text-center text-gray-600">5.1</td>
+            <td class="px-4 py-3.5 text-center text-gray-300 text-xs">—</td>
+          </tr>
+          <tr>
+            <td class="px-5 py-3.5 text-xs text-gray-400">6</td>
+            <td class="px-4 py-3.5 font-medium text-gray-800">Drunk Elephant</td>
+            <td class="px-4 py-3.5 text-center text-gray-600">3 / 20</td>
+            <td class="px-4 py-3.5 text-center text-gray-600">5.8</td>
+            <td class="px-4 py-3.5 text-center text-xs text-green-600">↑ 1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Your Brand panel -->
+  <div id="panel-brand" class="hidden">
+    <p class="text-xs text-gray-400 mb-5">Brand-anchored prompts — how well ChatGPT knows your brand specifically</p>
+    <div class="border border-gray-200 rounded-lg overflow-hidden">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-gray-100 bg-gray-50">
+            <th class="text-left px-5 py-3 text-xs font-medium text-gray-400">Prompt</th>
+            <th class="text-center px-4 py-3 text-xs font-medium text-gray-400">Mentioned</th>
+            <th class="text-center px-4 py-3 text-xs font-medium text-gray-400">Position</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-50">
+          <tr class="brand-row">
+            <td class="px-5 py-3.5 text-gray-700">does [Brand] make a moisturizer?</td>
+            <td class="px-4 py-3.5 text-center font-medium text-gray-900">✓</td>
+            <td class="px-4 py-3.5 text-center font-semibold text-gray-900">#1</td>
+          </tr>
+          <tr>
+            <td class="px-5 py-3.5 text-gray-700">is [Brand] good for dry skin?</td>
+            <td class="px-4 py-3.5 text-center text-gray-300">✗</td>
+            <td class="px-4 py-3.5 text-center text-gray-300">—</td>
+          </tr>
+          <tr class="brand-row">
+            <td class="px-5 py-3.5 text-gray-700">[Brand] cleanser reviews</td>
+            <td class="px-4 py-3.5 text-center font-medium text-gray-900">✓</td>
+            <td class="px-4 py-3.5 text-center font-semibold text-gray-900">#2</td>
+          </tr>
+          <tr>
+            <td class="px-5 py-3.5 text-gray-700">does [Brand] have lip products?</td>
+            <td class="px-4 py-3.5 text-center text-gray-300">✗</td>
+            <td class="px-4 py-3.5 text-center text-gray-300">—</td>
+          </tr>
+          <tr class="brand-row">
+            <td class="px-5 py-3.5 text-gray-700">best [Brand] products for beginners</td>
+            <td class="px-4 py-3.5 text-center font-medium text-gray-900">✓</td>
+            <td class="px-4 py-3.5 text-center font-semibold text-gray-900">#1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-xs text-gray-400 mt-3">Strong on cleanser · Thin on moisturizer and lip</p>
+  </div>
+
+</div>
+
+<script>
+function showTab(tab) {
+  document.getElementById('panel-cat').classList.toggle('hidden', tab !== 'cat');
+  document.getElementById('panel-brand').classList.toggle('hidden', tab !== 'brand');
+  document.getElementById('tab-cat').className = tab === 'cat'
+    ? 'px-4 py-2.5 text-sm font-medium text-gray-900 border-b-2 border-gray-900 -mb-px'
+    : 'px-4 py-2.5 text-sm text-gray-400 hover:text-gray-700 border-b-2 border-transparent -mb-px';
+  document.getElementById('tab-brand').className = tab === 'brand'
+    ? 'px-4 py-2.5 text-sm font-medium text-gray-900 border-b-2 border-gray-900 -mb-px'
+    : 'px-4 py-2.5 text-sm text-gray-400 hover:text-gray-700 border-b-2 border-transparent -mb-px';
+}
+</script>
+</body>
+</html>
