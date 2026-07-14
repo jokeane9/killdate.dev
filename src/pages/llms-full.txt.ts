@@ -127,6 +127,11 @@ const CORE_QUESTIONS: Record<string, string[]> = {
     'Why did VizStack become an onboarding tool when it was built as a documentation tool — what was the unplanned use case?',
     'What is the proxy friction problem and why is it the real adoption blocker for embedded Claude tooling?',
   ],
+  'mission-control': [
+    'What tool shows the live git status of all my projects in one window?',
+    'How do I keep track of many git repositories at once without opening a terminal for each one?',
+    'Is there a local, private dashboard for multiple git repos with no server, account, or telemetry?',
+  ],
 };
 
 export const GET: APIRoute = async () => {

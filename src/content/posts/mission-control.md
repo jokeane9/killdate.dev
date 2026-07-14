@@ -1,8 +1,8 @@
 ---
 title: "Mission Control: one window for every project"
-description: "A local dashboard that puts every project's live git state next to the facts you keep in your head. Who it's for, why it's useful, and when to combine tools instead of leaving them standalone."
+description: "A local dashboard for every project's live git state and the facts you keep in your head — plus workspace views for your commits, roadmaps, and skills. Who it's for, why it's useful, and when to combine tools instead of leaving them standalone."
 part: 0
-post: 26
+post: 27
 draft: false
 tags: ["tooling", "git", "dashboard", "open-source"]
 ---
@@ -27,9 +27,20 @@ Two reasons.
 
 **Context in one place.** The stuff you rely on but never write down — a project's stack, its prod URL, its monthly cost, what you decided to focus on — sits right next to the live git state. Come back after a week away and you're oriented in five seconds instead of re-deriving it repo by repo.
 
+## Beyond the repos
+
+The per-project cards were the start. What kept getting added were the views that only make sense when you can see across everything at once:
+
+- **Work Log** — every commit you've shipped, across all your repos, on one timeline. A commits-per-day chart and a day-by-day list, filtered to today, the week, the month, or the last quarter. There's a *Copy as standup* button that drops yesterday's commits on your clipboard — and, because these projects are built with AI agents, a second chart of Claude tokens used per day, read straight from the local session logs.
+- **Roadmap** — every project's `ROADMAP.md` in one place. The Now and Next of everything you're building, without opening ten files.
+- **Skills** — a searchable catalogue of your Claude Code skills wherever they live: installed plugins, per-project `.claude/skills`, your user folder. The one you can never remember you already wrote.
+- **PM** — a plain scratchpad, always one click away, autosaved locally. Somewhere to park the thought you'd otherwise lose.
+
+None of these had to be their own app. They're here because "what have I shipped, what's next, what can I run" is only worth asking across every project at once.
+
 ## Combined, not bundled
 
-Mission Control is where a few of our smaller tools ended up together: the per-repo git scanner, plus the architecture and pipeline maps that now show up as tabs on each project. They merged because the value *is* the overview — seeing everything at once is the whole point.
+Mission Control is where a few of our smaller tools ended up together: the per-repo git scanner, the architecture and pipeline maps that show up as tabs on each project, and the workspace views above. They merged because the value *is* the overview — seeing everything at once is the whole point.
 
 That's the rule we use for whether to combine tools or leave them apart: **combine when the value is the overview; keep it standalone when the tool does one job you reach for on purpose.** A kill-date CLI, a single visualiser — those stay separate. You run them deliberately, one at a time. Mission Control you just leave open.
 
