@@ -38,11 +38,13 @@ The per-project cards were the start. What kept getting added were the views tha
 
 None of these had to be their own app. They're here because "what have I shipped, what's next, what can I run" is only worth asking across every project at once.
 
-## Combined, not bundled
+## One place for our open-source tools
 
-Mission Control is where a few of our smaller tools ended up together: the per-repo git scanner, the architecture and pipeline maps that show up as tabs on each project, and the workspace views above. They merged because the value *is* the overview — seeing everything at once is the whole point.
+We build a lot of small open-source tools — a route-and-architecture visualiser ([VizStack](/posts/22-vizstack-2)), an agent-pipeline visualiser (AgentViz), the per-repo git scanner that started this one. Each shipped on its own and ran on its own. Mission Control is turning into the place the ones that belong together converge.
 
-That's the rule we use for whether to combine tools or leave them apart: **combine when the value is the overview; keep it standalone when the tool does one job you reach for on purpose.** A kill-date CLI, a single visualiser — those stay separate. You run them deliberately, one at a time. Mission Control you just leave open.
+The architecture and pipeline maps already live here, as tabs on every project — VizStack and AgentViz, the same tools, now reading each repo in context instead of being pointed at one folder at a time. The workspace views — Work Log, Roadmap, Skills — grew up *inside* it, because there was nowhere else that already had every project in one window. Rather than ship five more standalone binaries you'd have to remember to open, we put each one where the context already was.
+
+That's the rule for what folds in and what stays out: **combine when the value is the overview; keep it standalone when the tool does one job you reach for on purpose.** A kill-date CLI, a one-shot visualiser — those stay separate; you run them deliberately, one at a time. Anything whose job is *"show me across all of it"* ends up here. You just leave Mission Control open, and the tools collect in it.
 
 ---
 

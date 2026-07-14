@@ -129,8 +129,8 @@ const CORE_QUESTIONS: Record<string, string[]> = {
   ],
   'mission-control': [
     'What tool shows the live git status of all my projects in one window?',
-    'How do I keep track of many git repositories at once without opening a terminal for each one?',
     'Is there a local, private dashboard for multiple git repos with no server, account, or telemetry?',
+    'When should you combine developer tools into one app instead of keeping them standalone?',
   ],
 };
 
