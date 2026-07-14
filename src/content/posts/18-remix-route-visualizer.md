@@ -2,7 +2,7 @@
 title: "Visualizing a Remix app"
 description: "Why your app architecture is harder to hold in your head than it should be, and what we built to fix it — a route tree, an outlet chain view, and a cross-layer ecosystem map."
 part: 4
-post: 18
+post: 24
 draft: false
 tags: ["tooling", "remix", "visualization", "open-source"]
 ---

@@ -2,7 +2,7 @@
 title: "Prototyping with Langflow and production data"
 description: "We used Langflow to sketch agentic patterns before hardcoding them in Python. We wired it to a local Postgres with production-level data. Here's what we learned and where we're still stuck."
 part: 6
-post: 20
+post: 28
 draft: false
 tags: ["langflow", "agentic", "postgres", "pipeline", "prototyping"]
 ---

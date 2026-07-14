@@ -2,7 +2,7 @@
 title: "How to build a custom MCP server"
 description: "A technical walkthrough of building a production MCP server in Python — FastMCP, asyncpg, tool descriptions, testing, and the gotchas we hit live."
 part: 1
-post: 25
+post: 11
 draft: false
 tags: ["mcp", "python", "postgres", "claude-code", "tooling"]
 ---

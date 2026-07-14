@@ -2,7 +2,7 @@
 title: "Building a complex UI surface with AI — a case study"
 description: "Figma mockup → UX state map → prototype → feature lock → Cursor build → tests → production. What the workflow looks like on a real billing surface."
 part: 4
-post: 14
+post: 20
 draft: false
 tags: ["ui-ux", "case-study", "cursor", "remix", "runbook"]
 ---

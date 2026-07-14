@@ -2,7 +2,7 @@
 title: "The V2 to V3 migration"
 description: "The real eval stack behind migrating a production LLM prompt on Shelf — a 32-check scoring rubric, a one-way runner, 54 adversarial payloads, Pydantic strict validation, and a hard rule about who can approve prompt edits."
 part: 6
-post: 21
+post: 29
 draft: false
 tags: ["prompting", "evals", "migration", "v3", "shelf", "pipeline"]
 ---

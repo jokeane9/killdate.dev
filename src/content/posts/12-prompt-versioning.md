@@ -2,7 +2,7 @@
 title: "Treat your prompts like code"
 description: "Prompts need semver. A wording fix is not the same as a schema change. The MAJOR/MINOR/PATCH/NO BUMP decision tree keeps your prompt history coherent and your migrations safe."
 part: 5
-post: 12
+post: 25
 draft: false
 tags: ["prompts", "versioning", "semver", "production", "llm"]
 ---

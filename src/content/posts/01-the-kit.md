@@ -2,7 +2,7 @@
 title: "killdate-kit: a tour"
 description: "The repo you fork before you start. What's in it, how the pieces connect, and how to orient yourself in Claude Code before writing a line of code."
 part: 0
-post: 1.5
+post: 2
 draft: false
 tags: ["setup", "killdate-kit", "getting-started"]
 ---

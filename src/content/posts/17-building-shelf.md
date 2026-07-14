@@ -2,7 +2,7 @@
 title: "Building Shelf: a technical post-mortem"
 description: "How we built a production Shopify competitor intelligence app end to end with this discipline — the stack, the pipeline, the prompting mistakes, and what the discipline actually gave us."
 part: 4
-post: 17
+post: 23
 draft: false
 tags: ["case-study", "pipeline", "shopify", "prompting"]
 ---
