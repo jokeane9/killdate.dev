@@ -2,7 +2,7 @@
 title: "AI as Reliable Partners"
 description: "What humans bring to AI systems — taste, judgment, and technical intuition."
 part: 4
-post: 16
+post: 22
 draft: false
 tags: ["philosophy", "craft", "ai", "professional-development"]
 ---

@@ -2,7 +2,7 @@
 title: "Building a feature: runbook, Cursor, Strangler Fig"
 description: "The runbook for feature work. Five blocks. Strangler Fig when you're replacing something live. Claude Code reviews every task before the next one starts."
 part: 2
-post: 9
+post: 15
 draft: false
 tags: ["runbooks", "cursor", "strangler-fig", "build-process", "drift-prevention"]
 ---

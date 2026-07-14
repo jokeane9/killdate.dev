@@ -2,7 +2,7 @@
 title: "Shipping the Minimum Viable Build"
 description: "The lock is signed, the mock is approved. Now you write the runbook, hand it to Cursor task by task, and validate everything before it goes to production."
 part: 1
-post: 6
+post: 8
 draft: false
 tags: ["runbook", "cursor", "build-process", "production"]
 ---

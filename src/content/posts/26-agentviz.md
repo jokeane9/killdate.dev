@@ -2,7 +2,7 @@
 title: "agentviz: visualizing an AI pipeline when routes are the wrong shape"
 description: "vizstack maps web apps by route. Point it at a Python agent pipeline and it bails — because agent systems aren't organized around routes, they're organized around data flowing through stages. So I built a different analyzer."
 part: 1
-post: 26
+post: 12
 draft: true
 tags: ["tooling", "visualization", "agents", "python", "open-source"]
 ---

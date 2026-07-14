@@ -2,7 +2,7 @@
 title: "Mission Control: one window for every project"
 description: "A local dashboard for every project's live git state and the facts you keep in your head — plus workspace views for your commits, roadmaps, and skills. Who it's for, why it's useful, and when to combine tools instead of leaving them standalone."
 part: 0
-post: 27
+post: 4
 draft: false
 tags: ["tooling", "git", "dashboard", "open-source"]
 ---

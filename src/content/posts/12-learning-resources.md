@@ -2,7 +2,7 @@
 title: "Learning resources"
 description: "Useful references for getting more familiar with LLMs and prompt engineering. Understanding these transfers directly to stronger agentic work."
 part: 4
-post: 15
+post: 21
 draft: false
 tags: ["learning", "llm", "prompt-engineering"]
 ---

@@ -2,7 +2,7 @@
 title: "CLAUDE.md / AGENTS.md: pre-build session discipline"
 description: "CLAUDE.md isn't a readme. It's the persistent context layer that tells your AI agent who it is, what it's allowed to do, and how to behave across every session."
 part: 1
-post: 3
+post: 5
 draft: false
 tags: ["claude-md", "setup", "context-management", "session-discipline"]
 ---
