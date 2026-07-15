@@ -48,4 +48,4 @@ That's the rule for what folds in and what stays out: **combine when the value i
 
 ---
 
-**Get it:** Free and open source, Mac and Windows — [github.com/jokeane9/mission-control-desktop](https://github.com/jokeane9/mission-control-desktop). On a Mac, `brew install --cask jokeane9/tap/mission-control-desktop`.
+**Get it:** Free and open source (MIT), Mac and Windows — [github.com/jokeane9/mission-control-desktop](https://github.com/jokeane9/mission-control-desktop). On a Mac, `brew install --cask jokeane9/tap/mission-control-desktop`.
