@@ -30,7 +30,7 @@ const standalonePosts = essays.filter(p => p.data.group !== seriesName);
       <div class="post-list">
         {seriesPosts.map(post => (
           <a href={`/posts/${post.id.replace(/\.md$/, '')}`} class="post-item">
-            <span class="post-number">{post.data.post}</span>
+            <span class="post-number">{String(post.data.post).padStart(2, '0')}</span>
             <span class="post-title">{post.data.title}</span>
             {post.data.draft && <span class="post-tag draft">draft</span>}
             {!post.data.draft && post.data.tags[0] && <span class="post-tag">{post.data.tags[0]}</span>}
@@ -46,7 +46,7 @@ const standalonePosts = essays.filter(p => p.data.group !== seriesName);
       <div class="post-list">
         {standalonePosts.map(post => (
           <a href={`/posts/${post.id.replace(/\.md$/, '')}`} class="post-item">
-            <span class="post-number">{post.data.post}</span>
+            <span class="post-number">{String(post.data.post).padStart(2, '0')}</span>
             <span class="post-title">{post.data.title}</span>
             {post.data.tags[0] && <span class="post-tag">{post.data.tags[0]}</span>}
           </a>

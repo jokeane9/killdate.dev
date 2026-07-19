@@ -23,7 +23,7 @@ const chapters = [
     <p class="section-label">Langmerge Agentic Systems Lab — The Playbook</p>
     <h1>The Playbook</h1>
     <p class="tagline">killdate-kit is the repo we fork every time we start something new — a pre-wired CLAUDE.md, Cursor rules, and a runbook system, so the AI tools have structure to push against. These posts walk through how we actually use it. Best read in order.</p>
-    <a href="https://github.com/jokeane9/killdate.dev" class="entry-link" target="_blank" rel="noopener">Fork killdate-kit on GitHub →</a>
+    <a href="https://github.com/jokeane9/killdate-kit" class="entry-link" target="_blank" rel="noopener">Fork killdate-kit on GitHub →</a>
   </div>
 
   {chapters.map(chapter => {
@@ -35,7 +35,7 @@ const chapters = [
         <div class="post-list">
           {chapterPosts.map(post => (
             <a href={`/posts/${post.id.replace(/\.md$/, '')}`} class="post-item">
-              <span class="post-number">{post.data.post}</span>
+              <span class="post-number">{String(post.data.post).padStart(2, '0')}</span>
               <span class="post-title">{post.data.title}</span>
               {post.data.tags[0] && <span class="post-tag">{post.data.tags[0]}</span>}
             </a>
