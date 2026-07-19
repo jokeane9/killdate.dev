@@ -4,7 +4,7 @@ description: "Shellware: software where the product is a thin shell over agentic
 part: 6
 post: 32
 section: essays
-group: "The Next Software"
+group: "A Take on Agentic Products"
 draft: true
 tags: ["shellware", "agents", "product", "software-delivery", "architecture"]
 ---

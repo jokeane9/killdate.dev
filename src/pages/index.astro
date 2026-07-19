@@ -9,7 +9,7 @@ const essays = allPosts
   .filter(p => p.data.section === 'essays')
   .sort((a, b) => a.data.post - b.data.post);
 
-const seriesName = 'The Next Software';
+const seriesName = 'A Take on Agentic Products';
 const seriesPosts = essays.filter(p => p.data.group === seriesName);
 const standalonePosts = essays.filter(p => p.data.group !== seriesName);
 ---
@@ -24,11 +24,10 @@ const standalonePosts = essays.filter(p => p.data.group !== seriesName);
     </ul>
   </div>
 
-  {seriesPosts.length > 0 && (
+  {standalonePosts.length > 0 && (
     <section class="part-section">
-      <p class="section-label">Series — {seriesName}</p>
       <div class="post-list">
-        {seriesPosts.map(post => (
+        {standalonePosts.map(post => (
           <a href={`/posts/${post.id.replace(/\.md$/, '')}`} class="post-item">
             <span class="post-number">{String(post.data.post).padStart(2, '0')}</span>
             <span class="post-title">{post.data.title}</span>
@@ -40,15 +39,16 @@ const standalonePosts = essays.filter(p => p.data.group !== seriesName);
     </section>
   )}
 
-  {standalonePosts.length > 0 && (
+  {seriesPosts.length > 0 && (
     <section class="part-section">
-      <p class="section-label">Standalone</p>
+      <p class="section-label">Series — {seriesName}</p>
       <div class="post-list">
-        {standalonePosts.map(post => (
+        {seriesPosts.map(post => (
           <a href={`/posts/${post.id.replace(/\.md$/, '')}`} class="post-item">
             <span class="post-number">{String(post.data.post).padStart(2, '0')}</span>
             <span class="post-title">{post.data.title}</span>
-            {post.data.tags[0] && <span class="post-tag">{post.data.tags[0]}</span>}
+            {post.data.draft && <span class="post-tag draft">draft</span>}
+            {!post.data.draft && post.data.tags[0] && <span class="post-tag">{post.data.tags[0]}</span>}
           </a>
         ))}
       </div>

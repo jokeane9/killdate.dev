@@ -4,7 +4,7 @@ description: "What I currently mean by systems thinking: not the old T-shaped pl
 part: 6
 post: 36
 section: essays
-group: "The Next Software"
+group: "A Take on Agentic Products"
 draft: true
 tags: ["systems-thinking", "agent-orchestration", "design", "agents", "craft", "product"]
 ---

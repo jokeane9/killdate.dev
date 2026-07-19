@@ -4,7 +4,7 @@ description: "SaaS earned its 80% margins selling access to tools — dashboards
 part: 6
 post: 35
 section: essays
-group: "The Next Software"
+group: "A Take on Agentic Products"
 draft: true
 tags: ["product", "recommendations", "shopify", "agents", "discovery", "design-paradigm"]
 ---

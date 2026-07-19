@@ -4,7 +4,7 @@ description: "A driver who knows his routes still follows the blue line. Some th
 part: 6
 post: 34
 section: essays
-group: "The Next Software"
+group: "A Take on Agentic Products"
 draft: true
 tags: ["product", "ux", "recommendations", "cognitive-load", "agents"]
 ---

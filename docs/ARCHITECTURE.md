@@ -39,6 +39,20 @@ Consequences worth knowing:
   it. Drafts are unlisted, not secret — don't put anything sensitive in one.
 - To see exactly what production will show: `npm run build && npm run preview`.
 
+### When a content edit doesn't show up
+
+Astro caches the content collection in `.astro/`. Frontmatter-only edits —
+changing `section`, `group`, `draft` — are **not always picked up by a running
+dev server**, so the page keeps rendering the old grouping and you conclude your
+edit failed. It didn't. Clear the cache and restart:
+
+```sh
+rm -rf .astro && npm run dev
+```
+
+Body edits hot-reload fine; it's the frontmatter that goes stale. If a change to
+the *structure* of a page seems ignored, do this before debugging anything else.
+
 ---
 
 ## Stack

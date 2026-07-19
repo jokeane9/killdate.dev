@@ -3,13 +3,14 @@ title: "Zooming In, Zooming Out"
 description: "The skill set that transfers between products isn't a framework or a stack — it's altitude control. How the same systems thinking shows up across Vizidex and DiagnosticIQ."
 part: 6
 post: 31
-section: essays
-group: "The Next Software"
+group: "Unfiled"
 draft: true
 tags: ["systems-thinking", "product", "craft", "philosophy"]
 ---
 
-<!-- DRAFT NOTE (John): Vizidex details now filled from the vizidex-engine repo (README + architecture review) — verify the "scoring idea didn't survive the numbers" framing is how you want the GEO-score kill described publicly. -->
+<!-- NOT APPROVED — John, 2026-07-19: "I never signed off on this - it sucks." Pulled from the essays section (no `section:` field = renders nowhere). Kept on disk pending a rewrite or a decision to bin it. Posts 34 and 36 still link to it — fix or remove those links before publishing.
+
+DRAFT NOTE (John): Vizidex details now filled from the vizidex-engine repo (README + architecture review) — verify the "scoring idea didn't survive the numbers" framing is how you want the GEO-score kill described publicly. -->
 
 *5 minute read*
 
