@@ -55,7 +55,7 @@ The publish checklist (`docs/publish-checklist.md`) enforces this as a step.
 
 - Max content width: 680px (`--max` CSS variable)
 - Font: Inter via Google Fonts (`<link>` in Base.astro head — do not add `@import` to global.css, it causes a duplicate)
-- Color palette: `--accent: #4ade80`, `--bg: #0a0a0a`, `--text: #e8e8e8`, `--muted: #555`, `--border: #1f1f1f`
+- Color palette: `--accent: #7a9eb5`, `--bg: #0a0a0a`, `--text: #e8e8e8`, `--muted: #555`, `--border: #1f1f1f`
 - `html { overflow-y: scroll; }` in global.css — keeps layout stable for users with classic scrollbars
 - Emails in footer use HTML entity encoding (`&#64;` for `@`) to deter scrapers
 
