@@ -119,7 +119,7 @@ compatibility and can be deleted once nothing reads it.
 | `playbook` | `/playbook` | chapter, in reading order | the method: how we build, start to finish |
 | `workshop` | `/prod` | project | build logs from products and open-source tools |
 
-`group` values in use — essays: `Essays` (the substantial pieces, rendered first and unlabelled) then one labelled block per run of shorter pieces, e.g. `Breakdown — Systems Thinking` · playbook:
+`group` values in use — essays: `Essays` (the substantial pieces, rendered first and unlabelled) and `Shorts` (briefer pieces, labelled block below) · playbook:
 `Foundations`, `The Minimum Viable Build`, `Feature Development`, `Testing`,
 `Prompts in Production`, `Tooling: MCP`, `Designing with AI` · workshop:
 `Shelf`, `vizstack & agentviz`, `Orrery`.
@@ -127,10 +127,11 @@ compatibility and can be deleted once nothing reads it.
 Adding a chapter to the playbook means adding its name to the `chapters` array
 in `playbook.astro` — the order of that array is the order on the page.
 
-The homepage needs no code change to add a run of shorter pieces: anything in
+The homepage needs no code change to add a new block: anything in
 `section: essays` whose `group` is not `Essays` renders as its own labelled
-block below the essays, in post order. Name the group what you want the heading
-to say.
+block below the essays, in post order. Today that's `Shorts`; a future
+multi-part run can be its own group (e.g. `Breakdown — Evals`) just by naming
+it. The group name *is* the heading.
 
 ### One page is hand-written on purpose
 
