@@ -3,6 +3,8 @@ title: "Shipping a feature: staging, flags, kill dates"
 description: "Staging validation, feature flags as rollback, canary rollout, kill dates, and the N-1 rule. What 'done' means when real users are in the product."
 part: 2
 post: 16
+section: playbook
+group: "Feature Development"
 draft: false
 tags: ["shipping", "staging", "feature-flags", "kill-dates", "canary"]
 ---

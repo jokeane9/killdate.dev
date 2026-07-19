@@ -3,6 +3,8 @@ title: "Prompts that run for hours"
 description: "What 250K context actually feels like in production. How we structure long-running prompt jobs, what the industry is beginning to understand about this shift, and why we haven't really cracked it yet."
 part: 6
 post: 27
+section: workshop
+group: "Shelf"
 draft: false
 tags: ["prompting", "context-window", "production", "llm", "agentic"]
 ---

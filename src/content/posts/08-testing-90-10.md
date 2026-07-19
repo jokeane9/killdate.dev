@@ -3,6 +3,8 @@ title: "Testing as part of the build"
 description: "Tests aren't a cleanup pass. They're part of the runbook. Golden fixtures, contract testing across language boundaries, and the drift signal."
 part: 3
 post: 17
+section: playbook
+group: "Testing"
 draft: false
 tags: ["testing", "golden-fixture", "contract-testing", "build-process"]
 ---

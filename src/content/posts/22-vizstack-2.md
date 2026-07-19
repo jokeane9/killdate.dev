@@ -3,6 +3,8 @@ title: "VizStack 2.0"
 description: "We shipped VizStack as an open-source architecture visualizer. Then we wired Claude directly into the graph. It became an onboarding tool. We didn't plan that."
 part: 6
 post: 30
+section: workshop
+group: "vizstack & agentviz"
 draft: false
 tags: ["vizstack", "tooling", "open-source", "onboarding", "architecture", "claude"]
 ---

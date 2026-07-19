@@ -3,6 +3,8 @@ title: "Scoping the minimum viable build (MVB) in Claude Code"
 description: "Lock scope, build the mock, understand what you're shipping and why — before Cursor opens a single file. All of this happens in Claude Code."
 part: 1
 post: 7
+section: playbook
+group: "The Minimum Viable Build"
 draft: false
 tags: ["mvb", "lock", "mocks", "claude-code", "build-process"]
 ---

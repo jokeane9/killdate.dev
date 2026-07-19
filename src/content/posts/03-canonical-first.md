@@ -3,6 +3,8 @@ title: "Define the product. Constrain the AI."
 description: "Before any code, write the product definition doc. It's not product requirements — it's what you argue from, not what you argue about."
 part: 1
 post: 6
+section: playbook
+group: "The Minimum Viable Build"
 draft: false
 tags: ["product-definition", "documentation", "product-truth", "process"]
 ---

@@ -39,8 +39,9 @@ const pageTitle = title === 'killdate.dev' ? title : `${title} — killdate.dev`
     <header>
       <a href="/" class="site-name"><img src="/favicon.svg" alt="" class="site-icon" />killdate.dev</a>
       <nav>
-        <a href="/" class:list={['nav-link', { active: currentPath === '/' }]}>playbook</a>
-        <a href="/prod" class:list={['nav-link', { active: currentPath === '/prod' }]}>in prod</a>
+        <a href="/" class:list={['nav-link', { active: currentPath === '/' }]}>essays</a>
+        <a href="/playbook" class:list={['nav-link', { active: currentPath.startsWith('/playbook') }]}>playbook</a>
+        <a href="/prod" class:list={['nav-link', { active: currentPath.startsWith('/prod') }]}>workshop</a>
         <a href="/about" class:list={['nav-link', { active: currentPath === '/about' }]}>about</a>
       </nav>
     </header>

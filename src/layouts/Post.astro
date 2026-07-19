@@ -6,8 +6,9 @@ interface Props {
   tags: string[];
   part: number;
   post: number;
+  group?: string;
 }
-const { title, description, tags, part, post } = Astro.props;
+const { title, description, tags, part, post, group } = Astro.props;
 const canonicalURL = `https://killdate.dev${Astro.url.pathname}`;
 const jsonLd = JSON.stringify({
   "@context": "https://schema.org",
@@ -28,7 +29,7 @@ const jsonLd = JSON.stringify({
 
     <header class="post-header">
       <p class="post-meta">
-        <span>Part {part}, Post {post}</span>
+        <span>{group ?? `Part ${part}`} · Post {post}</span>
         {tags.length > 0 && <span>·</span>}
         {tags.map(tag => <span class="tag">{tag}</span>)}
       </p>

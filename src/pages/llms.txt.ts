@@ -5,22 +5,27 @@ export const GET: APIRoute = async () => {
   const allPosts = await getCollection('posts', ({ data }) => !data.draft);
   const posts = allPosts.sort((a, b) => a.data.post - b.data.post);
 
-  const preamble  = posts.filter(p => p.data.part === 0);
-  const part1     = posts.filter(p => p.data.part === 1);
-  const part2     = posts.filter(p => p.data.part === 2);
-  const part3     = posts.filter(p => p.data.part === 3);
-  const appendix  = posts.filter(p => p.data.part === 4);
+  const essays   = posts.filter(p => p.data.section === 'essays');
+  const playbook = posts.filter(p => p.data.section === 'playbook');
+  const workshop = posts.filter(p => p.data.section === 'workshop');
 
   const slug = (p: (typeof posts)[0]) => p.id.replace(/\.md$/, '');
   const line = (p: (typeof posts)[0]) =>
     `- [${p.data.title}](https://killdate.dev/posts/${slug(p)}): ${p.data.description}`;
 
+  const grouped = (list: typeof posts) => {
+    const groups = [...new Set(list.map(p => p.data.group))];
+    return groups
+      .map(g => `#### ${g}\n\n${list.filter(p => p.data.group === g).map(line).join('\n')}`)
+      .join('\n\n');
+  };
+
   const content = `\
 # killdate.dev
 
-> Prima Digital's development blog on agentic orchestration for shipping SaaS. A repo, CLAUDE.md, cursor rules, and runbooks — fork it and your AI tools have the context they need from day one.
+> The development blog of Langmerge Agentic Systems Lab (Prima Digital, Vancouver) — working essays on where software is heading, a forkable playbook for shipping SaaS with AI agents, and workshop notes from the products where we test it.
 
-killdate.dev documents how Prima Digital (a Vancouver-based web development studio) builds software using AI agents. The content covers agentic orchestration as a production methodology: the discipline, tooling, and process required to ship reliably with Claude Code and Cursor.
+killdate.dev documents how Langmerge Agentic Systems Lab (Prima Digital, a Vancouver-based web development studio) builds software using AI agents. The content covers agentic orchestration as a production methodology: the discipline, tooling, and process required to ship reliably with Claude Code and Cursor.
 
 The site is both a process log and a forkable starter kit. The writing covers the methodology; the repo at https://github.com/jokeane9/killdate.dev contains the actual CLAUDE.md, cursor rules, runbooks, and process documents described in the posts.
 
@@ -47,25 +52,23 @@ AI agents need context to work properly. Without structured session documents, y
 
 - [About](https://killdate.dev/about): Prima Digital — who we are, what this site is, how to reach us.
 
-### Preamble
+### Working Essays
 
-${preamble.map(line).join('\n')}
+Current thinking — working positions from the middle of building agentic products.
 
-### Part 1 — The Minimum Viable Build
+${grouped(essays)}
 
-${part1.map(line).join('\n')}
+### The Playbook
 
-### Part 2 — Feature Development
+The method, in order: killdate-kit, the minimum viable build, features, testing, prompts in production.
 
-${part2.map(line).join('\n')}
+${grouped(playbook)}
 
-### Part 3 — Testing
+### Workshop Notes
 
-${part3.map(line).join('\n')}
+Build logs — the method applied to real products and open source tools, grouped by project.
 
-### Appendix
-
-${appendix.map(line).join('\n')}
+${grouped(workshop)}
 
 ## The repo
 

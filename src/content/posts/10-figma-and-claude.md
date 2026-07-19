@@ -3,6 +3,8 @@ title: "Figma + Claude: how iterative design actually works"
 description: "Three tools, three jobs, no overlap. Figma decides shape. Claude prototypes. Claude Code implements. The gap between them is where drift lives."
 part: 4
 post: 19
+section: playbook
+group: "Designing with AI"
 draft: false
 tags: ["design", "figma", "workflow", "ui-ux", "iteration"]
 ---

@@ -3,6 +3,8 @@ title: "Scoping the feature: lock, blast radius, mocks"
 description: "You have a live product. Before any code, make two things explicit: what this build changes, and what it doesn't touch."
 part: 2
 post: 14
+section: playbook
+group: "Feature Development"
 draft: false
 tags: ["pre-build-lock", "blast-radius", "mocks", "drift-prevention", "scoping"]
 ---
