@@ -4,7 +4,7 @@ description: "Part one said the tiring part is holding the whole system in your 
 part: 6
 post: 37
 section: essays
-group: "A Take on Agentic Products"
+group: "Breakdown — Systems Thinking"
 draft: true
 tags: ["systems-thinking", "orrery", "tooling", "open-source", "agents", "cognitive-load"]
 ---

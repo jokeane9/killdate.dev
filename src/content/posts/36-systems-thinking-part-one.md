@@ -4,7 +4,7 @@ description: "What I currently mean by systems thinking: not the old T-shaped pl
 part: 6
 post: 36
 section: essays
-group: "A Take on Agentic Products"
+group: "Breakdown — Systems Thinking"
 draft: true
 tags: ["systems-thinking", "agent-orchestration", "design", "agents", "craft", "product"]
 ---
@@ -49,6 +49,6 @@ Deep is different, and for me the depth belongs to design — deeper on design t
 
 ## Why it's tiring
 
-The catch — and the reason this work is genuinely exhausting — is that none of it is sequential. You hold the loops simultaneously: the chain's structure, the eval results, the state of three repos and their sessions, what the customer said Tuesday, and the design question at the center — all in your head at once, [zooming between altitudes](../31-zooming-in-zooming-out/) as the day demands. The breadth is manageable. The *concurrent* breadth is what wears you down.
+The catch — and the reason this work is genuinely exhausting — is that none of it is sequential. You hold the loops simultaneously: the chain's structure, the eval results, the state of three repos and their sessions, what the customer said Tuesday, and the design question at the center — all in your head at once, zooming between altitudes as the day demands. The breadth is manageable. The *concurrent* breadth is what wears you down.
 
 I've started building open-source tools for exactly this, because it feels like a largely underexplored problem space: how much of that held system can a human legitimately outsource to software? That's part two.

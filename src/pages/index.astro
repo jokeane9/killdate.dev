@@ -9,9 +9,11 @@ const essays = allPosts
   .filter(p => p.data.section === 'essays')
   .sort((a, b) => a.data.post - b.data.post);
 
-const seriesName = 'A Take on Agentic Products';
-const seriesPosts = essays.filter(p => p.data.group === seriesName);
-const standalonePosts = essays.filter(p => p.data.group !== seriesName);
+// "Essays" sit at the top, unlabelled. Everything else is a run of shorter
+// pieces — one labelled block per group, newest group last.
+const ESSAYS = 'Essays';
+const standalonePosts = essays.filter(p => p.data.group === ESSAYS);
+const runGroups = [...new Set(essays.filter(p => p.data.group !== ESSAYS).map(p => p.data.group))];
 ---
 <Base>
   <div class="hero">
@@ -39,11 +41,11 @@ const standalonePosts = essays.filter(p => p.data.group !== seriesName);
     </section>
   )}
 
-  {seriesPosts.length > 0 && (
+  {runGroups.map(groupName => (
     <section class="part-section">
-      <p class="section-label">Series — {seriesName}</p>
+      <p class="section-label">{groupName}</p>
       <div class="post-list">
-        {seriesPosts.map(post => (
+        {essays.filter(p => p.data.group === groupName).map(post => (
           <a href={`/posts/${post.id.replace(/\.md$/, '')}`} class="post-item">
             <span class="post-number">{String(post.data.post).padStart(2, '0')}</span>
             <span class="post-title">{post.data.title}</span>
@@ -53,7 +55,7 @@ const standalonePosts = essays.filter(p => p.data.group !== seriesName);
         ))}
       </div>
     </section>
-  )}
+  ))}
 </Base>
 
 <style>

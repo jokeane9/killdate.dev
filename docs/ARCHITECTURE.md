@@ -115,18 +115,22 @@ compatibility and can be deleted once nothing reads it.
 
 | section | page | organized by | what belongs there |
 |---|---|---|---|
-| `essays` | `/` | series, then standalone | working essays — current thinking, argued so it can be tested |
+| `essays` | `/` | `Essays` first, then labelled runs | working essays — current thinking, argued so it can be tested |
 | `playbook` | `/playbook` | chapter, in reading order | the method: how we build, start to finish |
 | `workshop` | `/prod` | project | build logs from products and open-source tools |
 
-`group` values in use — essays: `The Next Software`, `Standalone` · playbook:
+`group` values in use — essays: `Essays` (the substantial pieces, rendered first and unlabelled) then one labelled block per run of shorter pieces, e.g. `Breakdown — Systems Thinking` · playbook:
 `Foundations`, `The Minimum Viable Build`, `Feature Development`, `Testing`,
 `Prompts in Production`, `Tooling: MCP`, `Designing with AI` · workshop:
 `Shelf`, `vizstack & agentviz`, `Orrery`.
 
 Adding a chapter to the playbook means adding its name to the `chapters` array
-in `playbook.astro` — the order of that array is the order on the page. The
-homepage reads its series name from the `seriesName` constant in `index.astro`.
+in `playbook.astro` — the order of that array is the order on the page.
+
+The homepage needs no code change to add a run of shorter pieces: anything in
+`section: essays` whose `group` is not `Essays` renders as its own labelled
+block below the essays, in post order. Name the group what you want the heading
+to say.
 
 ### One page is hand-written on purpose
 

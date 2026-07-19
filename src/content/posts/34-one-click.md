@@ -4,7 +4,7 @@ description: "A driver who knows his routes still follows the blue line. Some th
 part: 6
 post: 34
 section: essays
-group: "A Take on Agentic Products"
+group: "Essays"
 draft: true
 tags: ["product", "ux", "recommendations", "cognitive-load", "agents"]
 ---
@@ -67,7 +67,7 @@ Known-pattern work doesn't just consume hours — it consumes the *quality* of a
 
 **Creativity** — the promotion nobody's run, the product line that doesn't exist yet, the angle a pattern-matcher can't propose because there's no pattern to match.
 
-**Systems thinking** — stepping back from the individual reorder to ask whether the supply chain itself is shaped right. [Zooming out](../31-zooming-in-zooming-out/), when every zoomed-in task is screaming for attention, is the first casualty of cognitive overload.
+**Systems thinking** — stepping back from the individual reorder to ask whether the supply chain itself is shaped right. Zooming out, when every zoomed-in task is screaming for attention, is the first casualty of cognitive overload.
 
 **The intuitive north star** — the professional's accumulated sense of where their craft, their store, their codebase *should be going*. The tacit judgment we wrote about in [the taste post](../16-taste-judgment-and-the-ai-partner/). It's the least automatable thing a practitioner has, and it's exactly what gets crowded out when known-pattern work fills the day.
 
