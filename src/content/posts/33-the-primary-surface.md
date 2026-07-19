@@ -4,7 +4,7 @@ description: "Dashboards hand the investigation back to the user. What we're try
 part: 6
 post: 33
 section: essays
-group: "Essays"
+group: "Shorts"
 draft: true
 tags: ["product", "ux", "agents", "design-paradigm", "dashboards", "simplification"]
 ---

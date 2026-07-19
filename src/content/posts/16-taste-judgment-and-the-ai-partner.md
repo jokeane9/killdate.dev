@@ -4,7 +4,7 @@ description: "What humans bring to AI systems — taste, judgment, and technical
 part: 4
 post: 22
 section: essays
-group: "Essays"
+group: "Shorts"
 draft: false
 tags: ["philosophy", "craft", "ai", "professional-development"]
 ---

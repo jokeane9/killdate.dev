@@ -4,7 +4,7 @@ description: "SaaS earned its 80% margins selling access to tools — dashboards
 part: 6
 post: 35
 section: essays
-group: "Essays"
+group: "Shorts"
 draft: true
 tags: ["product", "recommendations", "shopify", "agents", "discovery", "design-paradigm"]
 ---
