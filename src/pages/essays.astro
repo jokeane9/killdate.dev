@@ -1,0 +1,144 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+// Drafts render in dev so the section can be previewed; production builds exclude them.
+const showDrafts = import.meta.env.DEV;
+const allPosts = await getCollection('posts', ({ data }) => !data.draft || showDrafts);
+const essays = allPosts
+  .filter(p => p.data.section === 'essays')
+  .sort((a, b) => a.data.post - b.data.post);
+
+// "Essays" render first, then every other group — "Shorts", or a named run of
+// pieces — as its own labelled block underneath. All blocks carry a label.
+const ESSAYS = 'Essays';
+const standalonePosts = essays.filter(p => p.data.group === ESSAYS);
+const runGroups = [...new Set(essays.filter(p => p.data.group !== ESSAYS).map(p => p.data.group))];
+---
+<Base title="Working Essays" description="Working essays on where software is heading — written from the middle of building it.">
+  <div class="hero">
+    <p class="section-label">Langmerge Agentic Systems Lab — Working Essays</p>
+    <h1 class="hero-title">Notes from building software with teams of agents.</h1>
+    <ul class="hero-list">
+      <li><span class="hero-term">Essays</span> — things we're mulling while we build</li>
+      <li><a href="/playbook" class="hero-term hero-link">Playbook</a> — how we build stuff, start to finish</li>
+      <li><a href="/prod" class="hero-term hero-link">Workshop</a> — notes from the bench: the products and tools we're making</li>
+    </ul>
+  </div>
+
+  {standalonePosts.length > 0 && (
+    <section class="part-section">
+      <p class="section-label">{ESSAYS}</p>
+      <div class="post-list">
+        {standalonePosts.map(post => (
+          <a href={`/posts/${post.id.replace(/\.md$/, '')}`} class="post-item">
+            <span class="post-number">{String(post.data.post).padStart(2, '0')}</span>
+            <span class="post-title">{post.data.title}</span>
+            {post.data.draft && <span class="post-tag draft">draft</span>}
+            {!post.data.draft && post.data.tags[0] && <span class="post-tag">{post.data.tags[0]}</span>}
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {runGroups.map(groupName => (
+    <section class="part-section">
+      <p class="section-label">{groupName}</p>
+      <div class="post-list">
+        {essays.filter(p => p.data.group === groupName).map(post => (
+          <a href={`/posts/${post.id.replace(/\.md$/, '')}`} class="post-item">
+            <span class="post-number">{String(post.data.post).padStart(2, '0')}</span>
+            <span class="post-title">{post.data.title}</span>
+            {post.data.draft && <span class="post-tag draft">draft</span>}
+            {!post.data.draft && post.data.tags[0] && <span class="post-tag">{post.data.tags[0]}</span>}
+          </a>
+        ))}
+      </div>
+    </section>
+  ))}
+</Base>
+
+<style>
+  .hero {
+    margin-bottom: 64px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+
+  .hero-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 15px;
+    color: #888;
+    line-height: 1.5;
+  }
+
+  .hero-term { font-weight: 500; color: var(--text); }
+
+  .hero-link { color: var(--accent); transition: opacity 0.15s; }
+
+  .hero-link:hover { opacity: 0.7; }
+
+  .part-section { margin-bottom: 48px; }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .post-list { display: flex; flex-direction: column; }
+
+  .post-item {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .post-item:first-of-type { border-top: 1px solid var(--border); }
+
+  .post-number {
+    font-size: 12px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    min-width: 24px;
+  }
+
+  .post-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    flex: 1;
+    transition: color 0.15s;
+  }
+
+  .post-item:hover .post-title { color: var(--accent); }
+
+  .post-tag {
+    font-size: 11px;
+    color: var(--muted);
+    background: var(--border);
+    padding: 2px 8px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+
+  .post-tag.draft { color: var(--accent); }
+</style>

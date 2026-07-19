@@ -2,94 +2,81 @@
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 
-// Drafts render in dev so the section can be previewed; production builds exclude them.
-const showDrafts = import.meta.env.DEV;
-const allPosts = await getCollection('posts', ({ data }) => !data.draft || showDrafts);
-const essays = allPosts
-  .filter(p => p.data.section === 'essays')
+const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+const playbook = allPosts
+  .filter(p => p.data.section === 'playbook')
   .sort((a, b) => a.data.post - b.data.post);
 
-// "Essays" render first, then every other group — "Shorts", or a named run of
-// pieces — as its own labelled block underneath. All blocks carry a label.
-const ESSAYS = 'Essays';
-const standalonePosts = essays.filter(p => p.data.group === ESSAYS);
-const runGroups = [...new Set(essays.filter(p => p.data.group !== ESSAYS).map(p => p.data.group))];
+const chapters = [
+  'Foundations',
+  'The Minimum Viable Build',
+  'Feature Development',
+  'Testing',
+  'Prompts in Production',
+  'Tooling: MCP',
+  'Designing with AI',
+];
 ---
-<Base>
-  <div class="hero">
-    <p class="section-label">Langmerge Agentic Systems Lab — Working Essays</p>
-    <h1 class="hero-title">Notes from building software with teams of agents.</h1>
-    <ul class="hero-list">
-      <li><span class="hero-term">Essays</span> — things we're mulling while we build</li>
-      <li><a href="/playbook" class="hero-term hero-link">Playbook</a> — how we build stuff, start to finish</li>
-      <li><a href="/prod" class="hero-term hero-link">Workshop</a> — notes from the bench: the products and tools we're making</li>
-    </ul>
+<Base description="How we build with AI, start to finish — killdate-kit, the minimum viable build, features, testing, and prompts in production. Best read in order.">
+
+  <div class="intro">
+    <p class="section-label">Langmerge Agentic Systems Lab — The Playbook</p>
+    <h1>The Playbook</h1>
+    <p class="tagline">killdate-kit is the repo we fork every time we start something new — a pre-wired CLAUDE.md, Cursor rules, and a runbook system, so the AI tools have structure to push against. These posts walk through how we actually use it. Best read in order.</p>
+    <a href="https://github.com/jokeane9/killdate-kit" class="entry-link" target="_blank" rel="noopener">Fork killdate-kit on GitHub →</a>
   </div>
 
-  {standalonePosts.length > 0 && (
-    <section class="part-section">
-      <p class="section-label">{ESSAYS}</p>
-      <div class="post-list">
-        {standalonePosts.map(post => (
-          <a href={`/posts/${post.id.replace(/\.md$/, '')}`} class="post-item">
-            <span class="post-number">{String(post.data.post).padStart(2, '0')}</span>
-            <span class="post-title">{post.data.title}</span>
-            {post.data.draft && <span class="post-tag draft">draft</span>}
-            {!post.data.draft && post.data.tags[0] && <span class="post-tag">{post.data.tags[0]}</span>}
-          </a>
-        ))}
-      </div>
-    </section>
-  )}
-
-  {runGroups.map(groupName => (
-    <section class="part-section">
-      <p class="section-label">{groupName}</p>
-      <div class="post-list">
-        {essays.filter(p => p.data.group === groupName).map(post => (
-          <a href={`/posts/${post.id.replace(/\.md$/, '')}`} class="post-item">
-            <span class="post-number">{String(post.data.post).padStart(2, '0')}</span>
-            <span class="post-title">{post.data.title}</span>
-            {post.data.draft && <span class="post-tag draft">draft</span>}
-            {!post.data.draft && post.data.tags[0] && <span class="post-tag">{post.data.tags[0]}</span>}
-          </a>
-        ))}
-      </div>
-    </section>
-  ))}
+  {chapters.map(chapter => {
+    const chapterPosts = playbook.filter(p => p.data.group === chapter);
+    if (chapterPosts.length === 0) return null;
+    return (
+      <section class="part-section">
+        <p class="section-label">{chapter}</p>
+        <div class="post-list">
+          {chapterPosts.map(post => (
+            <a href={`/posts/${post.id.replace(/\.md$/, '')}`} class="post-item">
+              <span class="post-number">{String(post.data.post).padStart(2, '0')}</span>
+              <span class="post-title">{post.data.title}</span>
+              {post.data.tags[0] && <span class="post-tag">{post.data.tags[0]}</span>}
+            </a>
+          ))}
+        </div>
+      </section>
+    );
+  })}
 </Base>
 
 <style>
-  .hero {
+  .intro {
     margin-bottom: 64px;
     padding-bottom: 48px;
     border-bottom: 1px solid var(--border);
   }
 
-  .hero-title {
+  .intro h1 {
     font-size: 22px;
     font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
     color: var(--text);
-    line-height: 1.2;
-    letter-spacing: -0.03em;
-    margin-bottom: 16px;
   }
 
-  .hero-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  .tagline {
     font-size: 15px;
+    font-weight: 400;
     color: #888;
     line-height: 1.5;
+    margin-bottom: 12px;
   }
 
-  .hero-term { font-weight: 500; color: var(--text); }
+  .entry-link {
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+    transition: opacity 0.15s;
+  }
 
-  .hero-link { color: var(--accent); transition: opacity 0.15s; }
-
-  .hero-link:hover { opacity: 0.7; }
+  .entry-link:hover { opacity: 0.7; }
 
   .part-section { margin-bottom: 48px; }
 
@@ -139,6 +126,4 @@ const runGroups = [...new Set(essays.filter(p => p.data.group !== ESSAYS).map(p 
     border-radius: 3px;
     white-space: nowrap;
   }
-
-  .post-tag.draft { color: var(--accent); }
 </style>
