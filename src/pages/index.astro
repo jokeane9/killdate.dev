@@ -9,8 +9,8 @@ const essays = allPosts
   .filter(p => p.data.section === 'essays')
   .sort((a, b) => a.data.post - b.data.post);
 
-// "Essays" sit at the top, unlabelled. Every other group — "Shorts", or a named
-// run of pieces — renders as its own labelled block underneath.
+// "Essays" render first, then every other group — "Shorts", or a named run of
+// pieces — as its own labelled block underneath. All blocks carry a label.
 const ESSAYS = 'Essays';
 const standalonePosts = essays.filter(p => p.data.group === ESSAYS);
 const runGroups = [...new Set(essays.filter(p => p.data.group !== ESSAYS).map(p => p.data.group))];
@@ -28,6 +28,7 @@ const runGroups = [...new Set(essays.filter(p => p.data.group !== ESSAYS).map(p 
 
   {standalonePosts.length > 0 && (
     <section class="part-section">
+      <p class="section-label">{ESSAYS}</p>
       <div class="post-list">
         {standalonePosts.map(post => (
           <a href={`/posts/${post.id.replace(/\.md$/, '')}`} class="post-item">
