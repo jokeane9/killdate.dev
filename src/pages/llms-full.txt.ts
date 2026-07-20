@@ -2,6 +2,41 @@ import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 
 const CORE_QUESTIONS: Record<string, string[]> = {
+  '32-shellware': [
+    'What is shellware — software where the product the user touches is a thin shell over agentic machinery that does the actual work?',
+    'Why is a thin-surface, conclusion-first product only now viable, when it was not before?',
+    'What does a shellware codebase actually contain when there is no algorithmic core — where does the value live if not in the code?',
+    'What does the shell owe the user in exchange for hiding the machinery — what are the obligations of a conclusion-first interface?',
+  ],
+  '33-the-primary-surface': [
+    'Why do dashboards fail as the primary surface of an AI product — what work do they hand back to the user?',
+    'What is the primary surface, and why does product value accrete at exactly one screen rather than spreading across many?',
+    'How much of an agent\'s reasoning should you show the user — what is "just enough thinking" and how do you calibrate it?',
+    'Why does recognition beat trust when an expert evaluates an AI recommendation?',
+  ],
+  '34-one-click': [
+    'Why does an expert who already knows the answer still follow an AI recommendation — what is the machine actually contributing?',
+    'What is recognition-primed decision-making, and why does expert pattern recognition make one-click approval safe?',
+    'Why is rerouting — continuous re-derivation as conditions change — the actual product rather than the first recommendation?',
+    'What do professionals get back when known-pattern work stops consuming their attention?',
+  ],
+  '35-recommendations-and-finished-work': [
+    'Where does the next tier of SaaS margin come from, and why is selling access to tools no longer the ceiling?',
+    'What makes "a recommendation plus the finished work, one click from live" so hard to design in practice?',
+    'How do you work out which steps of a human workflow a machine may absorb and which it must respect?',
+    'Why do you have to test recommendations differently than you test features?',
+  ],
+  '36-systems-thinking-part-one': [
+    'What does systems thinking mean when the team you are running is mostly agents rather than people?',
+    'How does orchestrating agents differ from the older T-shaped skills model of breadth plus one depth?',
+    'How deep do you actually need to be in each domain to supervise agents — what is the difference between mechanical and deep?',
+    'Why is directing a team of agents across many domains genuinely exhausting?',
+  ],
+  '37-systems-thinking-part-two-orrery': [
+    'What is Orrery, and what problem does it solve for a developer running agents across multiple repos and sessions?',
+    'Why did agentic coding destroy the free mental model developers used to have of their own workspace?',
+    'How is workspace observability for the human directing agents different from agent observability in the Datadog or Langfuse sense?',
+  ],
   '25-mcp-server-technical-deep-dive': [
     'What is the actual wire format of MCP — what bytes travel over stdio during an initialize handshake and a tool call?',
     'Why does asyncpg return JSONB columns as raw Python strings, and what is the exact fix — where does it go and why does placement matter?',

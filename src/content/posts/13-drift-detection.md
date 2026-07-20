@@ -3,6 +3,8 @@ title: "When your LLM output stops being what you shipped"
 description: "Prompt drift is real, subtle, and expensive to debug after the fact. Schema validation as a drift signal. The fuzzer. What to actually build."
 part: 5
 post: 26
+section: playbook
+group: "Prompts in Production"
 draft: false
 tags: ["drift", "prompt-drift", "schema-validation", "fuzzer", "production"]
 ---

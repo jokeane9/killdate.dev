@@ -3,6 +3,8 @@ title: "Technical Knowledge Floor"
 description: "Tools and technologies in active use. The working knowledge base for everything in this series."
 part: 0
 post: 1
+section: playbook
+group: "Foundations"
 draft: false
 tags: ["tooling", "stack"]
 ---

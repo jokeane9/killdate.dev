@@ -3,6 +3,8 @@ title: "MCP servers for your build stack"
 description: "Which MCP servers actually help during a production SaaS build, and how to wire them into Claude Code in one file edit."
 part: 1
 post: 9
+section: playbook
+group: "Tooling: MCP"
 draft: false
 tags: ["tooling", "mcp", "claude-code", "infrastructure", "postgres"]
 ---

@@ -13,7 +13,9 @@ Live: https://killdate.dev
 - Astro v6 static site, content collections with glob loader
 - Node >=22.12.0 required (Astro v6 constraint — CI uses node-version: 22)
 - Deployed: `git push origin main` → GitHub Actions → S3 sync + CloudFront invalidation
-- Dev server: `npm run dev` (port 4322 in this project)
+- Dev server: `npm run dev` (port 4322 in this project; `.claude/launch.json` pins it)
+
+**Full architecture, site structure, and local-dev details: `docs/ARCHITECTURE.md`.** Read it before changing pages, sections, or styles.
 
 ## Content structure
 
@@ -22,10 +24,14 @@ Posts live in `src/content/posts/`. Frontmatter fields:
 ```yaml
 title: string
 description: string        # shown in index + llms.txt line entries
-post: number               # sort order, must be sequential, no duplicates
-part: number               # 0=preamble, 1–3=main parts, 4=appendix
-draft: boolean             # true = excluded from all collections
+post: number               # stable ID and sort key — never renumber
+part: number               # legacy grouping, retained but no longer drives the UI
+section: essays | playbook | workshop   # which page it appears on
+group: string              # chapter, project, or series name within that section
+draft: boolean             # true = hidden in production, shown on the dev homepage
 ```
+
+The site has three sections: `/` = Working Essays, `/playbook` = The Playbook, `/prod` = Workshop Notes (hand-written entries — adding a workshop post means editing `prod.astro` too).
 
 ## AI crawlability — do not break this
 

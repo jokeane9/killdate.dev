@@ -3,6 +3,8 @@ title: "Learning resources"
 description: "Useful references for getting more familiar with LLMs and prompt engineering. Understanding these transfers directly to stronger agentic work."
 part: 4
 post: 21
+section: playbook
+group: "Designing with AI"
 draft: false
 tags: ["learning", "llm", "prompt-engineering"]
 ---

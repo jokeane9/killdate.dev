@@ -1,0 +1,181 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Open Source" description="The tools we build and release — killdate-kit, Orrery, vizstack, and agentviz. Free, local-first, no accounts.">
+
+  <div class="intro">
+    <p class="section-label">Langmerge Agentic Systems Lab — Open Source</p>
+    <h1>Open Source</h1>
+    <p class="tagline">The tools we build for our own work and release for yours. Free, local-first, no accounts.</p>
+  </div>
+
+  <div class="tool-list">
+
+    <div class="tool">
+      <div class="tool-meta">
+        <a href="https://github.com/jokeane9/killdate-kit" class="tool-title" target="_blank" rel="noopener">killdate-kit</a>
+        <span class="tool-tag">starter repo</span>
+      </div>
+      <p class="tool-desc">The repo we fork every time we start something new — a pre-wired CLAUDE.md, Cursor rules, and a runbook system, so the AI tools have structure to push against. The playbook walks through how we actually use it.</p>
+      <div class="tool-links">
+        <a href="https://github.com/jokeane9/killdate-kit" class="tool-link" target="_blank" rel="noopener">GitHub →</a>
+        <a href="/playbook" class="tool-link">The playbook →</a>
+      </div>
+    </div>
+
+    <div class="tool">
+      <div class="tool-meta">
+        <a href="https://github.com/jokeane9/orrery" class="tool-title" target="_blank" rel="noopener">Orrery</a>
+        <span class="tool-tag">desktop app</span>
+      </div>
+      <p class="tool-desc">One local window for every project's live git state and the facts you normally keep in your head — plus what your agents left behind across repos, sessions, and worktrees. Reads your disk live: no server, no account, no telemetry. Formerly Mission Control.</p>
+      <div class="tool-links">
+        <a href="https://github.com/jokeane9/orrery" class="tool-link" target="_blank" rel="noopener">GitHub →</a>
+        <a href="/posts/mission-control" class="tool-link">How it was built →</a>
+      </div>
+    </div>
+
+    <div class="tool">
+      <div class="tool-meta">
+        <a href="https://github.com/jokeane9/vizstack" class="tool-title" target="_blank" rel="noopener">vizstack</a>
+        <span class="tool-tag">cli</span>
+      </div>
+      <p class="tool-desc">A zero-install CLI that turns any Remix or Next.js codebase into an interactive dependency map. Point it at a directory and it produces a single HTML file showing your routes, database, AI providers, and external APIs as a scrollable graph — hover any node to see what connects to it.</p>
+      <a href="/tools/ecosystem-viz.html" class="viz-preview" target="_blank" rel="noopener">
+        <img src="/images/ecosystem-viz-preview.png" alt="Shelf ecosystem cross-layer dependency map — routes, database, AI layer, external APIs" class="viz-img" />
+        <span class="viz-caption">Open interactive map →</span>
+      </a>
+      <div class="tool-links">
+        <a href="https://github.com/jokeane9/vizstack" class="tool-link" target="_blank" rel="noopener">GitHub →</a>
+        <a href="/posts/18-remix-route-visualizer" class="tool-link">How it was built →</a>
+      </div>
+    </div>
+
+    <div class="tool">
+      <div class="tool-meta">
+        <a href="https://github.com/jokeane9/agentviz" class="tool-title" target="_blank" rel="noopener">agentviz</a>
+        <span class="tool-tag">cli</span>
+      </div>
+      <p class="tool-desc">vizstack's sibling for Python agent pipelines, where routes are the wrong shape. Point it at a pipeline and get one interactive HTML file: which stages call which models, where they touch the database, what's cached versus recomputed, what's traced versus flying blind.</p>
+      <div class="tool-links">
+        <a href="https://github.com/jokeane9/agentviz" class="tool-link" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+    </div>
+
+  </div>
+
+</Base>
+
+<style>
+  .intro {
+    margin-bottom: 64px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .intro h1 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+
+  .tagline {
+    font-size: 15px;
+    font-weight: 400;
+    color: #888;
+    line-height: 1.5;
+  }
+
+  .tool-list { display: flex; flex-direction: column; }
+
+  .tool {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tool:first-child { border-top: 1px solid var(--border); }
+
+  .tool-meta {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .tool-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    transition: color 0.15s;
+  }
+
+  .tool-title:hover { color: var(--accent); }
+
+  .tool-tag {
+    font-size: 11px;
+    color: var(--muted);
+    background: var(--border);
+    padding: 2px 8px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+
+  .tool-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .tool-links { display: flex; gap: 20px; }
+
+  .tool-link {
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+    transition: opacity 0.15s;
+  }
+
+  .tool-link:hover { opacity: 0.7; }
+
+  .viz-preview {
+    display: block;
+    margin-bottom: 16px;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+
+  .viz-preview:hover { border-color: var(--accent); }
+
+  .viz-img { display: block; width: 100%; height: auto; }
+
+  .viz-caption {
+    display: block;
+    font-size: 12px;
+    color: var(--accent);
+    padding: 10px 14px;
+    background: #0f0f0f;
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 480px) {
+    .tool-meta { flex-wrap: wrap; gap: 8px; }
+    .tool-title { font-size: 15px; }
+    .tool { padding: 24px 0; }
+    .viz-caption { font-size: 11px; }
+  }
+</style>

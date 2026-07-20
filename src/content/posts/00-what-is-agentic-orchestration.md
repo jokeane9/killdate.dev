@@ -3,6 +3,8 @@ title: "Agentic orchestration: what it is, what it isn't"
 description: "The term is everywhere. The meaning is buried. Here's the simplest version that's still true."
 part: 0
 post: 0
+section: playbook
+group: "Foundations"
 draft: false
 tags: ["orchestration", "intro"]
 ---

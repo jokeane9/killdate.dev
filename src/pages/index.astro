@@ -2,84 +2,66 @@
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 
-const allPosts = await getCollection('posts', ({ data }) => !data.draft);
-const posts = allPosts.sort((a, b) => a.data.post - b.data.post);
+// Drafts render in dev so the section can be previewed; production builds exclude them.
+const showDrafts = import.meta.env.DEV;
+const allPosts = await getCollection('posts', ({ data }) => !data.draft || showDrafts);
+const essays = allPosts
+  .filter(p => p.data.section === 'essays')
+  .sort((a, b) => a.data.post - b.data.post);
 
-const introPosts = posts.filter(p => p.data.part === 0);
-
-const parts = [
-  { num: 1, label: 'The Minimum Viable Build' },
-  { num: 2, label: 'Feature Development' },
-  { num: 3, label: 'Testing' },
-  { num: 4, label: 'Design, UI & Case Studies' },
-  { num: 5, label: 'Prompts in Production' },
-  { num: 6, label: 'Field Notes' },
-];
-
-const appendixParts: number[] = [];
-const appendixPosts = posts.filter(p => appendixParts.includes(p.data.part));
+// "Essays" render first, then every other group — "Shorts", or a named run of
+// pieces — as its own labelled block underneath. All blocks carry a label.
+const ESSAYS = 'Essays';
+const standalonePosts = essays.filter(p => p.data.group === ESSAYS);
+const runGroups = [...new Set(essays.filter(p => p.data.group !== ESSAYS).map(p => p.data.group))];
 ---
 <Base>
-<div class="hero">
-    <p class="section-label">Prima Digital — Studio Development Blog</p>
-    <h1 class="hero-title">AI-Assisted SaaS Development</h1>
-    <p class="hero-tagline">killdate-kit is a forkable repository that gives your AI coding tools the structure they need to build production SaaS without drifting. It includes a pre-wired CLAUDE.md, Cursor execution rules, and a runbook system — the scaffolding that turns capable models into reliable engineering partners.</p>
-    <p class="hero-tagline">15 minutes if you've shipped before. 30 if you haven't. Articles designed to skim — repo built for Q&A.</p>
-    <a href="https://github.com/jokeane9/killdate-kit" class="hero-link" target="_blank" rel="noopener">Fork on GitHub →</a>
+  <div class="hero">
+    <p class="section-label">Langmerge Agentic Systems Lab — Working Essays</p>
+    <h1 class="hero-title">Notes from building software with teams of agents.</h1>
+    <ul class="hero-list">
+      <li><span class="hero-term">Essays</span> — things we're mulling while we build</li>
+      <li><a href="/playbook" class="hero-term hero-link">Playbook</a> — how we build stuff, start to finish</li>
+      <li><a href="/prod" class="hero-term hero-link">Workshop</a> — notes from the bench: the products and tools we're making</li>
+      <li><a href="/open-source" class="hero-term hero-link">Open Source</a> — the tools we build for our own work and release for yours</li>
+    </ul>
   </div>
 
-{introPosts.length > 0 && (
+  {standalonePosts.length > 0 && (
     <section class="part-section">
-      <p class="section-label">Preamble</p>
+      <p class="section-label">{ESSAYS}</p>
       <div class="post-list">
-        {introPosts.map(post => (
+        {standalonePosts.map(post => (
           <a href={`/posts/${post.id.replace(/\.md$/, '')}`} class="post-item">
             <span class="post-number">{String(post.data.post).padStart(2, '0')}</span>
             <span class="post-title">{post.data.title}</span>
-            {post.data.tags[0] && <span class="post-tag">{post.data.tags[0]}</span>}
+            {post.data.draft && <span class="post-tag draft">draft</span>}
+            {!post.data.draft && post.data.tags[0] && <span class="post-tag">{post.data.tags[0]}</span>}
           </a>
         ))}
       </div>
     </section>
   )}
 
-  {parts.map(part => {
-    const partPosts = posts.filter(p => p.data.part === part.num);
-    if (partPosts.length === 0) return null;
-    return (
-      <section class="part-section">
-        <p class="section-label">Part {part.num} — {part.label}</p>
-        <div class="post-list">
-          {partPosts.map(post => (
-            <a href={`/posts/${post.id.replace(/\.md$/, '')}`} class="post-item">
-              <span class="post-number">{String(post.data.post).padStart(2, '0')}</span>
-              <span class="post-title">{post.data.title}</span>
-              {post.data.tags[0] && <span class="post-tag">{post.data.tags[0]}</span>}
-            </a>
-          ))}
-        </div>
-      </section>
-    );
-  })}
-
-  {appendixPosts.length > 0 && (
+  {runGroups.map(groupName => (
     <section class="part-section">
-      <p class="section-label">Appendix</p>
+      <p class="section-label">{groupName}</p>
       <div class="post-list">
-        {appendixPosts.map(post => (
+        {essays.filter(p => p.data.group === groupName).map(post => (
           <a href={`/posts/${post.id.replace(/\.md$/, '')}`} class="post-item">
-            <span class="post-number post-bullet">·</span>
+            <span class="post-number">{String(post.data.post).padStart(2, '0')}</span>
             <span class="post-title">{post.data.title}</span>
-            {post.data.tags[0] && <span class="post-tag">{post.data.tags[0]}</span>}
+            {post.data.draft && <span class="post-tag draft">draft</span>}
+            {!post.data.draft && post.data.tags[0] && <span class="post-tag">{post.data.tags[0]}</span>}
           </a>
         ))}
       </div>
     </section>
-  )}
+  ))}
 </Base>
 
 <style>
-.hero {
+  .hero {
     margin-bottom: 64px;
     padding-bottom: 48px;
     border-bottom: 1px solid var(--border);
@@ -94,20 +76,19 @@ const appendixPosts = posts.filter(p => appendixParts.includes(p.data.part));
     margin-bottom: 16px;
   }
 
-  .hero-tagline {
+  .hero-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     font-size: 15px;
-    font-weight: 400;
     color: #888;
     line-height: 1.5;
-    margin-bottom: 20px;
   }
 
-  .hero-link {
-    font-size: 13px;
-    color: var(--accent);
-    font-weight: 500;
-    transition: opacity 0.15s;
-  }
+  .hero-term { font-weight: 500; color: var(--text); }
+
+  .hero-link { color: var(--accent); transition: opacity 0.15s; }
 
   .hero-link:hover { opacity: 0.7; }
 
@@ -159,4 +140,6 @@ const appendixPosts = posts.filter(p => appendixParts.includes(p.data.part));
     border-radius: 3px;
     white-space: nowrap;
   }
+
+  .post-tag.draft { color: var(--accent); }
 </style>

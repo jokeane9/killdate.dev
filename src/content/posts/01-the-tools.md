@@ -3,6 +3,8 @@ title: "The broader toolset"
 description: "Adjacent tooling for orchestration. What each tool is actually for, where to learn, and what to avoid using wrong."
 part: 0
 post: 3
+section: playbook
+group: "Foundations"
 draft: false
 tags: ["tooling", "claude-code", "cursor", "orchestration"]
 ---

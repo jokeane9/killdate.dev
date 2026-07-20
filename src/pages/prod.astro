@@ -1,135 +1,107 @@
 ---
 import Base from '../layouts/Base.astro';
 ---
-<Base title="In Prod" description="Real software, real constraints. Build processes and open source tooling from a small studio.">
+<Base title="Workshop Notes" description="Notes from the bench — the products we run in production, the agentic stuff we're figuring out, and the open source tools that fall out along the way.">
 
   <div class="intro">
-    <p class="section-label">Prima Digital — Studio Development Blog</p>
-    <h1>In Prod</h1>
-    <p class="tagline">Prima Digital documents what it builds: production SaaS, agentic products, and open source tooling for the community. vizstack is the open source release — a zero-install route and dependency visualizer for any file-based router codebase (Remix, Next.js, and more).</p>
-    <a href="https://github.com/jokeane9/vizstack" class="entry-link" target="_blank" rel="noopener">Clone on GitHub →</a>
+    <p class="section-label">Langmerge Agentic Systems Lab — Workshop Notes</p>
+    <h1>Workshop Notes</h1>
+    <p class="tagline">Notes from the bench — the products we run in production, the agentic stuff we're figuring out, and the open source tools that fall out along the way. Grouped by project.</p>
+    <a href="https://github.com/jokeane9/vizstack" class="entry-link" target="_blank" rel="noopener">Clone vizstack on GitHub →</a>
   </div>
 
-  <div class="prod-list">
+  <section class="project-section">
+    <p class="section-label">Shelf — production SaaS</p>
+    <div class="prod-list">
 
-    <div class="prod-entry">
-      <div class="entry-meta">
-        <a href="/posts/25-mcp-server-technical-deep-dive" class="entry-title">How to build a custom MCP server</a>
-        <span class="entry-tag">tooling</span>
-        <span class="entry-date">May 18</span>
+      <div class="prod-entry">
+        <div class="entry-meta">
+          <a href="/posts/17-building-shelf" class="entry-title">Shelf</a>
+          <span class="entry-tag">live</span>
+        </div>
+        <p class="entry-desc">Shelf is a Shopify app that gives merchants a daily briefing on what their competitors are doing — prices, inventory signals, stock levels. It crawls rival storefronts with Playwright, passes the signals through a four-layer AI pipeline, and surfaces the output inside the merchant's Shopify admin.</p>
+        <a href="/posts/17-building-shelf" class="entry-link">How it was built →</a>
       </div>
-      <p class="entry-desc">The technical deep-dive: JSON-RPC over stdio, FastMCP, asyncpg connection pools, the JSONB codec gotcha, tool descriptions as routing logic, and a four-tier test strategy. Everything glossed over in the methodology post.</p>
-      <a href="/posts/25-mcp-server-technical-deep-dive" class="entry-link">Read →</a>
+
+      <div class="prod-entry">
+        <div class="entry-meta">
+          <a href="/posts/17-building-shelf" class="entry-title">Building Shelf</a>
+          <span class="entry-tag">case-study</span>
+        </div>
+        <p class="entry-desc">How we built a production Shopify competitor intelligence app end to end — the stack, the pipeline, the prompting mistakes, and what the discipline actually gave us.</p>
+        <a href="/posts/17-building-shelf" class="entry-link">Read →</a>
+      </div>
+
+      <div class="prod-entry">
+        <div class="entry-meta">
+          <a href="/posts/11-building-ui-with-ai" class="entry-title">Building a complex UI surface with AI</a>
+          <span class="entry-tag">case-study</span>
+        </div>
+        <p class="entry-desc">A dense, stateful UI surface built with AI doing the assembly — what worked, what drifted, and where hands had to stay on the wheel.</p>
+        <a href="/posts/11-building-ui-with-ai" class="entry-link">Read →</a>
+      </div>
+
+      <div class="prod-entry">
+        <div class="entry-meta">
+          <a href="/posts/20-langflow-postgres" class="entry-title">Prototyping with Langflow and production data</a>
+          <span class="entry-tag">writing</span>
+        </div>
+        <p class="entry-desc">We used Langflow to sketch agentic patterns before hardcoding them in Python. We wired it to a local Postgres with production-level data. Here's what we learned and where we're still stuck.</p>
+        <a href="/posts/20-langflow-postgres" class="entry-link">Read →</a>
+      </div>
+
+      <div class="prod-entry">
+        <div class="entry-meta">
+          <a href="/posts/19-long-prompting" class="entry-title">Prompts that run for hours</a>
+          <span class="entry-tag">writing</span>
+        </div>
+        <p class="entry-desc">What 250K context actually feels like in production. How we structure long-running prompt jobs on Shelf, what the industry is beginning to understand about this shift, and why we haven't really cracked it yet.</p>
+        <a href="/posts/19-long-prompting" class="entry-link">Read →</a>
+      </div>
+
+      <div class="prod-entry">
+        <div class="entry-meta">
+          <a href="/posts/21-v2-to-v3-learnings" class="entry-title">The V2 to V3 migration</a>
+          <span class="entry-tag">evals</span>
+        </div>
+        <p class="entry-desc">The real eval stack behind migrating a production LLM prompt on Shelf — a 32-check scoring rubric, a one-way runner, 54 adversarial payloads, Pydantic strict validation, and a hard rule about who can approve a prompt edit.</p>
+        <a href="/posts/21-v2-to-v3-learnings" class="entry-link">Read →</a>
+      </div>
+
     </div>
+  </section>
 
-    <div class="prod-entry">
-      <div class="entry-meta">
-        <a href="/posts/24-building-an-mcp-server" class="entry-title">Building a production MCP server</a>
-        <span class="entry-tag">tooling</span>
-        <span class="entry-date">May 18</span>
+  <section class="project-section">
+    <p class="section-label">Tooling</p>
+    <div class="prod-list">
+
+      <div class="prod-entry">
+        <div class="entry-meta">
+          <span class="entry-title">The tools have their own page</span>
+          <span class="entry-tag">pointer</span>
+        </div>
+        <p class="entry-desc">killdate-kit, Orrery, vizstack and agentviz — everything we've released, with links and how each was built.</p>
+        <a href="/open-source" class="entry-link">Open source →</a>
       </div>
-      <p class="entry-desc">How we built a custom MCP server for Shelf in one autonomous session — 7 tools, 43 tests, live competitive intelligence queryable from Claude Code. The spike branch pattern and what failed when we hit the real database.</p>
-      <a href="/posts/24-building-an-mcp-server" class="entry-link">Read →</a>
+
     </div>
+  </section>
 
-    <div class="prod-entry">
-      <div class="entry-meta">
-        <a href="/posts/22-vizstack-2" class="entry-title">VizStack 2.0</a>
-        <span class="entry-tag">writing</span>
-        <span class="entry-date">May 17</span>
+  <section class="project-section">
+    <p class="section-label">MCP servers</p>
+    <div class="prod-list">
+
+      <div class="prod-entry">
+        <div class="entry-meta">
+          <span class="entry-title">The MCP posts live in the playbook</span>
+          <span class="entry-tag">pointer</span>
+        </div>
+        <p class="entry-desc">They're how-tos, so they file under method — built for Shelf, linked from here.</p>
+        <a href="/playbook" class="entry-link">Playbook → Tooling: MCP →</a>
       </div>
-      <p class="entry-desc">We shipped VizStack as an open-source architecture visualizer. Then we wired Claude directly into the graph. It became an onboarding tool. We didn't plan that.</p>
-      <a href="/posts/22-vizstack-2" class="entry-link">Read →</a>
+
     </div>
-
-    <div class="prod-entry">
-      <div class="entry-meta">
-        <a href="/posts/21-v2-to-v3-learnings" class="entry-title">The V2 to V3 migration</a>
-        <span class="entry-tag">writing</span>
-        <span class="entry-date">May 17</span>
-      </div>
-      <p class="entry-desc">The real eval stack behind migrating a production LLM prompt on Shelf — a 32-check scoring rubric, a one-way runner, 54 adversarial payloads, Pydantic strict validation, and a hard rule about who can approve a prompt edit.</p>
-      <a href="/posts/21-v2-to-v3-learnings" class="entry-link">Read →</a>
-    </div>
-
-    <div class="prod-entry">
-      <div class="entry-meta">
-        <a href="/posts/20-langflow-postgres" class="entry-title">Prototyping with Langflow and production data</a>
-        <span class="entry-tag">writing</span>
-        <span class="entry-date">May 17</span>
-      </div>
-      <p class="entry-desc">We used Langflow to sketch agentic patterns before hardcoding them in Python. We wired it to a local Postgres with production-level data. Here's what we learned and where we're still stuck.</p>
-      <a href="/posts/20-langflow-postgres" class="entry-link">Read →</a>
-    </div>
-
-    <div class="prod-entry">
-      <div class="entry-meta">
-        <a href="/posts/19-long-prompting" class="entry-title">Prompts that run for hours</a>
-        <span class="entry-tag">writing</span>
-        <span class="entry-date">May 17</span>
-      </div>
-      <p class="entry-desc">What 250K context actually feels like in production. How we structure long-running prompt jobs on Shelf, what the industry is beginning to understand about this shift, and why we haven't really cracked it yet.</p>
-      <a href="/posts/19-long-prompting" class="entry-link">Read →</a>
-    </div>
-
-    <div class="prod-entry">
-      <div class="entry-meta">
-        <a href="/posts/18-remix-route-visualizer" class="entry-title">Visualizing a Remix app</a>
-        <span class="entry-tag">tooling</span>
-        <span class="entry-date">May 8</span>
-      </div>
-      <p class="entry-desc">Why your app architecture is harder to hold in your head than it should be, and what we built to fix it — a route tree, an outlet chain view, and a cross-layer ecosystem map.</p>
-      <a href="/posts/18-remix-route-visualizer" class="entry-link">Read →</a>
-    </div>
-
-    <div class="prod-entry">
-      <div class="entry-meta">
-        <a href="/posts/18-remix-route-visualizer" class="entry-title">vizstack</a>
-        <span class="entry-tag">open source</span>
-        <span class="entry-date">May 8</span>
-      </div>
-      <p class="entry-desc">vizstack is a zero-install CLI that turns any Remix or Next.js codebase into an interactive dependency map. Point it at a directory and it produces a single HTML file showing your routes, database, AI providers, and external APIs as a scrollable graph — hover any node to see what connects to it.</p>
-      <a href="/tools/ecosystem-viz.html" class="viz-preview" target="_blank" rel="noopener">
-        <img src="/images/ecosystem-viz-preview.png" alt="Shelf ecosystem cross-layer dependency map — routes, database, AI layer, external APIs" class="viz-img" />
-        <span class="viz-caption">Open interactive map →</span>
-      </a>
-      <div class="entry-links">
-        <a href="https://github.com/jokeane9/vizstack" class="entry-link" target="_blank" rel="noopener">GitHub →</a>
-        <a href="/posts/18-remix-route-visualizer" class="entry-link">How it was built →</a>
-      </div>
-    </div>
-
-    <div class="prod-entry">
-      <div class="entry-meta">
-        <a href="/posts/17-building-shelf" class="entry-title">Building Shelf</a>
-        <span class="entry-tag">case-study</span>
-        <span class="entry-date">May 8</span>
-      </div>
-      <p class="entry-desc">How we built a production Shopify competitor intelligence app end to end — the stack, the pipeline, the prompting mistakes, and what the discipline actually gave us.</p>
-      <a href="/posts/17-building-shelf" class="entry-link">Read →</a>
-    </div>
-
-    <div class="prod-entry">
-      <div class="entry-meta">
-        <a href="/posts/17-building-shelf" class="entry-title">Shelf</a>
-        <span class="entry-tag">live</span>
-        <span class="entry-date">May 8</span>
-      </div>
-      <p class="entry-desc">Shelf is a Shopify app that gives merchants a daily briefing on what their competitors are doing — prices, inventory signals, stock levels. It crawls rival storefronts with Playwright, passes the signals through a four-layer AI pipeline, and surfaces the output inside the merchant's Shopify admin.</p>
-      <a href="/posts/17-building-shelf" class="entry-link">How it was built →</a>
-    </div>
-
-    <div class="prod-entry">
-      <div class="entry-meta">
-        <a href="/posts/16-taste-judgment-and-the-ai-partner" class="entry-title">AI as Reliable Partners</a>
-        <span class="entry-tag">philosophy</span>
-        <span class="entry-date">May 4</span>
-      </div>
-      <p class="entry-desc">What humans bring to AI systems — taste, judgment, and technical intuition.</p>
-      <a href="/posts/16-taste-judgment-and-the-ai-partner" class="entry-link">Read →</a>
-    </div>
-
-  </div>
+  </section>
 
 </Base>
 
@@ -164,6 +136,8 @@ import Base from '../layouts/Base.astro';
     line-height: 1.5;
     margin-bottom: 12px;
   }
+
+  .project-section { margin-bottom: 48px; }
 
   .prod-list {
     display: flex;
@@ -202,12 +176,6 @@ import Base from '../layouts/Base.astro';
     padding: 2px 8px;
     border-radius: 3px;
     white-space: nowrap;
-  }
-
-  .entry-date {
-    font-size: 11px;
-    color: var(--muted);
-    margin-left: auto;
   }
 
   .entry-desc {

@@ -5,22 +5,27 @@ export const GET: APIRoute = async () => {
   const allPosts = await getCollection('posts', ({ data }) => !data.draft);
   const posts = allPosts.sort((a, b) => a.data.post - b.data.post);
 
-  const preamble  = posts.filter(p => p.data.part === 0);
-  const part1     = posts.filter(p => p.data.part === 1);
-  const part2     = posts.filter(p => p.data.part === 2);
-  const part3     = posts.filter(p => p.data.part === 3);
-  const appendix  = posts.filter(p => p.data.part === 4);
+  const essays   = posts.filter(p => p.data.section === 'essays');
+  const playbook = posts.filter(p => p.data.section === 'playbook');
+  const workshop = posts.filter(p => p.data.section === 'workshop');
 
   const slug = (p: (typeof posts)[0]) => p.id.replace(/\.md$/, '');
   const line = (p: (typeof posts)[0]) =>
     `- [${p.data.title}](https://killdate.dev/posts/${slug(p)}): ${p.data.description}`;
 
+  const grouped = (list: typeof posts) => {
+    const groups = [...new Set(list.map(p => p.data.group))];
+    return groups
+      .map(g => `#### ${g}\n\n${list.filter(p => p.data.group === g).map(line).join('\n')}`)
+      .join('\n\n');
+  };
+
   const content = `\
 # killdate.dev
 
-> Prima Digital's development blog on agentic orchestration for shipping SaaS. A repo, CLAUDE.md, cursor rules, and runbooks — fork it and your AI tools have the context they need from day one.
+> The development blog of Langmerge Agentic Systems Lab (Prima Digital, Vancouver) — working essays on where software is heading, a forkable playbook for shipping SaaS with AI agents, and workshop notes from the products where we test it.
 
-killdate.dev documents how Prima Digital (a Vancouver-based web development studio) builds software using AI agents. The content covers agentic orchestration as a production methodology: the discipline, tooling, and process required to ship reliably with Claude Code and Cursor.
+killdate.dev documents how Langmerge Agentic Systems Lab (Prima Digital, a Vancouver-based web development studio) builds software using AI agents. The content covers agentic orchestration as a production methodology: the discipline, tooling, and process required to ship reliably with Claude Code and Cursor.
 
 The site is both a process log and a forkable starter kit. The writing covers the methodology; the repo at https://github.com/jokeane9/killdate.dev contains the actual CLAUDE.md, cursor rules, runbooks, and process documents described in the posts.
 
@@ -40,6 +45,12 @@ AI agents need context to work properly. Without structured session documents, y
 - **Strangler Fig pattern**: Incremental migration — wrap the old, build the new alongside it, cut over when ready. Avoids big-bang rewrites on live products.
 - **Blast radius**: The explicit set of files and systems a change is allowed to touch. Defined before the build starts, not discovered after.
 - **The N-1 rule**: Always maintain the ability to roll back to the previous version when shipping to production.
+- **Shellware**: A term coined on this site for software where the product the user touches is a thin shell, and the work happens in agentic machinery behind it. The shell presents conclusions — a diagnosis, a recommendation, a prepared action — and asks for a decision, rather than exposing controls to operate. No relation to "shelfware".
+- **Primary surface**: The one screen in a product where the problem meets its answer. Value accretes there; every other screen exists to feed or configure it. The design test is whether a unit of work makes the primary surface more valuable or just makes the product bigger.
+- **Just enough thinking**: The calibrated display of an agent's reasoning — the recommendation plus the two or three load-bearing cues (what was checked, the correlation that mattered, what was ruled out). Enough that an expert recognizes competent work; not the full trace, which rebuilds a dashboard out of paragraphs.
+- **Recognition over trust**: An experienced practitioner does not audit an AI recommendation, they recognize it against their own pattern library. Recognition is instant and durable because the user verifies against their own expertise; trust is extended reluctantly and revoked instantly.
+- **Rerouting**: The continuous re-derivation of a decision as circumstances change, after the initial plan is made. The claim is that rerouting, not the first answer, is where an agentic product earns its keep.
+- **Orrery**: The open-source workspace observability tool built by the lab (formerly Mission Control) — every repo's git state, agent sessions, and skills in one local-first window. Observability of the workspace for the person directing agents, not tracing of agent runs in production.
 
 ## Pages
 
@@ -47,25 +58,27 @@ AI agents need context to work properly. Without structured session documents, y
 
 - [About](https://killdate.dev/about): Prima Digital — who we are, what this site is, how to reach us.
 
-### Preamble
+### Open Source
 
-${preamble.map(line).join('\n')}
+- [Open Source](https://killdate.dev/open-source): The tools we build for our own work and release — killdate-kit, Orrery, vizstack, agentviz. Free, local-first, no accounts.
 
-### Part 1 — The Minimum Viable Build
+### Working Essays
 
-${part1.map(line).join('\n')}
+Current thinking — working positions from the middle of building agentic products.
 
-### Part 2 — Feature Development
+${grouped(essays)}
 
-${part2.map(line).join('\n')}
+### The Playbook
 
-### Part 3 — Testing
+The method, in order: killdate-kit, the minimum viable build, features, testing, prompts in production.
 
-${part3.map(line).join('\n')}
+${grouped(playbook)}
 
-### Appendix
+### Workshop Notes
 
-${appendix.map(line).join('\n')}
+Build logs — the method applied to real products and open source tools, grouped by project.
+
+${grouped(workshop)}
 
 ## The repo
 

@@ -3,6 +3,8 @@ title: "When to test, when not to, and knowing your app"
 description: "Coverage targets are not the goal. Regression protection is. And neither replaces actually understanding what you built."
 part: 3
 post: 18
+section: playbook
+group: "Testing"
 draft: false
 tags: ["testing", "90-10-rule", "judgment", "production"]
 ---
