@@ -23,6 +23,28 @@ so agent tooling can start the server the same way every time. Prefer starting
 it through that config rather than a bare `npm run dev` in a terminal — it keeps
 one server per project instead of several strays on random ports.
 
+### The dev server is a launchd agent
+
+`http://localhost:4322` is always up. It is owned by a user LaunchAgent —
+`~/Library/LaunchAgents/dev.killdate.devserver.plist` — with `RunAtLoad` and
+`KeepAlive`, so it starts at login and relaunches within ~10s if it dies. Logs
+go to `~/Library/Logs/killdate-dev.log`.
+
+```sh
+tail -f ~/Library/Logs/killdate-dev.log            # what it's doing
+launchctl kickstart -k gui/$(id -u)/dev.killdate.devserver   # restart it
+launchctl bootout gui/$(id -u)/dev.killdate.devserver        # stop it (until login)
+```
+
+Because `KeepAlive` is on, `kill` does not stop it — launchd restarts it. Use
+`bootout` to actually stop it, and delete the plist to remove it for good. If
+4322 is ever occupied by a stray `astro dev`, that stray is the thing to kill;
+the agent owns the port.
+
+One consequence worth remembering: frontmatter edits are cached in `.astro/`
+(see below), and a long-lived server makes that staleness *more* likely, not
+less. `launchctl kickstart -k` after `rm -rf .astro` is the reliable reset.
+
 ### Dev and production differ in one deliberate way
 
 Draft posts (`draft: true`) are **excluded from every collection query in
@@ -71,6 +93,24 @@ the *structure* of a page seems ignored, do this before debugging anything else.
 - **Deploy**: push to `main` → GitHub Actions → S3 sync → CloudFront
   invalidation. Pushing to `main` *is* the deploy; there is no separate release
   step. Work on a branch, merge deliberately.
+
+### When Actions is down: `npm run deploy`
+
+[`scripts/deploy.sh`](../scripts/deploy.sh) runs the same three steps as
+[`deploy.yml`](../.github/workflows/deploy.yml) — build, `s3 sync --delete` to
+`s3://killdate.dev`, CloudFront invalidation on `EQG7QFC8WUAA4` — straight from
+your machine using your local AWS credentials. It exists because a GitHub
+Actions incident can leave a merge queued indefinitely with production stale.
+
+```sh
+npm run deploy                      # refuses to run unless you are on main
+DEPLOY_ANY_BRANCH=1 npm run deploy  # override, e.g. to publish a preview branch
+```
+
+The branch guard is the important part: the bucket *is* the live site, so a bare
+deploy from a feature branch would publish that branch to killdate.dev. CI
+remains the normal path — reach for this only when Actions is unavailable, and
+remember it deploys your working tree, not what is on the remote.
 
 ---
 
