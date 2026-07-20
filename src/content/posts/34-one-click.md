@@ -5,7 +5,7 @@ part: 6
 post: 34
 section: essays
 group: "Shorts"
-draft: true
+draft: false
 tags: ["product", "ux", "recommendations", "cognitive-load", "agents"]
 ---
 

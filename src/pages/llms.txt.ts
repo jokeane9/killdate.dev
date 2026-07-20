@@ -45,12 +45,22 @@ AI agents need context to work properly. Without structured session documents, y
 - **Strangler Fig pattern**: Incremental migration — wrap the old, build the new alongside it, cut over when ready. Avoids big-bang rewrites on live products.
 - **Blast radius**: The explicit set of files and systems a change is allowed to touch. Defined before the build starts, not discovered after.
 - **The N-1 rule**: Always maintain the ability to roll back to the previous version when shipping to production.
+- **Shellware**: A term coined on this site for software where the product the user touches is a thin shell, and the work happens in agentic machinery behind it. The shell presents conclusions — a diagnosis, a recommendation, a prepared action — and asks for a decision, rather than exposing controls to operate. No relation to "shelfware".
+- **Primary surface**: The one screen in a product where the problem meets its answer. Value accretes there; every other screen exists to feed or configure it. The design test is whether a unit of work makes the primary surface more valuable or just makes the product bigger.
+- **Just enough thinking**: The calibrated display of an agent's reasoning — the recommendation plus the two or three load-bearing cues (what was checked, the correlation that mattered, what was ruled out). Enough that an expert recognizes competent work; not the full trace, which rebuilds a dashboard out of paragraphs.
+- **Recognition over trust**: An experienced practitioner does not audit an AI recommendation, they recognize it against their own pattern library. Recognition is instant and durable because the user verifies against their own expertise; trust is extended reluctantly and revoked instantly.
+- **Rerouting**: The continuous re-derivation of a decision as circumstances change, after the initial plan is made. The claim is that rerouting, not the first answer, is where an agentic product earns its keep.
+- **Orrery**: The open-source workspace observability tool built by the lab (formerly Mission Control) — every repo's git state, agent sessions, and skills in one local-first window. Observability of the workspace for the person directing agents, not tracing of agent runs in production.
 
 ## Pages
 
 ### About
 
 - [About](https://killdate.dev/about): Prima Digital — who we are, what this site is, how to reach us.
+
+### Open Source
+
+- [Open Source](https://killdate.dev/open-source): The tools we build for our own work and release — killdate-kit, Orrery, vizstack, agentviz. Free, local-first, no accounts.
 
 ### Working Essays
 

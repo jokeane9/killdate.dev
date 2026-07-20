@@ -5,11 +5,9 @@ part: 6
 post: 33
 section: essays
 group: "Shorts"
-draft: true
+draft: false
 tags: ["product", "ux", "agents", "design-paradigm", "dashboards", "simplification"]
 ---
-
-<!-- DRAFT NOTE (John): Vizidex example now filled from the vizidex-engine repo (primary surface = the intelligence brief). Microsoft references are real and linked: the microsoft.design agent UX principles and the HAX Toolkit guidelines (verified 2026-07). -->
 
 *6 minute read*
 

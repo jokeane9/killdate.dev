@@ -5,11 +5,9 @@ part: 6
 post: 36
 section: essays
 group: "Shorts"
-draft: true
+draft: false
 tags: ["systems-thinking", "agent-orchestration", "design", "agents", "craft", "product"]
 ---
-
-<!-- DRAFT NOTE (John): reframed per your note — systems thinking = agent orchestration (loops, not just breadth), with T-shaped skills explicitly named as the adjacent-but-different older idea (audit finding folded in without diluting the take). Six-domain list unchanged — still verify it's your six. -->
 
 *5 minute read*
 

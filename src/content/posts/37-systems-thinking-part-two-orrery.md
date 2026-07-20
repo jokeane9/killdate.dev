@@ -5,11 +5,9 @@ part: 6
 post: 37
 section: essays
 group: "Shorts"
-draft: true
+draft: false
 tags: ["systems-thinking", "orrery", "tooling", "open-source", "agents", "cognitive-load"]
 ---
-
-<!-- DRAFT NOTE (John): grounded in mission-control-desktop's PRODUCT.md (Orrery v2.0.0, renamed from Mission Control) — one-liner, views, and local-first principles are quoted from there. Linked back to the published Mission Control post; flagged the rename explicitly since that post is live under the old name. -->
 
 *4 minute read*
 

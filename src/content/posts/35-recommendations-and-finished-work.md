@@ -5,11 +5,9 @@ part: 6
 post: 35
 section: essays
 group: "Shorts"
-draft: true
+draft: false
 tags: ["product", "recommendations", "shopify", "agents", "discovery", "design-paradigm"]
 ---
-
-<!-- DRAFT NOTE (John): reframed per your note — premise-first (recommendations + finished work, one-click), two Shopify openers, extrapolation, then the design challenges with DiagnosticIQ as the worked example. "Seam" vocabulary dropped; the theory survives in plain language inside the challenges section. Old file 35-finding-the-seams.md deleted. -->
 
 *5 minute read*
 

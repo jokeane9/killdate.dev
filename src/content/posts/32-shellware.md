@@ -5,11 +5,9 @@ part: 6
 post: 32
 section: essays
 group: "Shorts"
-draft: true
+draft: false
 tags: ["shellware", "agents", "product", "software-delivery", "architecture"]
 ---
-
-<!-- DRAFT NOTE (John): definition now leads and the coinage is credited to you. The Vizidex stack section is grounded in vizidex-engine's ARCHITECTURE-REVIEW-2026-06-06.md (deterministic skeleton / one bounded agent / evals) and the engine README — kept at the level of detail the blog already reveals in the agentviz draft. Check I haven't exposed anything you'd rather hold back. -->
 
 *6 minute read*
 

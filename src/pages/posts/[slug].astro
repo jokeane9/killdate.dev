@@ -3,7 +3,10 @@ import Post from '../../layouts/Post.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('posts');
+  // Drafts get a page in dev so they can be previewed, but never in a production
+  // build — an unlisted page is still a public URL, and the sitemap would ship it.
+  const showDrafts = import.meta.env.DEV;
+  const posts = await getCollection('posts', ({ data }) => !data.draft || showDrafts);
   return posts.map(post => ({
     params: { slug: post.id.replace(/\.md$/, '') },
     props: { post },

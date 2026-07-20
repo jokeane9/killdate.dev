@@ -31,13 +31,20 @@ production** but **rendered on the essays homepage in dev**, via
 This exists so a whole unpublished series can be reviewed in context — in the
 real layout, in reading order — before anything ships.
 
+The same `import.meta.env.DEV` switch guards `getStaticPaths` in
+[`src/pages/posts/[slug].astro`](../src/pages/posts/[slug].astro), so a draft
+gets a page in dev and **no page at all in production**.
+
 Consequences worth knowing:
 
 - The dev homepage and the live homepage legitimately differ. That is not drift.
-- Draft posts still build their own pages in both environments (Astro renders
-  every file in the collection), so a draft URL is reachable if someone guesses
-  it. Drafts are unlisted, not secret — don't put anything sensitive in one.
+- A draft has no public URL in production and cannot reach `sitemap-0.xml`.
+  Until July 2026 it did: `getStaticPaths` read the whole collection unfiltered,
+  so every unfinished draft shipped as a guessable page *and* was handed to
+  search engines by `@astrojs/sitemap` while staying invisible in the nav. If a
+  draft ever reappears in `dist/posts/`, that filter is what regressed.
 - To see exactly what production will show: `npm run build && npm run preview`.
+  Treat that preview, not the dev server, as the sign-off surface.
 
 ### When a content edit doesn't show up
 
@@ -132,6 +139,18 @@ The homepage needs no code change to add a new block: anything in
 block below the essays, in post order. Today that's `Shorts`; a future
 multi-part run can be its own group (e.g. `Breakdown — Evals`) just by naming
 it. The group name *is* the heading.
+
+### Standalone pages outside the collection
+
+`/open-source` and `/about` are hand-written pages with no posts behind them.
+`/open-source` catalogues the released tools (killdate-kit, Orrery, vizstack,
+agentviz) and is maintained by editing `open-source.astro` directly.
+
+The homepage hero lists four destinations — Essays (the page you are on, so it
+is plain text rather than a link), Playbook, Workshop, and Open Source. That
+list is the site's front door and should stay in sync with the header nav in
+`Base.astro`; adding a top-level page means touching both, plus the `Pages`
+block in `llms.txt.ts` so crawlers see it.
 
 ### One page is hand-written on purpose
 
