@@ -28,6 +28,43 @@ has been answered. The posts are live, so answering them means a follow-up edit.
 - **Systems Thinking Part 1 (post 36)** — verify the six-domain list is actually
   your six.
 
+## Drafted shorts — awaiting your review
+
+Cleaned up from a voice note, not on the site. If it holds up, it slots into the
+Shorts group in essays. Read it, cut what's overwritten, and it's ready to number.
+
+### Hiring by the Session *(working title)*
+
+The constraint I actually hit isn't the AI's — it's mine. I can hold a session: a
+bounded stretch of work with a beginning, a middle, and an end. Inside that window
+I can drive an agent hard. But the window is finite. Concentration runs out,
+context fills up, and the session has to close. That's not a failure — a session
+that ends clean is the point. The problem is I only get so many of them in a day.
+
+That reframes what hiring is for. You don't hire to add AI capacity; the AI is the
+cheap, parallel part. You hire to add *session-holders*.
+
+Each person you bring on is another human who can own a context session — hold the
+goal in their head, feed the agent, judge what comes back, and decide when it's
+done. The chat spins up agents downstream, and those agents spin up more; the chain
+does the work. But the chain still bottoms out at one human controlling the session
+it runs inside. You can't remove that human. You can only add more of them, one at a
+time, and only when there's enough coherent work to keep each new person's sessions
+full.
+
+So the hiring signal isn't "we're busy." It's narrower: *there's a bounded stream
+of sessions going unowned.* Enough real, self-contained work that a new person could
+walk in, take a session end to end, and close it without me holding their hand
+through it. Short of that, another hire doesn't add throughput — it adds a second
+thing competing for my attention, which is the exact resource that was scarce to
+begin with.
+
+That's the current read, anyway. It's why we've grown slowly and deliberately:
+headcount here is a count of concurrent, well-fed session-holders, not a count of
+seats.
+
+---
+
 ## Post ideas / backlog
 
 - **The ecosystem viz** — how a hand-rolled HTML dependency map (nodes + SVG
