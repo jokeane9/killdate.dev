@@ -11,6 +11,8 @@ tags: ["mcp", "tooling", "claude-code", "postgres", "shelf"]
 
 *6 minute read*
 
+> **Want the step-by-step build instead?** This is the *case study* — how we built one MCP server for Shelf, start to finish. For the technical how-to (FastMCP, asyncpg, testing, the gotchas), see [How to build a custom MCP server](/posts/25-mcp-server-technical-deep-dive/).
+
 ## The premise
 
 Post 23 covered wiring up existing MCP servers — Postgres, GitHub, Playwright, Brave. This is the next step: building your own.

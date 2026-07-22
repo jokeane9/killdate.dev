@@ -11,6 +11,8 @@ tags: ["mcp", "python", "postgres", "claude-code", "tooling"]
 
 *12 minute read*
 
+> **This is the how-to.** For the real-world story of building one — 7 tools, 43 tests, one autonomous session — see [Building a production MCP server](/posts/24-building-an-mcp-server/). To choose which MCP servers to run in the first place, see [MCP servers for your build stack](/posts/23-mcp-servers/).
+
 ## What MCP actually is at the protocol level
 
 Before the framework, the wire format. MCP is JSON-RPC 2.0 over stdio. When Claude calls a tool, it sends a newline-delimited JSON message to your server's stdin. Your server writes the result to stdout. That's it. No HTTP, no webhooks, no websockets — just two pipes.
