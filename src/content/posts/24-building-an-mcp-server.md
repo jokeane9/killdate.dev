@@ -1,6 +1,6 @@
 ---
-title: "Building a production MCP server"
-description: "How we built a custom MCP server for Shelf in a single autonomous session — 7 tools, 43 tests, live competitive intelligence in Claude Code."
+title: "Building an MCP Server in One Autonomous Session (Case Study)"
+description: "A case study: how we built a custom MCP server for Shelf in a single autonomous session — 7 tools, 43 tests, live competitive intelligence in Claude Code."
 part: 1
 post: 10
 section: playbook

@@ -84,6 +84,8 @@ One file. User-level (`~/.claude/settings.json`) makes MCPs available across eve
 
 Restart Claude Code. Type `/mcp` to confirm they're connected and see every tool available.
 
+Once you've wired the existing servers, the next step is building your own for whatever the off-the-shelf ones don't cover — see [How to build an MCP server](/posts/25-mcp-server-technical-deep-dive/).
+
 ---
 
 ## What changes
