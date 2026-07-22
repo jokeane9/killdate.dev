@@ -1,71 +1,72 @@
 ---
-title: "Scoping the feature: lock, blast radius, mocks"
-description: "You have a live product. Before any code, make two things explicit: what this build changes, and what it doesn't touch."
-part: 2
-post: 14
+title: "Claude Code vs Cursor: it's not either/or"
+description: "Everyone frames it as a fight. It's a division of labor — Claude Code plans and orchestrates, Cursor executes. Here's where each one wins, and why running both beats picking one."
+part: 1
+post: 12
 section: playbook
-group: "Feature Development"
+group: "Tooling"
 draft: false
-tags: ["pre-build-lock", "blast-radius", "mocks", "drift-prevention", "scoping"]
+tags: ["claude-code", "cursor", "workflow", "orchestration", "tooling"]
 ---
 
-You have a live product. The blast radius of a misscoped feature isn't hypothetical — it's real users hitting broken surfaces and no clean rollback path.
+*6 minute read*
 
-The pre-build lock is the mechanism that prevents this. It's not a planning document. It's a drift prevention mechanism. Its primary job is to enumerate what is NOT changing — because if you don't name what's protected, the AI agent has no way to know what's off-limits. It will optimize toward what you asked for, and anything adjacent to the change is fair game.
+Every "Claude Code vs Cursor" comparison I've read tries to crown a winner. That framing is the reason people get worse results than they should — out of both tools.
 
-The most dangerous word in AI-assisted development is "and." As in: "fix the settings page and clean up the loader while you're in there." Every unscoped "and" is a bug waiting to be introduced into something that was working.
+They're not competitors. They're two halves of one workflow. Claude Code is where you think; Cursor is where you build. Pick one for everything and you're using a screwdriver as a hammer half the time.
 
-## The lock
+Here's the division of labor I actually run, and why it lands where it does.
 
-Fill the lock before any code is written. Two sections do most of the work:
+## What Claude Code is good at: the whole picture
 
-**Scope statement** — one sentence. What this build does that nothing currently does. If you can't write this sentence, the scope isn't defined yet. Descope or clarify before continuing.
+Claude Code reads the entire repo before it touches anything. That's the whole game. When I'm scoping a feature — enumerating what's protected, writing the [pre-build lock](/posts/14-scoping-the-feature/), mapping the blast radius — I need a tool that can hold the codebase in its head and answer *"if I change this shared type, what else breaks?"* That's not a code-completion question. It's a whole-repo question, and it's where Claude Code is unmatched.
 
-**Invariants inventory** — a table of every surface, route, table, and system that must behave identically after this change. Every row has a verification method. "Trust the builder" is not a verification method.
+So Claude Code owns:
 
-| Surface / System | Unchanged? | Verification method |
-|---|---|---|
-| Onboarding flow | ☑ | Load each step, verify no regression |
-| Settings page | ☑ | Verify content unchanged |
-| Auth flow | ☑ | Smoke test login |
-| Billing | ☑ | Load billing page, check state |
+- **Planning and scoping** — the lock, the invariants inventory, the single surgical-change sentence.
+- **Orchestration** — deciding which tool does which job, wiring [MCP servers](/posts/23-mcp-servers/), reading logs, running the harness.
+- **Authoring the runbook** — the step-by-step a build will follow.
+- **Anything that needs the full repo as context** — audits, refactors-on-paper, "where is this actually used."
 
-Empty cells in the invariants table are a problem, not a neutral state. An empty cell means you didn't check. "Investigate, don't assume clean."
+It's the planner. It decides *what* happens and in *what order*.
 
-## The single surgical change test
+## What Cursor is good at: the surgical change
 
-Every feature build must be expressible as: **V(N+1) = V(N) + exactly one surgical change.**
+Cursor is where the [runbook](/posts/06-runbooks/) becomes code. Once I know exactly what changes — one component, one route, one field — Cursor's tight in-editor loop is faster than anything else: see the diff, accept, adjust, repeat, with the file right in front of you.
 
-One component. One route. One field. If it can't be, split into multiple builds. The instinct to bundle feels like efficiency — in practice, bundled builds are where drift becomes invisible. A shared type gets quietly refactored, an adjacent file gets "improved," and by the time you notice, you're debugging the interaction between half-built things.
+So Cursor owns:
 
-Write the surgical change sentence before opening a code editor. If you're revising it three times trying to cover two different changes, that's two builds.
+- **Executing a scoped build** — one surgical change at a time, from a runbook.
+- **The edit–review loop** — fast iteration on a known target.
+- **Staying inside the lines** — because the scope was already set upstream, in Claude Code.
 
-## The blast radius audit
+It's the executor. It does the thing, and it does it well — when the thing is already defined.
 
-Before the mocks: a matrix of every touchpoint the change could affect. Routes, components, templates, notifications, webhooks, telemetry, tests. Empty cells are not neutral — they mean you didn't check.
+## The handoff is the whole point
 
-The failure mode the audit prevents: you add a new field to a shared type. Everything that reads that type now has a new required field. Three components not in your FILES block silently break because they depended on the old shape. The audit surfaces those downstream dependencies before you write a line of code.
+The mistake isn't picking the wrong tool. It's skipping the handoff.
 
-A useful framing: if someone changed this file six months ago, what else would they have had to check? That's your blast radius.
+| Job | Tool |
+|---|---|
+| Read the repo, decide scope | Claude Code |
+| Write the pre-build lock | Claude Code |
+| Author the runbook | Claude Code |
+| Make the surgical change | Cursor |
+| Iterate on the diff | Cursor |
+| Verify the invariants held | Claude Code |
 
-## Mocks for feature work
+When people say *"Cursor made a mess,"* it's usually because they asked Cursor to plan — to figure out scope on the fly, in a tool that can't see the whole board. When people say *"Claude Code is slow,"* it's usually because they're using it for the tight edit loop that Cursor does better.
 
-Same discipline as the MVB, different pressure. You're not proving the stack works — you're confirming the new surface fits the existing product.
+Use Claude Code to decide. Use Cursor to do. The runbook is the seam between them — and if you've read anything else here, you know how much I care about that seam.
 
-The mock is a simple HTML file showing the new surface in context. Two things it must resolve before Cursor sees it:
+## So which should you use?
 
-**Data shape** — what exactly does this component receive? Name the fields. This makes the TYPES block derivable rather than invented.
+Both. In that order.
 
-**State coverage** — loading, empty, error, populated. Not all on one screen — but each state must be represented somewhere in the mock.
+If you only have room for one in your head right now: **Claude Code** — because the planning is where the leverage is. A bad plan executed fast in Cursor is just a mess arriving sooner. A good plan makes the execution tool almost interchangeable.
 
-The companion doc maps every section of the mock to the product definition doc. A divergence between the mock and the product definition is caught here, not three tasks into a Cursor build.
+The "vs" was never the right question. The question is which one you hand each job to.
 
 ---
 
-**In the repo:** `FEATURE-LOCK.md` is pre-populated. Run this in Claude Code before writing any code for a new feature:
-
-> Open `FEATURE-LOCK.md`. Read it in full. Walk me through what I need to fill in for [feature name] — ask me one question at a time, starting with the scope statement.
-
-After the lock is filled:
-
-> Read the completed lock for [feature name]. Check the invariants inventory against the current repo. Flag any listed surface that has changed recently and any empty cells in the verification method column.
+**In the repo:** this is the same workflow the lock and runbook docs assume. Start a feature in Claude Code, hand the runbook to Cursor, come back to Claude Code to verify the invariants held.
