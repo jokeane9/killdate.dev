@@ -5,7 +5,7 @@ part: 1
 post: 8
 section: playbook
 group: "Tooling: MCP"
-draft: true
+draft: false
 tags: ["mcp", "model-context-protocol", "claude-code", "tooling", "ai-agents"]
 ---
 
