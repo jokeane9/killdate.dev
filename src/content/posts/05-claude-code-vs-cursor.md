@@ -11,11 +11,11 @@ tags: ["claude-code", "cursor", "workflow", "orchestration", "tooling"]
 
 *6 minute read*
 
-Every "Claude Code vs Cursor" comparison I've read tries to crown a winner. That framing is the reason people get worse results than they should — out of both tools.
+**Short version: Claude Code vs Cursor is the wrong fight. Claude Code plans and orchestrates; Cursor executes. Run both, in that order, and you beat anyone who picked one.** Almost every comparison I've read tries to crown a winner — and that framing is exactly why people get worse results out of both tools.
 
-They're not competitors. They're two halves of one workflow. Claude Code is where you think; Cursor is where you build. Pick one for everything and you're using a screwdriver as a hammer half the time.
+The real difference is one thing: how much context each holds. Claude Code reads your entire repo before it touches a line, so it's where you *think* — scoping, planning, orchestration. Cursor's tight in-editor loop is where you *build* — one surgical change at a time, fast. They're not competitors; they're two halves of one workflow. Pick one for everything and you're using a screwdriver as a hammer half the time.
 
-Here's the division of labor I actually run, and why it lands where it does.
+Here's the division of labor I actually run, and why each job lands where it does.
 
 ## What Claude Code is good at: the whole picture
 
