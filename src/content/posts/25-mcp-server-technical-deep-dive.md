@@ -1,6 +1,6 @@
 ---
-title: "How to build a custom MCP server"
-description: "A technical walkthrough of building a production MCP server in Python — FastMCP, asyncpg, tool descriptions, testing, and the gotchas we hit live."
+title: "How to Build an MCP Server (Custom, in Python)"
+description: "How to build an MCP server in Python — a technical walkthrough with FastMCP, asyncpg, tool descriptions, testing, and the gotchas we hit live."
 part: 1
 post: 11
 section: playbook
